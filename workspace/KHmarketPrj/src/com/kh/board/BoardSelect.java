@@ -1,8 +1,8 @@
-package com.kh.main;
+package com.kh.board;
 
-public class BoardCategory {	
+public class BoardSelect {	
 	public void sellProduct() {
-		// 물건 팔기 
+		// 물건 팔기
 	}
 	
 	public void findPartTime() {
@@ -10,6 +10,6 @@ public class BoardCategory {
 	}
 	
 	public void searchRestaurant() {
-		// 식당 찾기 
+		// 식당 찾기
 	}
 }
