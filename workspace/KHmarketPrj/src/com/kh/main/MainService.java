@@ -13,4 +13,8 @@ public class MainService {
 	public void processService() {
 		// 서비스 진행
 	}
+	
+	public void showPopularItems() {
+		// 인기 품목 노출
+	}
 }
