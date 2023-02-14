@@ -10,6 +10,4 @@ public class Auction {
 	public void closeBid() {
 		// 입찰 취소 (ex. 대신 수수료 발생)
 	}
-	
-	
 }

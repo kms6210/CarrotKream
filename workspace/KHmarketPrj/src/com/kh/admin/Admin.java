@@ -1,14 +1,10 @@
 package com.kh.admin;
 
-// 테이블 : 유저, 상품, 삭제된 상품, 정지 아이디, 품질 검증, 계좌 
+// 테이블 : 유저, 상품, 정지 아이디, 품질 검증, 계좌 
 
 public class Admin {
 	public void showUserList() {
 		// 회원 목록 조회
-	}
-	
-	public void showDeleteItem() {
-		// 삭제 상품 조회 
 	}
 	
 	public void deleteItem() {
@@ -19,11 +15,11 @@ public class Admin {
 		// 계정 정지하기 (ex. 7일 / 30일 / 1년 / 영구 ...)
 	}
 
-	public void verifyQuality() {
-		// 품질 검증하기 
+	public void judgeQuality() {
+		// 품질 판정하기
 	}
 	
-	public void getFee() {
-		// 수수료(요금) 적립
+	public void receiveFee() {
+		// 수수료(요금) 취득
 	}
 }
