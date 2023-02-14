@@ -12,7 +12,7 @@ public class Account {
 	}
 	
 	public void transfer() {
-		// 이체 
+		// 이체       
 	}
 	
 	public void showEvents() {
