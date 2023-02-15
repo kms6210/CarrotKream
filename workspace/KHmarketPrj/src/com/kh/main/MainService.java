@@ -17,4 +17,9 @@ public class MainService {
 	public void showPopularItems() {
 		// 인기 품목 노출
 	}
+	
+	public void showFAQ() {
+		// 자주 묻는 질문 출력 
+	}
+	
 }

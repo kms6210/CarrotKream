@@ -1,6 +1,6 @@
 package com.kh.admin;
 
-// 테이블 : 유저, 상품, 정지 아이디, 품질 검증, 계좌 
+// 테이블 : 유저, 상품, 제재 내역, 품질 검증, 계좌, Q&A, 공지사항 
 
 public class Admin {
 	public void showUserList() {
@@ -21,5 +21,17 @@ public class Admin {
 	
 	public void receiveFee() {
 		// 수수료(요금) 취득
+	}
+	
+	public void answerQuestion() {
+		// 답변하기
+	}
+	
+	public void writePublic() {
+		// 공지사항 작성하기
+	}
+	
+	public void deletePublic() {
+		// 공지사항 삭제하기
 	}
 }

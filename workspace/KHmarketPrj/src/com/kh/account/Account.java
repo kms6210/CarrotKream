@@ -1,6 +1,6 @@
 package com.kh.account;
 
-// 테이블 : 유저. 계좌이용내역 
+// 테이블 : 유저. 계좌 내역 
 
 public class Account {
 	public void deposit() {
@@ -16,6 +16,6 @@ public class Account {
 	}
 	
 	public void showAccount() {
-		// 계좌 이용 내역 출력
+		// 계좌 내역 출력
 	}
 }
