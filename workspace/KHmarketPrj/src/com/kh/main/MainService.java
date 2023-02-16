@@ -1,5 +1,9 @@
 package com.kh.main;
 
+import java.sql.Connection;
+
+import com.kh.jdbc.JdbcTemplate;
+
 public class MainService {
 	public boolean startService() {
 		// kh 마켓 실행
@@ -22,4 +26,19 @@ public class MainService {
 		// 자주 묻는 질문 출력 
 	}
 	
+	public void processService(String input) throws Exception {
+		Connection conn = JdbcTemplate.m01();
+		
+		switch(input) {
+		case "1" : break;
+		case "2" : break;
+		case "3" : break;
+		case "4" : break;
+		case "5" : break;
+		default : System.out.println("잘못 입력하셨습니다....");;
+		}
+		
+		System.out.println("");
+		conn.close();
+	}
 }
