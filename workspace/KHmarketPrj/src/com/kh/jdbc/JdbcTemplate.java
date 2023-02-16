@@ -7,7 +7,7 @@ public class JdbcTemplate {
 	public static Connection m01() throws Exception {
 		String driver = "oracle.jdbc.driver.OracleDriver";
 		String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		String id = "C##KH";
+		String id = "C##TEAM1";
 		String pwd = "KH";
 		
 		Class.forName(driver);
