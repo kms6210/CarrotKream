@@ -2,12 +2,23 @@ package com.kh.main;
 
 import java.sql.Connection;
 
+import com.kh.account.Account;
 import com.kh.jdbc.JdbcTemplate;
 
 public class MainService {
-	public boolean startService() {
+	public boolean startService() throws Exception {
 		// kh 마켓 실행
-		return false;
+		showMarket();
+		System.out.print("[번호를 선택하세요] : ");
+		String input = Main.SC.nextLine();
+		System.out.println("");
+		if(input.equals("9")) {
+			System.out.println("프로그램을 종료합니다.");
+			return true;
+		} else {
+			processService(input);
+			return false;
+		}
 	}
 
 	public void showMarket() {
@@ -28,9 +39,11 @@ public class MainService {
 	
 	public void processService(String input) throws Exception {
 		Connection conn = JdbcTemplate.m01();
+		Account account = new Account();
+		
 		
 		switch(input) {
-		case "1" : break;
+		case "1" : account.deposit(1, 2, conn); break; // 수정해야함
 		case "2" : break;
 		case "3" : break;
 		case "4" : break;
