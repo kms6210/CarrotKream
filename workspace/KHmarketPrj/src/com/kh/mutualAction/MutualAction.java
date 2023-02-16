@@ -23,10 +23,6 @@ public class MutualAction {
 		// 구매 
 	}
 	
-	public void makeChatRoom() {
-		// 채팅방 생성 
-	}
-	
 	public void chat() {
 		// 채팅하기 
 	}
