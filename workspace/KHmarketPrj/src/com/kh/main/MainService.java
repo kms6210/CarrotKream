@@ -43,7 +43,12 @@ public class MainService {
 		
 		
 		switch(input) {
-		case "1" : account.deposit(1, 2, conn); break; // 충전 기능 예시 
+		case "1" :
+			// 충전 기능 예시
+			System.out.print("유저번호 : ");
+			int user_no = Integer.parseInt(Main.SC.nextLine());
+			account.deposit(user_no, conn); 
+			break; 
 		case "2" : break;
 		case "3" : break;
 		case "4" : break;
