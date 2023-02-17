@@ -2,20 +2,20 @@ package com.kh.main;
 
 import java.sql.Connection;
 
-import com.kh.account.Account;
 import com.kh.jdbc.JdbcTemplate;
+import com.kh.mutualAction.MutualAction;
 
 public class MainService {
 	public boolean startService() throws Exception {
 		// kh 마켓 실행
 		showMarket();
-		System.out.print("[번호를 선택하세요] : ");
+		System.out.print("번호를 입력하세요 : ");
 		String input = Main.SC.nextLine();
-		System.out.println("");
 		if(input.equals("9")) {
 			System.out.println("프로그램을 종료합니다.");
 			return true;
-		} else {
+		}
+		else {
 			processService(input);
 			return false;
 		}
@@ -39,21 +39,15 @@ public class MainService {
 	
 	public void processService(String input) throws Exception {
 		Connection conn = JdbcTemplate.m01();
-		Account account = new Account();
 		
-		
+		MutualAction mutualAction = new MutualAction();
 		switch(input) {
-		case "1" :
-			// 충전 기능 예시
-			System.out.print("유저번호 : ");
-			int user_no = Integer.parseInt(Main.SC.nextLine());
-			account.deposit(user_no, conn); 
-			break; 
+		case "1" : mutualAction.setLikeList(conn, 1, 1); break;
 		case "2" : break;
 		case "3" : break;
 		case "4" : break;
 		case "5" : break;
-		default : System.out.println("잘못 입력하셨습니다....");;
+		default : System.out.println("잘못 입력하셨습니다….");
 		}
 		
 		System.out.println("");
