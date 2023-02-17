@@ -536,16 +536,16 @@ insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE) values (8, 8
 insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE) values (9, 9, 9, '제목9', '내용9', 17250);
 insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE) values (10, 10, 10, '제목10', '내용10', 69959);
 
-insert into ITEM_TYPE (TYPE_NO) values (1);
-insert into ITEM_TYPE (TYPE_NO) values (2);
-insert into ITEM_TYPE (TYPE_NO) values (3);
-insert into ITEM_TYPE (TYPE_NO) values (4);
-insert into ITEM_TYPE (TYPE_NO) values (5);
-insert into ITEM_TYPE (TYPE_NO) values (6);
-insert into ITEM_TYPE (TYPE_NO) values (7);
-insert into ITEM_TYPE (TYPE_NO) values (8);
-insert into ITEM_TYPE (TYPE_NO) values (9);
-insert into ITEM_TYPE (TYPE_NO) values (10);
+insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (1, '분류1');
+insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (2, '분류2');
+insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (3, '분류3');
+insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (4, '분류4');
+insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (5, '분류5');
+insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (6, '분류6');
+insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (7, '분류7');
+insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (8, '분류8');
+insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (9, '분류9');
+insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (10, '분류10');
 
 insert into HINT_TYPE (QUESTION_NO, QUESTION) values (1, '질문1');
 insert into HINT_TYPE (QUESTION_NO, QUESTION) values (2, '질문2');
