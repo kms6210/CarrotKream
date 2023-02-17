@@ -13,7 +13,7 @@ public class Account {
 		// 충전(유저)
 		System.out.print("금액 : ");
 		int price = Integer.parseInt(Main.SC.nextLine());
-		String sql = "INSERT INTO USER_ACCOUNT(USE_NO, USER_NO, TARGET_NO, PRICE, USE_DATE) VALUES(SEQ_USER_ACCOUNT_NO.NEXTVAL, ?, ?, ?, SYSDATE)";
+		String sql = "INSERT INTO USER_ACCOUNT(USE_NO, USER_NO, TARGET_NO, PRICE) VALUES(SEQ_USER_USE_NO.NEXTVAL, ?, ?, ?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, user_no);
 		pstmt.setInt(2, target_no);
