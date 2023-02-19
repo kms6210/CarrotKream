@@ -29,15 +29,15 @@ public class Item {
 		*/
 		
 		System.out.println("카테고리를 정하십시오");
-		System.out.println("1. 가전");
-		System.out.println("2. 디지털");
-		System.out.println("3. 의류");
-		System.out.println("4. 식품");
-		System.out.println("5. 피시 모바일");
-		System.out.println("6. 가구");
-		System.out.println("7. 생필품");
-		System.out.println("8. 잡화");
-		System.out.println("9. 기타");	
+		System.out.println("101. 가전");
+		System.out.println("102. 디지털");
+		System.out.println("103. 의류");
+		System.out.println("104. 식품");
+		System.out.println("105. 피시 모바일");
+		System.out.println("106. 가구");
+		System.out.println("107. 생필품");
+		System.out.println("108. 잡화");
+		System.out.println("109. 기타");	
 		
 		String input = Main.SC.nextLine();
 		
@@ -61,9 +61,21 @@ public class Item {
 		// 상품 유형 선택 (ex. 판매, 구매, ...)
 	}
 	
-	public void registSellItem(Connection conn, int TYPE_NO, int USER_NO) throws Exception {
+	public void registSellItem(Connection conn, int USER_NO) throws Exception {
 		// 상품 등록 				
 		
+		System.out.println("카테고리를 정하십시오");
+		System.out.println("101. 가전");
+		System.out.println("102. 디지털");
+		System.out.println("103. 의류");
+		System.out.println("104. 식품");
+		System.out.println("105. 피시 모바일");
+		System.out.println("106. 가구");
+		System.out.println("107. 생필품");
+		System.out.println("108. 잡화");
+		System.out.println("109. 기타");	
+		System.out.println("카테고리: ");			
+		String typeNo = Main.SC.nextLine();
 		System.out.println("제목: ");
 		String itemTitle = Main.SC.nextLine();
 		System.out.println("내용: ");
@@ -74,7 +86,7 @@ public class Item {
 		//SQL
 		String sql = "INSERT INTO ITEM(ITEM_NO, TYPE_NO, USER_NO, TITLE,CONTENT,PRICE,WRITE_DATE) VALUES(SEQ_ITEM_NO.NEXTVAL,?,?,?,?,?,SYSDATE)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setLong(1, TYPE_NO);
+		pstmt.setString(1, typeNo);
 		pstmt.setLong(2, USER_NO);
 		pstmt.setString(3, itemTitle);
 		pstmt.setString(4, itemContent);
