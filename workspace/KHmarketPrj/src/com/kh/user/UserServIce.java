@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import com.kh.main.Main;
 
-public class UserServIce {
+public class UserService {
 	
 	private User user = new User();
 	
