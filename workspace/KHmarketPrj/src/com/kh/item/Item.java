@@ -103,42 +103,56 @@ public class Item {
 		String input = Main.SC.nextLine();
 		
 		switch(input) {
-		case "1": edit.editTitle(conn, 100); break;
-		case "2": edit.editContent(conn, 100); break;
-		case "3": edit.editPrice(conn, 100); break;
+		case "1": edit.editTitle(conn); break;
+		case "2": edit.editContent(conn); break;
+		case "3": edit.editPrice(conn); break;
 		default: System.out.println("잘못 입력하셨습니다.");
 		return;
 		}
 	}
 
-	public void deleteItem() {
+	public void deleteItem(Connection conn) throws Exception {
 		// 상품 삭제 (delete_YN? delete?)
+		
+		System.out.println("삭제하실 글의 번호를 입력하시오.");
+		System.out.println("글 번호: ");
+		
+		int delete = Main.SC.nextInt();
+		
+		//SQL
+		
+		String sql = "DELETE FROM ITEM WHERE ITEM_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, delete);
+		int result = pstmt.executeUpdate();
+		
+		if(result == 1) {
+			System.out.println("삭제 성공");
+		}
+		else {
+			System.out.println("삭제 실패");
+		}
+		
 	}
 	
 	public void findItem(Connection conn) throws Exception {
-		// 상품 조회 (10개 씩 조회 할 수 있으면 더 좋을 지도..수정 예정)
 			
-			//SQL
-			String sql = "SELECT TITLE,USER_NO,PRICE,WRITE_DATE FROM ITEM";
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-
-				String title = rs.getString("TITLE");
-				String userNo = rs.getString("USER_NO");
-				String price = rs.getString("PRICE");
-				String enroll_date = rs.getString("WRITE_DATE");
-				
-				System.out.print(title);
-				System.out.print(" | ");
-				System.out.print(userNo);
-				System.out.print(" | ");
-				System.out.print(price);
-				System.out.print(" | ");
-				System.out.println(enroll_date);
-				
-			}	
+		ItemSearch is = new ItemSearch();
+		
+		System.out.println("조회하실 글들을 선택하십시오.");
+		System.out.println("1. 모든 품목 조회");
+		System.out.println("2. 인기 상품");
+		System.out.println("3. 카테고리로 선택");
+		
+		String input = Main.SC.nextLine();
+		
+		switch(input) {
+		case "1": is.itemView(conn); break;
+		case "2": is.rankedByView(conn); break;
+		case "3": is.categoryView(conn); break;
+		}
+		
+		
 		
 	}
 	
