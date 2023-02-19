@@ -1,6 +1,7 @@
 package com.kh.user;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import com.kh.main.Main;
 
@@ -8,7 +9,7 @@ public class UserServIce {
 	
 	private User user = new User();
 	
-	public void userPage(Connection conn) throws Exception {
+	public void userPage(Connection conn){
 		System.out.println("==================");
 		System.out.println("유저 페이지");
 		System.out.println("------------------");
@@ -25,10 +26,48 @@ public class UserServIce {
 		System.out.println("");
 		
 		switch (input) {
-		case "1" : user.join(conn); break;
-		case "2" : user.login(conn); break;
-		case "3" : user.findId(conn); break;
-		case "99" : user.userList(conn); break;
+		case "1" : 
+			try {
+				user.join(conn);
+			} catch (Exception e1) {
+				System.out.println("회원가입 실패");
+			} break;
+		case "2" : 
+			try {
+				user.login(conn);
+			} catch (Exception e) {
+				System.out.println("로그인 실패");
+				System.out.println("\n아이디나 패스워드를 확인해주세요");
+			} break;
+		case "3" : 
+			try {
+				user.findId(conn);
+			} catch (SQLException e) {
+				System.out.println("아이디 찾기 실패");
+			} break;
+		case "4" :
+			try {
+				user.findPwd(conn);
+			} catch (SQLException e) {
+				System.out.println("비밀번호 찾기 실패");
+			} break;
+		case "5" : break;
+		
+		case "6" : 
+			if(Main.login_member_nick == 0) {
+				System.out.println("로그인이 필요한 서비스입니다");
+			} else {
+				try {
+					user.askQuestion(conn);
+				} catch (SQLException e1) {
+					System.out.println("질문 등록에 실패 했습니다...");
+				} 
+			} break;
+		case "99" : try {
+				user.userList(conn);
+			} catch (SQLException e) {
+				System.out.println("유저목록 불러오기 실패");
+			} break;
 		default:
 			System.out.println("잘못 입력하셨습니다….");
 		}

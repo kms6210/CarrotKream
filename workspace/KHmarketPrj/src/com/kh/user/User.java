@@ -19,7 +19,7 @@ public class User {
 		UserData data = uInput.UserJoinInput();
 		
 		
-		String sql = "insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, QUESTION_NO, ANSWER) values (SEQ_USER_NO.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, QUESTION_NO, ANSWER) VALUES (SEQ_USER_NO.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, data.getUserId());
 		pstmt.setString(2, data.getUserPwd());
@@ -38,24 +38,26 @@ public class User {
 			System.out.println("회원가입 실패...");
 		}
 		
-		//커넥션 정리
-		conn.close();
 	}
 	
 	// 로그인
 	public void login(Connection conn) throws Exception {
+		
 		//데이터 입력받기
 		UserData data = uInput.UserLoginInput();
-
 		
-		String sql = "SELECT * FROM K_USER WHERE ID = ? AND PWD = ?";
+		String sql = "SELECT * FROM K_USER WHERE UPPER(ID) = UPPER( ? ) AND PWD = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, data.getUserId());
 		pstmt.setString(2, data.getUserPwd());
 		ResultSet rs = pstmt.executeQuery();
-				
+		
+		rs.next();
+		
+		String userTatus = rs.getString("USER_STATUS");
+		
 		//결과 출력
-		if(rs.next() && rs.getString("USER_STATUS").equals("N")) {
+		if(userTatus.equals("N")) {
 			String nick = rs.getString("NICK");
 			String balance = rs.getString("BALANCE");
 			String trustLevel = rs.getString("TRUST_LEVEL");
@@ -67,84 +69,139 @@ public class User {
 			} else {
 				System.out.println("생성된 계좌가 없습니다.");
 			}
-			Main.login_member_nick = nick;
 			
-		} else if(rs.getString("USER_STATUS").equals("Y")) {
+			Main.login_member_nick = rs.getInt("USER_NO");;
+			
+		} else if(userTatus.equals("Y")) {
 			System.out.println("");
 			System.out.println("정지된 회원입니다");
 			
-		} else if(rs.getString("USER_STATUS").equals("Q")) {
+			sql = "SELECT BAN.STOP_REASON, BAN.RELEASE_DATE FROM BANNED BAN LEFT JOIN k_user U ON (U.USER_NO = BAN.USER_NO) WHERE U.USER_NO = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, data.getUserId());
+			
+			System.out.println("정지된 이유 : ");
+		} else if(userTatus.equals("Q")) {
 			System.out.println("탈퇴한 회원입니다");
 			
 		} else {
 			System.out.println("로그인 실패");
-			
 		}
 		
-		//커넥션 정리
-		conn.close();
 	}
 	
+	// 아이디 찾기 (전화번호 , 힌트)
 	public void findId(Connection conn) throws SQLException {
 		
 		// 전화번호 입력 받기
-		System.out.print("가입시 입력한 전화번호 : ");
-		String joinPhoneNo = Main.SC.nextLine();
+		String joinPhoneNo = uInput.phoneNoInput();
 		
-		// 아이디 찾기(힌트)
 		String sql = "SELECT H.QUESTION FROM K_USER U LEFT JOIN HINT_TYPE H ON (U.QUESTION_NO = H.QUESTION_NO) WHERE PHONE_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, joinPhoneNo);
 		ResultSet rs = pstmt.executeQuery();
 		
-		System.out.println(rs.next());
-		
+		//결과 출력
 		if(rs.next()) {
-			UserData data = uInput.findUserIdInput(rs.getString("H.QUESTION"));
+			UserData data = uInput.findUserIdInput(joinPhoneNo,rs.getString("QUESTION"));
 			
-			sql = "SELECT U.ID  FROM K_USER U LEFT JOIN HINT_TYPE H ON (U.QUESTION_NO = H.QUESTION_NO) WHERE ANSWER = ?";
+			sql = "SELECT U.ID  FROM K_USER U LEFT JOIN HINT_TYPE H ON (U.QUESTION_NO = H.QUESTION_NO) WHERE PHONE_NO = ? AND ANSWER = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, data.getUserAnswer());
+			pstmt.setString(1, data.getUserPhone());
+			pstmt.setString(2, data.getUserAnswer());
 			rs = pstmt.executeQuery();
 			
-			if(true) {
-				System.out.println("회원님의 아이디는 "+rs.getString("U.ID")+"입니다.");
+			if(rs.next()) {
+				System.out.println("");
+				System.out.println("회원님의 아이디는 "+rs.getString("ID")+"입니다.");
 			} else {
-				System.out.println("일치하는 회원정보가 없습니다.");
+				System.out.println("틀린 답변입니다.");
 			}
 			
 		} else {
-			System.out.println("일치하는 회원정보가 없습니다.");
+			System.out.println("전화번호와 일치하는 회원정보가 없습니다. ");
+		}
+		
+	}
+	
+	// 비밀번호 찾기(아이디 & 힌트)
+	public void findPwd(Connection conn) throws SQLException {
+		
+		// 정보입력 받기
+		System.out.print("가입시 입력한 아이디 : ");
+		String userId = Main.SC.nextLine();
+				
+		String joinPhoneNo = uInput.phoneNoInput();
+		
+		String sql = "SELECT H.QUESTION FROM K_USER U LEFT JOIN HINT_TYPE H ON (U.QUESTION_NO = H.QUESTION_NO) WHERE ID = ? AND PHONE_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setString(1, userId);
+		pstmt.setString(2, joinPhoneNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		//결과 출력
+		if(rs.next()) {
+			UserData data = uInput.findUserIdInput(joinPhoneNo,rs.getString("QUESTION"));
+			
+			sql = "SELECT U.PWD  FROM K_USER U LEFT JOIN HINT_TYPE H ON (U.QUESTION_NO = H.QUESTION_NO) WHERE ID = ? AND PHONE_NO = ? AND ANSWER = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, data.getUserPhone());
+			pstmt.setString(3, data.getUserAnswer());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				System.out.println("");
+				System.out.println("회원님의 비밀번호는 "+rs.getString("PWD")+"입니다.");
+			} else {
+				System.out.println("틀린 답변입니다.");
+			}
+			
+		} else {
+			System.out.println("전화번호와 일치하는 회원정보가 없습니다. ");
+		}
+		
+	}
+	
+	// 회원 탈퇴
+	public void dropUser() {
+		
+		System.out.println("");
+		
+	}
+	
+	// 질문하기
+	public void askQuestion(Connection conn) throws SQLException {
+		
+		if(Main.login_member_nick == 0) {
+			
+		}
+		//질문 받기
+		System.out.println("질문을 입력해 주세요");
+		String userQuestion = Main.SC.nextLine();
+		
+		String sql = "INSERT INTO QNA (QUESTION_NO,USER_NO,QUESTION,ANSWER) VALUES (SEQ_QNA_QUESTION_NO.NEXTVAL,?,?,?)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, Main.login_member_nick);
+		pstmt.setString(2, userQuestion);
+		pstmt.setString(3, "미답변");
+		int result = pstmt.executeUpdate();
+		
+		if(result == 1) {
+			System.out.println("질문 등록완료");
 		}
 	}
-	
-	public void findPwd() {
-		// 비밀번호 찾기(아이디 & 힌트)
-	}
-	
-	
-	
-	public void dropUser() {
-		// 회원 탈퇴
-	}
-	
-	public void askQuestion() {
-		// 질문하기
-	}
-	
 	public void userList(Connection conn) throws SQLException {
 		
 		String sql = "SELECT * FROM K_USER";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
-		
-//		if(rs.next()== false) {
-//			System.out.println("false 입니다");
-//		}
+
 		while(rs.next()) {
 			String userNo = rs.getString("USER_NO");
 			String userId = rs.getString("ID");
-			String userNick = rs.getString("NICK");
+			String userNick = rs.getString("PHONE_NO");
 			
 			System.out.print(userNo);
 			System.out.print(" / ");

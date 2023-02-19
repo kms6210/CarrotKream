@@ -9,6 +9,7 @@ public class UserInput {
 	private String pwdCheck = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,15}$"; // 영문, 숫자, 특수문자 , 8~15
 	private String userPwd = null;
 	private String userQuestion = null;
+	
 	// 회원 가입 정보입력
 	public UserData UserJoinInput() {
 		
@@ -58,7 +59,7 @@ public class UserInput {
 	
 	// 비밀번호 유효성 체크 (ex. 특수문자포함, 8~15자리 ...)
 	public boolean applyjoinRule(String userPwd) {
-		if (userPwd.matches(qusCheck)) {
+		if (userPwd.matches(pwdCheck)) {
 			return true;
 		} else {
 			System.out.println("8~15자 영문, 숫자, 특수문자를 포함해야합니다\n");
@@ -97,18 +98,31 @@ public class UserInput {
 	}
 	
 	
-
-	public UserData findUserIdInput(String question) {
+	// 아이디 찾기 입력 받기
+	public UserData findUserIdInput(String phoneNo, String question) {
 		System.out.println("질문 : "+question);
 		System.out.print("답변 : ");
 		String joinAnswer = Main.SC.nextLine();
 		
 		UserData data = new UserData();
+		
+		data.setUserPhone(phoneNo);
 		data.setUserAnswer(joinAnswer);
 		return data;
 	}
 	
 	
-	
+	//전화번호 입력 받기
+	public String phoneNoInput() {
+		System.out.print("가입시 입력한 전화번호 : ");
+		String joinPhoneNo = Main.SC.nextLine();
+		
+		// 전화번호 길이 맞추기
+		if(joinPhoneNo.length() < 20) {
+			joinPhoneNo = String.format("%-20s" , joinPhoneNo);
+		}
+		
+		return joinPhoneNo;
+	}
 	
 }
