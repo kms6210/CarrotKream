@@ -169,26 +169,29 @@ public class Item {
 	}
 	
 	public void findItemAbb(Connection conn) throws Exception {
-		// 줄임말로 아이템 찾기 (실험중)
+		// 글 번호로 글 상세 보기 
 		
-		System.out.println("검색 할 글 제목: ");
-		String Title = Main.SC.nextLine();
+		System.out.println("검색 할 글 번호: ");
+		String itemNo = Main.SC.nextLine();
 		
 		//SQL
-		String sql = "SELECT TITLE,CONTENT,PRICE,USER_NO,WRITE_DATE FROM ITEM WHERE TITLE=?";
+		String sql = "SELECT ITEM_NO,TITLE,CONTENT,PRICE,USER_NO,WRITE_DATE FROM ITEM WHERE ITEM_NO=?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, Title);
+		pstmt.setString(1, itemNo);
 		ResultSet rs = pstmt.executeQuery();
 		
 		//결과 도출
 		if(rs.next()) {
 			
+			String item_no = rs.getString("ITEM_NO");
 			String title = rs.getString("TITLE");
 			String content = rs.getString("CONTENT");
 			String price = rs.getString("PRICE");
 			int userNo = rs.getInt("USER_NO");
 			String writeDate = rs.getString("WRITE_DATE");
 			
+			System.out.print(item_no);
+			System.out.print(" | ");
 			System.out.print(title);
 			System.out.print(" | ");
 			System.out.print(content);
