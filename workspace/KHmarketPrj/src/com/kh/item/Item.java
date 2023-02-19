@@ -74,13 +74,13 @@ public class Item {
 		System.out.println("107. 생필품");
 		System.out.println("108. 잡화");
 		System.out.println("109. 기타");	
-		System.out.println("카테고리: ");			
+		System.out.print("카테고리: ");			
 		String typeNo = Main.SC.nextLine();
-		System.out.println("제목: ");
+		System.out.print("제목: ");
 		String itemTitle = Main.SC.nextLine();
-		System.out.println("내용: ");
+		System.out.print("내용: ");
 		String itemContent = Main.SC.nextLine();
-		System.out.println("가격: ");
+		System.out.print("가격: ");
 		String itemPrice = Main.SC.nextLine();
 		
 		//SQL
@@ -107,10 +107,11 @@ public class Item {
 		EditItem edit = new EditItem();
 		
 		// 상품 수정
-		System.out.println("수정하실 부분을 정하십시오");
+		System.out.println("[수정하실 부분을 정하십시오]");
 		System.out.println("1. 제목");
 		System.out.println("2. 글 내용");
 		System.out.println("3. 가격");
+		System.out.print("번호를 입력하세요 : ");
 		
 		String input = Main.SC.nextLine();
 		
@@ -127,7 +128,7 @@ public class Item {
 		// 상품 삭제 (delete_YN? delete?)
 		
 		System.out.println("삭제하실 글의 번호를 입력하시오.");
-		System.out.println("글 번호: ");
+		System.out.print("글 번호: ");
 		
 		int delete = Main.SC.nextInt();
 		
@@ -171,7 +172,7 @@ public class Item {
 	public void findItemAbb(Connection conn) throws Exception {
 		// 글 번호로 글 상세 보기 
 		
-		System.out.println("검색 할 글 번호: ");
+		System.out.print("검색 할 글 번호: ");
 		String itemNo = Main.SC.nextLine();
 		
 		//SQL

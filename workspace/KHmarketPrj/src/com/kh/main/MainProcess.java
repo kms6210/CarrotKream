@@ -7,6 +7,7 @@ import com.kh.admin.Admin;
 import com.kh.auction.Auction;
 import com.kh.auction.AuctionService;
 import com.kh.item.Item;
+import com.kh.item.ItemService;
 import com.kh.mutualAction.MutualAction;
 import com.kh.user.UserService;
 
@@ -35,9 +36,9 @@ public class MainProcess {
 		new AuctionService().auctionPage(conn);
 	}
 
-	public void executeItem(Connection conn) {
+	public void executeItem(Connection conn) throws Exception {
 		if(!authenticate()) { return; }
-		// new ItemService().itemPage(conn);
+		 new ItemService().itemPage(conn);
 	}
 
 	public void executemutualAction(Connection conn) {

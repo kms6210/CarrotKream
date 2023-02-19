@@ -11,12 +11,18 @@ public class AuctionSQL {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, "Y");
 		ResultSet rs = pstmt.executeQuery();
-
+		
+		Boolean isExist = false;
 		while (rs.next()) {
+			isExist = true;
 			int item_no = rs.getInt("ITEM_NO");
 			String remainedTime = rs.getString("남은시간");
 
 			System.out.println("상품번호 : " + item_no + "번 // 남은시간 : " + remainedTime);
+		}
+		
+		if(!isExist) {
+			System.out.println("경매란에 등록된 상품이 없습니다.");
 		}
 	}
 
