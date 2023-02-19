@@ -11,10 +11,10 @@ public class EditItem {
 	public void editTitle(Connection conn) throws Exception {
 		
 		System.out.println("수정할 글의 번호를 입력하십시오.");
-		System.out.println("글 번호: ");
+		System.out.print("글 번호: ");
 		String ITEM_NO = Main.SC.nextLine();
 		
-		System.out.println("수정할 제목: ");
+		System.out.print("수정할 제목: ");
 		String title = Main.SC.nextLine();
 		
 		String sql = "UPDATE ITEM SET TITLE = ? WHERE ITEM_NO = ?";
@@ -34,10 +34,10 @@ public class EditItem {
 	public void editContent(Connection conn) throws Exception {
 		
 		System.out.println("수정할 글의 번호를 입력하십시오.");
-		System.out.println("글 번호: ");
+		System.out.print("글 번호: ");
 		String ITEM_NO = Main.SC.nextLine();
 		
-		System.out.println("수정할 내용: ");
+		System.out.print("수정할 내용: ");
 		String content = Main.SC.nextLine();
 		
 		String sql = "UPDATE ITEM SET CONTENT = ? WHERE ITEM_NO = ?";
@@ -57,7 +57,7 @@ public class EditItem {
 	public void editPrice(Connection conn) throws SQLException {
 		
 		System.out.println("수정할 글의 번호를 입력하십시오.");
-		System.out.println("글 번호: ");
+		System.out.print("글 번호: ");
 		String ITEM_NO = Main.SC.nextLine();
 		
 		System.out.println("수정할 가격: ");

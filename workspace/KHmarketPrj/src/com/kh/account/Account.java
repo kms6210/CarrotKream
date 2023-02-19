@@ -17,7 +17,7 @@ public class Account {
 	public void deposit(Connection conn) throws Exception { 
 		// 포인트 충전
 		int price = inputPrice();
-		if(price == 0) { System.out.println("잘못된 입력입니다."); return; }
+		if(price <= 0) { System.out.println("잘못된 입력입니다."); return; }
 		int balance = aSQL.selectBalance(user_no, conn);
 		int result1 = aSQL.updateBalance(user_no, price, balance, conn);
 		int result2 = aSQL.insertAccount(user_no, user_no, price, conn);
@@ -32,7 +32,7 @@ public class Account {
 	public void withdraw(Connection conn) throws Exception { 
 		// 포인트 인출
 		int price = inputPrice();
-		if(price == 0) { System.out.println("잘못된 입력입니다."); return; }
+		if(price <= 0) { System.out.println("잘못된 입력입니다."); return; }
 		int balance = aSQL.selectBalance(user_no, conn);
 		int result1 = aSQL.updateBalance(user_no, -1 * price, balance, conn);
 		int result2 = aSQL.insertAccount(user_no, user_no, -1 * price, conn);
@@ -56,7 +56,7 @@ public class Account {
 		
 		int result1 =  aSQL.updateBalance(target_no, price, targetBalance, conn);
 		if(result1 == 0) { System.out.println("거래 대상을 찾을 수 없습니다"); return; }
-		int result2 = aSQL.updateBalance(user_no, -1 * price, targetBalance, conn);
+		int result2 = aSQL.updateBalance(user_no, -1 * price, userBalance, conn);
 		int result3 = aSQL.insertAccount(user_no, target_no, -1 * price, conn);
 		
 		if (result1 == 1 && result2 == 1 && result3 == 1) {
@@ -82,10 +82,10 @@ public class Account {
 					System.out.println("[-] 내 kh머니에서 " + -1 * price + "원 인출함 // " + use_date);
 				}
 			} else {
-				if(price > 0) {
-					System.out.println("[-] " + target_no + "번 유저에게 " + price + "원 입금함 // " + use_date);
+				if(price < 0) {
+					System.out.println("[-] " + target_no + "번 유저에게 " + -1 * price + "원 입금함 // " + use_date);
 				} else {
-					System.out.println("[+] " + target_no + "번 유저에게서 " + -1 * price + "원 입금받음 // " + use_date);
+					System.out.println("[+] " + target_no + "번 유저에게서 " + price + "원 입금받음 // " + use_date);
 				}
 			}
 		}
