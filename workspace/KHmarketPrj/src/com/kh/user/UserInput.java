@@ -77,11 +77,10 @@ public class UserInput {
 		}
 	}
 	
+	// 비번 설정시 보안 등급 출력 (ex. 낮음 중간 높음 ...)
 	public void showPwdGrade() {
-		// 비번 설정시 보안 등급 출력 (ex. 낮음 중간 높음 ...)
+		
 	}
-	
-	
 	
 	//로그인 정보 입력
 	public UserData UserLoginInput() {

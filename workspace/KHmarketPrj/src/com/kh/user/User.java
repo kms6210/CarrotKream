@@ -52,37 +52,55 @@ public class User {
 		pstmt.setString(2, data.getUserPwd());
 		ResultSet rs = pstmt.executeQuery();
 		
-		rs.next();
-		
-		String userTatus = rs.getString("USER_STATUS");
-		
+		String userTatus;
 		//결과 출력
-		if(userTatus.equals("N")) {
-			String nick = rs.getString("NICK");
-			String balance = rs.getString("BALANCE");
-			String trustLevel = rs.getString("TRUST_LEVEL");
-			System.out.println("");
-			System.out.println(nick + " 님 환영합니다.");
-			System.out.println("매너온도	: "+ trustLevel);
-			if(balance != null) {
-				System.out.println("잔액	: "+ balance);
-			} else {
-				System.out.println("생성된 계좌가 없습니다.");
+		if(rs.next()) {
+			userTatus = rs.getString("USER_STATUS");
+			Main.login_member_no = rs.getInt("USER_NO");
+			
+			// 정상 계정
+			if(userTatus.equals("N")) {
+				String nick = rs.getString("NICK");
+				String balance = rs.getString("BALANCE");
+				String trustLevel = rs.getString("TRUST_LEVEL");
+				System.out.println("");
+				System.out.println(nick + " 님 환영합니다.");
+				System.out.println("매너온도	: "+ trustLevel);
+				if(balance != null) {
+					System.out.println("잔액	: "+ balance);
+				} else {
+					System.out.println("생성된 계좌가 없습니다.");
+				}
 			}
 			
-			Main.login_member_no = rs.getInt("USER_NO");;
+			// 정지 계정
+			else if(userTatus.equals("Y")) {
+				System.out.println("");
+				System.out.println("정지된 회원입니다");
+				
+				sql = "SELECT BAN.STOP_REASON, BAN.RELEASE_DATE FROM BANNED BAN LEFT JOIN K_USER U ON (U.USER_NO = BAN.USER_NO) WHERE U.USER_NO = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, Main.login_member_no);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					System.out.println("정지된 이유 : " + rs.getString("STOP_REASON"));
+					System.out.println("정지 해제일 : " + rs.getDate("RELEASE_DATE"));
+					
+					System.out.println("\n자동으로 로그아웃 됩니다.");
+					Main.login_member_no = 0;
+				}
+				
+				
+				
+			}
 			
-		} else if(userTatus.equals("Y")) {
-			System.out.println("");
-			System.out.println("정지된 회원입니다");
-			
-			sql = "SELECT BAN.STOP_REASON, BAN.RELEASE_DATE FROM BANNED BAN LEFT JOIN k_user U ON (U.USER_NO = BAN.USER_NO) WHERE U.USER_NO = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, data.getUserId());
-			
-			System.out.println("정지된 이유 : ");
-		} else if(userTatus.equals("Q")) {
-			System.out.println("탈퇴한 회원입니다");
+			// 탈퇴 계정
+			else if(userTatus.equals("Q")) {
+				System.out.println("탈퇴한 회원입니다");
+				System.out.println("\n자동으로 로그아웃 됩니다.");
+				Main.login_member_no = 0;
+			} 
 			
 		} else {
 			System.out.println("로그인 실패");
@@ -101,7 +119,7 @@ public class User {
 		pstmt.setString(1, joinPhoneNo);
 		ResultSet rs = pstmt.executeQuery();
 		
-		//결과 출력
+		// 힌트 답 확인
 		if(rs.next()) {
 			UserData data = uInput.findUserIdInput(joinPhoneNo,rs.getString("QUESTION"));
 			
@@ -111,6 +129,7 @@ public class User {
 			pstmt.setString(2, data.getUserAnswer());
 			rs = pstmt.executeQuery();
 			
+			//결과 출력
 			if(rs.next()) {
 				System.out.println("");
 				System.out.println("회원님의 아이디는 "+rs.getString("ID")+"입니다.");
@@ -130,12 +149,10 @@ public class User {
 		// 정보입력 받기
 		System.out.print("가입시 입력한 아이디 : ");
 		String userId = Main.SC.nextLine();
-				
 		String joinPhoneNo = uInput.phoneNoInput();
 		
 		String sql = "SELECT H.QUESTION FROM K_USER U LEFT JOIN HINT_TYPE H ON (U.QUESTION_NO = H.QUESTION_NO) WHERE ID = ? AND PHONE_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		
 		pstmt.setString(1, userId);
 		pstmt.setString(2, joinPhoneNo);
 		ResultSet rs = pstmt.executeQuery();
@@ -165,18 +182,55 @@ public class User {
 	}
 	
 	// 회원 탈퇴
-	public void dropUser() {
+	public void dropUser(Connection conn) throws SQLException {
 		
-		System.out.println("");
+		System.out.println("정말로 탈퇴 하시겠습니까?");
+		System.out.println("1. 네 / 2. 아니오");
+		String yn = Main.SC.nextLine();
+		
+		if(yn.equals("1")) {
+						
+			String sql = "SELECT ID FROM K_USER WHERE USER_NO = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Main.login_member_no);
+			ResultSet rs = pstmt.executeQuery();
+			
+			// 아이디 일치 체크
+			if(rs.next()) {
+				System.out.println("탈퇴 하려면 [" + rs.getString("ID") + "]을 입력하세요");
+				String input = Main.SC.nextLine();
+				
+				// 탈퇴 처리
+				if(rs.getString("ID").equals(input)) {
+					System.out.println("");
+					sql = "UPDATE K_USER SET USER_STATUS = 'Q' WHERE USER_NO = ?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, Main.login_member_no);
+					int rrs = pstmt.executeUpdate();
+					
+					if(rrs != 0) {
+						System.out.println("탈퇴처리를 완료했습니다.");
+						Main.login_member_no = 0;
+					}
+					else {
+						System.out.println("탈퇴처리를 실패했습니다.");
+					}
+				} else {
+					System.out.println("입력한 값이 다릅니다.");
+				}
+			}
+			
+		}
+		else {
+			System.out.println("탈퇴 취소");
+		}
 		
 	}
 	
 	// 질문하기
 	public void askQuestion(Connection conn) throws SQLException {
 		
-		if(Main.login_member_no == 0) {
-			
-		}
+		
 		//질문 받기
 		System.out.println("질문을 입력해 주세요");
 		String userQuestion = Main.SC.nextLine();
