@@ -54,7 +54,7 @@ public class UserServIce {
 		case "5" : break;
 		
 		case "6" : 
-			if(Main.login_member_nick == 0) {
+			if(Main.login_member_no == 0) {
 				System.out.println("로그인이 필요한 서비스입니다");
 			} else {
 				try {

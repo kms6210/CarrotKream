@@ -70,7 +70,7 @@ public class User {
 				System.out.println("생성된 계좌가 없습니다.");
 			}
 			
-			Main.login_member_nick = rs.getInt("USER_NO");;
+			Main.login_member_no = rs.getInt("USER_NO");;
 			
 		} else if(userTatus.equals("Y")) {
 			System.out.println("");
@@ -174,7 +174,7 @@ public class User {
 	// 질문하기
 	public void askQuestion(Connection conn) throws SQLException {
 		
-		if(Main.login_member_nick == 0) {
+		if(Main.login_member_no == 0) {
 			
 		}
 		//질문 받기
@@ -183,7 +183,7 @@ public class User {
 		
 		String sql = "INSERT INTO QNA (QUESTION_NO,USER_NO,QUESTION,ANSWER) VALUES (SEQ_QNA_QUESTION_NO.NEXTVAL,?,?,?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, Main.login_member_nick);
+		pstmt.setInt(1, Main.login_member_no);
 		pstmt.setString(2, userQuestion);
 		pstmt.setString(3, "미답변");
 		int result = pstmt.executeUpdate();
