@@ -17,6 +17,7 @@ public class Account {
 	public void deposit(Connection conn) throws Exception { 
 		// 포인트 충전
 		int price = inputPrice();
+		if(price == 0) { System.out.println("잘못된 입력입니다."); return; }
 		int balance = aSQL.selectBalance(user_no, conn);
 		int result1 = aSQL.updateBalance(user_no, price, balance, conn);
 		int result2 = aSQL.insertAccount(user_no, user_no, price, conn);
@@ -31,6 +32,7 @@ public class Account {
 	public void withdraw(Connection conn) throws Exception { 
 		// 포인트 인출
 		int price = inputPrice();
+		if(price == 0) { System.out.println("잘못된 입력입니다."); return; }
 		int balance = aSQL.selectBalance(user_no, conn);
 		int result1 = aSQL.updateBalance(user_no, -1 * price, balance, conn);
 		int result2 = aSQL.insertAccount(user_no, user_no, -1 * price, conn);
@@ -47,6 +49,7 @@ public class Account {
 		System.out.print("상대의 유저 번호를 입력하세요 : ");
 		int target_no = Integer.parseInt(Main.SC.nextLine());
 		int price = inputPrice();
+		if(price == 0) { System.out.println("잘못된 입력입니다."); return; }
 		int userBalance = aSQL.selectBalance(user_no, conn);
 		int targetBalance = aSQL.selectBalance(target_no, conn);
 		if(userBalance - price <= 0) { System.out.println("잔액이 부족합니다."); return; }		
