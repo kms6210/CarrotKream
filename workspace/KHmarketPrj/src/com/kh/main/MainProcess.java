@@ -2,13 +2,11 @@ package com.kh.main;
 
 import java.sql.Connection;
 
-import com.kh.account.Account;
 import com.kh.account.AccountService;
 import com.kh.admin.Admin;
 import com.kh.auction.Auction;
 import com.kh.item.Item;
 import com.kh.mutualAction.MutualAction;
-import com.kh.user.User;
 import com.kh.user.UserService;
 
 public class MainProcess {
@@ -42,7 +40,7 @@ public class MainProcess {
 	public void executeItem(Connection conn) {
 		if(!authenticate()) { return; }
 		Item item = new Item();
-		// item.ItemPage(conn)
+		// item.ItemPage(conn);
 	}
 
 	public void executemutualAction(Connection conn) {
