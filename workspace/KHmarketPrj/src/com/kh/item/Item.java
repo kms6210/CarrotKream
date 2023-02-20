@@ -57,10 +57,6 @@ public class Item {
 		}
 	}
 	
-	public void selectItemType() {
-		// 상품 유형 선택 (ex. 판매, 구매, ...)
-	}
-	
 	public void registSellItem(Connection conn, int USER_NO) throws Exception {
 		// 상품 등록 				
 		
@@ -116,9 +112,9 @@ public class Item {
 		String input = Main.SC.nextLine();
 		
 		switch(input) {
-		case "1": edit.editTitle(conn); break;
-		case "2": edit.editContent(conn); break;
-		case "3": edit.editPrice(conn); break;
+		case "1": edit.editTitle(conn, Main.login_member_no); break;
+		case "2": edit.editContent(conn, Main.login_member_no); break;
+		case "3": edit.editPrice(conn, Main.login_member_no); break;
 		default: System.out.println("잘못 입력하셨습니다.");
 		return;
 		}
@@ -156,6 +152,7 @@ public class Item {
 		System.out.println("1. 모든 품목 조회");
 		System.out.println("2. 인기 상품");
 		System.out.println("3. 카테고리로 선택");
+		System.out.println("4. 내 작성 글 조회");
 		
 		String input = Main.SC.nextLine();
 		
@@ -163,6 +160,7 @@ public class Item {
 		case "1": is.itemView(conn); break;
 		case "2": is.rankedByView(conn); break;
 		case "3": is.categoryView(conn); break;
+		case "4": is.myView(conn, Main.login_member_no); break;
 		}
 		
 		
@@ -174,6 +172,9 @@ public class Item {
 		
 		System.out.print("검색 할 글 번호: ");
 		String itemNo = Main.SC.nextLine();
+		
+		Item item = new Item();
+		item.increasingView(conn, itemNo);
 		
 		//SQL
 		String sql = "SELECT ITEM_NO,TITLE,CONTENT,PRICE,USER_NO,WRITE_DATE FROM ITEM WHERE ITEM_NO=?";
@@ -204,6 +205,15 @@ public class Item {
 			System.out.println(writeDate);
 			
 		}
+		
+	}
+	
+	public void increasingView(Connection conn, String itemNo) throws Exception {
+		
+		String sql = "UPDATE ITEM SET \"VIEW\" = \"VIEW\" + 1 WHERE ITEM_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, itemNo);
+		int result = pstmt.executeUpdate();
 		
 	}
 		
