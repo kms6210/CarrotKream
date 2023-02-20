@@ -122,4 +122,44 @@ public class ItemSearch {
 			
 	}
 	
+	public void myView(Connection conn, int userNo) throws Exception {
+		
+		//SQL
+		String sql = "SELECT *\r\n"
+				+ "FROM(\r\n"
+				+ "    SELECT ROWNUM R,ITEM_NO,TITLE,USER_NO,PRICE,WRITE_DATE\r\n"
+				+ "    FROM (\r\n"
+				+ "        SELECT ITEM_NO,TITLE,USER_NO,PRICE,WRITE_DATE\r\n"
+				+ "        FROM ITEM\r\n"
+				+ "        WHERE USER_NO = ?\r\n"
+				+ "        ORDER BY ITEM_NO DESC\r\n"
+				+ "        )\r\n"
+				+ "    )\r\n";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setLong(1, userNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		//상품 보기
+		while(rs.next()) {
+			
+			String itemNo = rs.getString("ITEM_NO");
+			String title = rs.getString("TITLE");
+			String user_no = rs.getString("USER_NO");
+			String price = rs.getString("PRICE");
+			String write_date = rs.getString("WRITE_DATE");
+			
+			System.out.print(itemNo);
+			System.out.print(" | ");
+			System.out.print(title);
+			System.out.print(" | ");
+			System.out.print(user_no);
+			System.out.print(" | ");
+			System.out.print(price);
+			System.out.print(" | ");
+			System.out.println(write_date);
+			
+		}	
+		
+	}
+	
 }

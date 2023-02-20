@@ -23,7 +23,7 @@ public class ItemService {
 		System.out.println("");
 		
 		switch (input) {
-		case "1" : { item.registSellItem(conn, 1); break; }
+		case "1" : { item.registSellItem(conn, Main.login_member_no); break; }
 		case "2" : { item.editItem(conn); break; }
 		case "3" : { item.deleteItem(conn); break; }
 		case "4" : { item.findItem(conn); break; }
