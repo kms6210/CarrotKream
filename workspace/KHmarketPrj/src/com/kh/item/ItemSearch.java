@@ -14,13 +14,14 @@ public class ItemSearch {
 		//SQL
 		String sql = "SELECT *\r\n"
 				+ "FROM(\r\n"
-				+ "    SELECT ROWNUM R,ITEM_NO,TITLE,USER_NO,PRICE,WRITE_DATE\r\n"
-				+ "    FROM (\r\n"
-				+ "        SELECT ITEM_NO,TITLE,USER_NO,PRICE,WRITE_DATE\r\n"
-				+ "        FROM ITEM\r\n"
-				+ "        ORDER BY ITEM_NO DESC\r\n"
-				+ "        )\r\n"
-				+ "    )\r\n";
+				+ "SELECT ROWNUM R,ITEM_NO,TITLE,USER_NO,PRICE,WRITE_DATE\r\n"
+				+ "FROM (\r\n"
+				+ "SELECT ITEM_NO,TITLE,USER_NO,PRICE,WRITE_DATE\r\n"
+				+ "FROM ITEM\r\n"
+				+ "WHERE TRADE_STATUS != 'D'\r\n"
+				+ "ORDER BY ITEM_NO DESC\r\n"
+				+ ")\r\n"
+				+ ")";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		
@@ -33,15 +34,15 @@ public class ItemSearch {
 			String price = rs.getString("PRICE");
 			String write_date = rs.getString("WRITE_DATE");
 			
-			System.out.print(itemNo);
+			System.out.print("물건 번호: " + itemNo);
 			System.out.print(" | ");
-			System.out.print(title);
+			System.out.print("제목: "+ title);
 			System.out.print(" | ");
-			System.out.print(userNo);
+			System.out.print("유저 번호: "+ userNo);
 			System.out.print(" | ");
-			System.out.print(price);
+			System.out.print("가격: " + price);
 			System.out.print(" | ");
-			System.out.println(write_date);
+			System.out.println("작성일: "+ write_date);
 			
 		}	
 	}
@@ -51,7 +52,8 @@ public class ItemSearch {
 		//SQL
 		String sql = "SELECT RANK() OVER(ORDER BY \"VIEW\" DESC) AS 순위 ,\r\n"
 				+ "ITEM_NO, TITLE, USER_NO, PRICE, \"VIEW\", WRITE_DATE\r\n"
-				+ "FROM ITEM";
+				+ "FROM ITEM\r\n"
+				+ "WHERE TRADE_STATUS != 'D'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		
@@ -62,17 +64,20 @@ public class ItemSearch {
 			String title = rs.getString("TITLE");
 			String userNo = rs.getString("USER_NO");
 			String price = rs.getString("PRICE");
+			String view = rs.getString("VIEW");
 			String write_date = rs.getString("WRITE_DATE");
 			
-			System.out.print(itemNo);
+			System.out.print("물건 번호: "+itemNo);
 			System.out.print(" | ");
-			System.out.print(title);
+			System.out.print("제목: "+title);
 			System.out.print(" | ");
-			System.out.print(userNo);
+			System.out.print("유저 번호: "+userNo);
 			System.out.print(" | ");
-			System.out.print(price);
+			System.out.print("가격: "+price);
 			System.out.print(" | ");
-			System.out.println(write_date);
+			System.out.print("조회수: "+view);
+			System.out.print(" | ");
+			System.out.println("작성일"+write_date);
 		
 		}
 	
@@ -94,7 +99,7 @@ public class ItemSearch {
 		String input = Main.SC.nextLine();
 		
 		//SQL
-		String sql = "SELECT * FROM ITEM WHERE TYPE_NO = ?";
+		String sql = "SELECT * FROM ITEM WHERE TYPE_NO = ? AND TRADE_STATUS != 'D'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, input);
 		ResultSet rs = pstmt.executeQuery();
@@ -108,15 +113,15 @@ public class ItemSearch {
 			String price = rs.getString("PRICE");
 			String write_date = rs.getString("WRITE_DATE");
 			
-			System.out.print(itemNo);
+			System.out.print("물건 번호: "+itemNo);
 			System.out.print(" | ");
-			System.out.print(title);
+			System.out.print("제목: "+title);
 			System.out.print(" | ");
-			System.out.print(userNo);
+			System.out.print("유저 번호: "+userNo);
 			System.out.print(" | ");
-			System.out.print(price);
+			System.out.print("가격: "+price);
 			System.out.print(" | ");
-			System.out.println(write_date);
+			System.out.println("작성일: "+write_date);
 		
 		}
 			
@@ -131,7 +136,7 @@ public class ItemSearch {
 				+ "    FROM (\r\n"
 				+ "        SELECT ITEM_NO,TITLE,USER_NO,PRICE,WRITE_DATE\r\n"
 				+ "        FROM ITEM\r\n"
-				+ "        WHERE USER_NO = ?\r\n"
+				+ "        WHERE USER_NO = ? AND TRADE_STATUS != 'D'"
 				+ "        ORDER BY ITEM_NO DESC\r\n"
 				+ "        )\r\n"
 				+ "    )\r\n";
@@ -148,15 +153,15 @@ public class ItemSearch {
 			String price = rs.getString("PRICE");
 			String write_date = rs.getString("WRITE_DATE");
 			
-			System.out.print(itemNo);
+			System.out.print("물건 번호: "+itemNo);
 			System.out.print(" | ");
-			System.out.print(title);
+			System.out.print("제목: "+title);
 			System.out.print(" | ");
-			System.out.print(user_no);
+			System.out.print("유저 번호: "+user_no);
 			System.out.print(" | ");
-			System.out.print(price);
+			System.out.print("가격: "+price);
 			System.out.print(" | ");
-			System.out.println(write_date);
+			System.out.println("작성일: "+write_date);
 			
 		}	
 		
