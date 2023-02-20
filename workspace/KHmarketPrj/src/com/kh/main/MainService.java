@@ -26,7 +26,7 @@ public class MainService {
 			try {
 				processService(input);
 			} catch (Exception e) {
-				System.out.println("잘못된 입력입니다.");
+				System.out.println(e.getMessage());
 			}
 			return false;
 		}
@@ -35,6 +35,7 @@ public class MainService {
 
 	public void processService(String input) throws Exception {
 		// 세부 서비스 진행
+		
 		Connection conn = JdbcTemplate.m01();
 		MainProcess mp = new MainProcess();
 		
@@ -45,11 +46,11 @@ public class MainService {
 		case "4": mp.executeItem(conn); break;
 		case "5": mp.executemutualAction(conn); break;
 		case "6": mp.executeUser(conn); break;
-		default: System.out.println("잘못된 입력입니다."); 
+		default: throw new Exception("잘못된 입력입니다."); 
 		}
 
 		System.out.println("");
 		conn.close();
-	}
 	
+	}
 }

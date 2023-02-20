@@ -7,37 +7,34 @@ import com.kh.item.ItemService;
 import com.kh.user.UserService;
 
 public class MainProcess {
-	private boolean authenticate() {
+	private void authenticate() throws Exception {
 		if (Main.login_member_no == 0) {
-			System.out.println("로그인 한 유저만 작업이 가능합니다.");
-			return false;
-		} else {
-			return true;
+			throw new Exception("로그인 한 유저만 작업이 가능합니다.");
 		}
 	}
 	
 	public void executeAccount(Connection conn) throws Exception {
-		if(!authenticate()) { return; }
+		authenticate();
 		new AccountService().accountPage(conn);
 	}
 
-	public void executeAdmin(Connection conn) {
-		if(!authenticate()) { return; }
+	public void executeAdmin(Connection conn) throws Exception {
+		authenticate();
 		// new AdminService().adminPage(conn);
 	}
 
 	public void executeAuction(Connection conn) throws Exception {
-		if(!authenticate()) { return; }
+		authenticate();
 		new AuctionService().auctionPage(conn);
 	}
 
 	public void executeItem(Connection conn) throws Exception {
-		if(!authenticate()) { return; }
-		 new ItemService().itemPage(conn);
+		authenticate();
+		new ItemService().itemPage(conn);
 	}
 
-	public void executemutualAction(Connection conn) {
-		if(!authenticate()) { return; }
+	public void executemutualAction(Connection conn) throws Exception {
+		authenticate();
 		// new MutualActionService().mutualActionPage(conn);
 	}
 
