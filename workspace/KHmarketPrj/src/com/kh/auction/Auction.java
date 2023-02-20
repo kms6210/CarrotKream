@@ -5,21 +5,26 @@ import java.sql.Connection;
 import com.kh.main.Main;
 
 public class Auction {
-	int user_no = Main.login_member_no;
-	private AuctionSQL aSQL = new AuctionSQL();
+	AuctionInput ai = new AuctionInput();
 	
 	public void showAuction(Connection conn) throws Exception {
 		// 경매 페이지 출력
-		aSQL.showAuction(conn);
+		ai.showAuction(conn);
 	}
 
 	public void bid(Connection conn) throws Exception {
 		// 입찰하기
-		aSQL.bid(user_no, conn);
+		int[] arr = ai.bid(conn);
+		if (arr[2] == 1) {
+			System.out.println(arr[0] + "번 상품에 " + arr[1] + "원 충전 완료!");
+		} else {
+			System.out.println("충전 실패...");
+		}
 	}
 	
 	public void closeBid(Connection conn) {
 		// 입찰 취소 (ex. 대신 수수료 발생)
+		
 	}
 
 	
