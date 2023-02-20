@@ -13,7 +13,7 @@ public class AuctionService {
 		System.out.println("------------------");
 		System.out.println("1. 경매 페이지 출력\n"
 					 	 + "2. 입찰\n"
-						 + "3. 입찰 취소(미구현)");
+						 + "3. 입찰 취소(미완성)");
 		
 		System.out.print("번호를 입력하세요 : ");
 		String input = Main.SC.nextLine();
