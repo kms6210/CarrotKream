@@ -3,24 +3,43 @@ package com.kh.auction;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.kh.main.Main;
 
 public class AuctionSQL {
-	public ResultSet showAuction(Connection conn) throws Exception {
-		String sql = "SELECT ITEM_NO, END_TIME - SYSDATE 남은시간 FROM AUCTION WHERE AUCTION_YN = ?";
+	private ResultSet selectAuction(String sql, Connection conn) throws Exception {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, "Y");
+		pstmt.setString(1, "A");
+		pstmt.setString(2, "N");
+		return pstmt.executeQuery();
+	}
+	
+	public ResultSet showDeadlineAuction(Connection conn) throws Exception {
+		String sql = "SELECT I.ITEM_NO, PRICE, END_TIME - SYSDATE 남은시간 FROM ITEM I JOIN AUCTION A ON I.ITEM_NO = A.ITEM_NO WHERE TRADE_STATUS = ? AND AUCTION_YN = ? AND END_TIME < (SYSDATE + 1) ORDER BY 남은시간";
+		return selectAuction(sql, conn);
+	}
+	
+	public ResultSet showAuction(Connection conn) throws Exception {
+		String sql = "SELECT I.ITEM_NO, PRICE, END_TIME - SYSDATE 남은시간 FROM ITEM I JOIN AUCTION A ON I.ITEM_NO = A.ITEM_NO WHERE TRADE_STATUS = ? AND AUCTION_YN = ? ORDER BY 남은시간";
+		return selectAuction(sql, conn);
+	}
+	
+	public ResultSet showMyAuction(Connection conn) throws Exception {
+		String sql = "SELECT I.ITEM_NO, PRICE, END_TIME - SYSDATE 남은시간 FROM ITEM I JOIN AUCTION A ON I.ITEM_NO = A.ITEM_NO WHERE TRADE_STATUS = ? AND AUCTION_YN = ? AND USER_NO = ? ORDER BY 남은시간";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, "A");
+		pstmt.setString(2, "N");
+		pstmt.setInt(3, Main.login_member_no);
 		return pstmt.executeQuery();
 	}
 	
 	public int findItem(Connection conn) throws Exception {
-		System.out.print("입찰할 상품 번호 : ");
 		int item_no = Integer.parseInt(Main.SC.nextLine());
 		
 		String sql = "SELECT ITEM_NO FROM AUCTION WHERE AUCTION_YN = ? AND ITEM_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, "Y");
+		pstmt.setString(1, "N");
 		pstmt.setInt(2, item_no);
 		ResultSet rs = pstmt.executeQuery();
 
@@ -28,6 +47,20 @@ public class AuctionSQL {
 			return item_no;
 		} else {
 			throw new Exception("해당 상품은 경매란에 존재하지 않습니다.");
+		}
+	}
+	
+	public int findPrice(int item_no, Connection conn) throws Exception {
+		String sql = "SELECT MAX(PRICE) 최고가 FROM BID WHERE USER_NO = ? AND ITEM_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, Main.login_member_no);
+		pstmt.setInt(2, item_no);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			return rs.getInt("PRICE");
+		} else {
+			throw new Exception("해당 상품에 입찰한 기록이 없습니다.");
 		}
 	}
 	
@@ -60,6 +93,17 @@ public class AuctionSQL {
 		pstmt.setInt(2, item_no);
 		pstmt.setInt(3, price);
 		pstmt.setString(4, "Y");
+		
+		return pstmt.executeUpdate();
+	}
+	
+	public int updateBid(int user_no, int item_no, int price, Connection conn) throws Exception {
+		String sql = "UPDATE BID SET QUIT_YN = ? WHERE USER_NO = ? AND ITEM_NO = ? AND PRICE = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, "Y");
+		pstmt.setInt(2, user_no);
+		pstmt.setInt(3, item_no);
+		pstmt.setInt(4, price);
 		
 		return pstmt.executeUpdate();
 	}
