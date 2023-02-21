@@ -9,55 +9,63 @@ public class ItemService {
 	Item item = new Item();
 	
 	public void itemPage(Connection conn) throws Exception {
-		System.out.println("==================");
-		System.out.println("게시판 페이지");
-		System.out.println("------------------");
-		System.out.println("1. 게시글 등록 및 게시\n"
-					 	 + "2. 게시글 수정\n"
-						 + "3. 게시글 삭제\n"
-						 + "4. 게시글 조회\n"
-						 + "5. 게시글 상세보기\n");
 		
-		System.out.print("번호를 입력하세요 : ");
-		String input = Main.SC.nextLine();
-		System.out.println("");
+		boolean keep = true;
 		
-		switch (input) {
-		case "1" : 
-			try {
-				item.registSellItem(conn, Main.login_member_no);
-			} catch (Exception e1) {
-				System.out.println("잘못된 입력값입니다.");
-			} break;
-		case "2" : 
-			try {
-				 item.editItem(conn, Main.login_member_no);
-			} catch (Exception e) {
-				System.out.println("잘못 입력하셨습니다");
-			} break;
-		case "3" : 
-			try {
-				item.deleteItem(conn, Main.login_member_no);
-			} catch (Exception e) {
-				System.out.println("입력값을 다시 확인해부십시오.");
-			} break;
-		case "4" :
-			try {
-				item.findItem(conn);
-			} catch (Exception e) {
-				System.out.println("잘못된 입력값입니다.");
-			} break;
-		case "5" :
-			try {
-				item.findItemAbb(conn);
-			} catch (Exception e) {
-				System.out.println("글 번호를 다시 한번 확인해 주시기 바랍니다.");
-			} break;
-		default:
-			System.out.println("잘못 입력하셨습니다….");
+		while(keep) {
+
+			System.out.println("==================");
+			System.out.println("게시판 페이지");
+			System.out.println("------------------");
+			System.out.println("1. 게시글 등록 및 게시\n"
+					+ "2. 게시글 수정\n"
+					+ "3. 게시글 삭제\n"
+					+ "4. 게시글 조회\n"
+					+ "5. 게시글 상세보기\n"
+					+ "99. 메인 메뉴로 나가기\n");
+			
+			System.out.print("번호를 입력하세요 : ");
+			String input = Main.SC.nextLine();
+			System.out.println("");
+			
+			switch (input) {
+			case "1" : 
+				try {
+					item.registSellItem(conn, Main.login_member_no);
+				} catch (Exception e1) {
+					System.out.println("잘못된 입력값입니다.");
+				} break;
+			case "2" : 
+				try {
+					item.editItem(conn, Main.login_member_no);
+				} catch (Exception e) {
+					System.out.println("잘못 입력하셨습니다");
+				} break;
+			case "3" : 
+				try {
+					item.deleteItem(conn, Main.login_member_no);
+				} catch (Exception e) {
+					System.out.println("입력값을 다시 확인해부십시오.");
+				} break;
+			case "4" :
+				try {
+					item.findItem(conn);
+				} catch (Exception e) {
+					System.out.println("잘못된 입력값입니다.");
+				} break;
+			case "5" :
+				try {
+					item.findItemAbb(conn);
+				} catch (Exception e) {
+					System.out.println("글 번호를 다시 한번 확인해 주시기 바랍니다.");
+				} break;
+			case "99" : System.out.println("메인 화면으로 돌아갑니다.");
+			keep = false;	break;
+			default:
+				System.out.println("잘못 입력하셨습니다….");
+			}
+			
 		}
-		
-		
 		
 	}
 	
