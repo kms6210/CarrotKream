@@ -10,9 +10,10 @@
 [칼럼명]
 @@_YN, @@_STATUS = 'N' (진행중) / 'Y' (완료시)
 
-1. 탈퇴한 아이디 ( USER_STATUS = 'Q' )
-2. 정지된 아이디 ( USER_STATUS = 'S' )
-2. 삭제된 상품 ( TRADE_STATUS = 'D' )
-3. 구매 상품 (TRADE_STATUS = 'B')
-4. 판매 상품 (TRADE_STATUS = 'S')
-5. 경매 상품 (TRADE_STATUS = 'A')
+1. 탈퇴한 아이디 ( USER_STATUS = 'Q' ) - K_USER
+2. 정지된 아이디 ( USER_STATUS = 'S' ) - K_USER
+2. 삭제된 상품 ( TRADE_STATUS = 'D' ) - ITEM
+3. 구매 상품 (TRADE_STATUS = 'B') - ITEM
+4. 판매 상품 (TRADE_STATUS = 'S') - ITEM
+5. 경매 상품 (TRADE_STATUS = 'A') - ITEM
+6. 입찰 삭제 (QUIT_YN = 'D') - BID
