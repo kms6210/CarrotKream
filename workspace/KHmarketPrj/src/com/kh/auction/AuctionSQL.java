@@ -34,7 +34,7 @@ public class AuctionSQL {
 	}
 	
 	public int findItem(Connection conn) throws Exception {
-		int item_no = Integer.parseInt(Main.SC.nextLine());
+		int item_no = Main.integerParseInt();
 		
 		String sql = "SELECT ITEM_NO FROM AUCTION WHERE AUCTION_YN = ? AND ITEM_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
