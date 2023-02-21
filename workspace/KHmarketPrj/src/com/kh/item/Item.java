@@ -17,15 +17,15 @@ public class Item {
 		
 		/*
 		--CATEGORY (SQL 입력, 실행)
-		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (101, '가전');
-		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (102, '디지털');
-		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (103, '의류');
-		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (104, '식품');
-		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (105, '피시,모바일');
-		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (106, '가구');
-		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (107, '생필품');
-		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (108, '잡화');
-		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (109, '기타');
+		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (1, '가전');
+		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (2, '디지털');
+		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (3, '의류');
+		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (4, '식품');
+		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (5, '피시,모바일');
+		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (6, '가구');
+		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (7, '생필품');
+		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (8, '잡화');
+		insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) VALUES (9, '기타');
 		*/
 		
 		System.out.println("카테고리를 정하십시오");
@@ -71,7 +71,11 @@ public class Item {
 		System.out.println("108. 잡화");
 		System.out.println("109. 기타");	
 		System.out.print("카테고리: ");			
-		String typeNo = Main.SC.nextLine();
+		String typeNo = Main.SC.nextLine();		
+		System.out.println("판매를 위한 글인 지 구매를 위한 글인 지 정하십시오.(대문자)");
+		System.out.println("| 판매: S | 구매: B |");		
+		System.out.print("글 유형: ");			
+		String tradeStatus = Main.SC.nextLine();
 		System.out.print("제목: ");
 		String itemTitle = Main.SC.nextLine();
 		System.out.print("내용: ");
@@ -80,13 +84,14 @@ public class Item {
 		String itemPrice = Main.SC.nextLine();
 		
 		//SQL
-		String sql = "INSERT INTO ITEM(ITEM_NO, TYPE_NO, USER_NO, TITLE,CONTENT,PRICE,WRITE_DATE) VALUES(SEQ_ITEM_NO.NEXTVAL,?,?,?,?,?,SYSDATE)";
+		String sql = "INSERT INTO ITEM(ITEM_NO, TYPE_NO, TRADE_STATUS, USER_NO, TITLE,CONTENT,PRICE,WRITE_DATE) VALUES(SEQ_ITEM_NO.NEXTVAL,?,?,?,?,?,?,SYSDATE)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, typeNo);
-		pstmt.setLong(2, USER_NO);
-		pstmt.setString(3, itemTitle);
-		pstmt.setString(4, itemContent);
-		pstmt.setString(5, itemPrice);
+		pstmt.setString(2, tradeStatus);
+		pstmt.setLong(3, USER_NO);
+		pstmt.setString(4, itemTitle);
+		pstmt.setString(5, itemContent);
+		pstmt.setString(6, itemPrice);
 		int result = pstmt.executeUpdate();
 		
 		if(result == 1) {
@@ -98,30 +103,76 @@ public class Item {
 		
 	}
 	
-	public void editItem(Connection conn) throws Exception {
+	public void editItem(Connection conn, int userNo) throws Exception {
 		
 		EditItem edit = new EditItem();
 		
+		//SQL
+		System.out.println("내가 작성한 글 목록");
+		
+		String sql = "SELECT *\r\n"
+				+ "FROM(\r\n"
+				+ "    SELECT ROWNUM R,ITEM_NO,TITLE,USER_NO,PRICE,WRITE_DATE\r\n"
+				+ "    FROM (\r\n"
+				+ "        SELECT ITEM_NO,TITLE,USER_NO,PRICE,WRITE_DATE\r\n"
+				+ "        FROM ITEM\r\n"
+				+ "        WHERE USER_NO = ? AND TRADE_STATUS != 'D'"
+				+ "        ORDER BY ITEM_NO DESC\r\n"
+				+ "        )\r\n"
+				+ "    )\r\n";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setLong(1, userNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		//상품 보기
+		while(rs.next()) {
+			
+			String itemNo = rs.getString("ITEM_NO");
+			String title = rs.getString("TITLE");
+			String user_no = rs.getString("USER_NO");
+			String price = rs.getString("PRICE");
+			String write_date = rs.getString("WRITE_DATE");
+			
+			System.out.print("물건 번호: "+itemNo);
+			System.out.print(" | ");
+			System.out.print("제목: "+title);
+			System.out.print(" | ");
+			System.out.print("유저 번호: "+user_no);
+			System.out.print(" | ");
+			System.out.print("가격: "+price);
+			System.out.print(" | ");
+			System.out.println("작성일: "+write_date);
+			
+		}	
+
+		
 		// 상품 수정
+		System.out.println("=======================================================");
+		
+		System.out.println("[수정하실 글의 번호를 입력해 주십시오.]");
+		System.out.print("수정 할 글의 번호:");
+		
+		int editNum = Main.SC.nextInt();
+		
 		System.out.println("[수정하실 부분을 정하십시오]");
 		System.out.println("1. 제목");
 		System.out.println("2. 글 내용");
 		System.out.println("3. 가격");
 		System.out.print("번호를 입력하세요 : ");
 		
-		String input = Main.SC.nextLine();
+		int input = Main.SC.nextInt();
 		
 		switch(input) {
-		case "1": edit.editTitle(conn, Main.login_member_no); break;
-		case "2": edit.editContent(conn, Main.login_member_no); break;
-		case "3": edit.editPrice(conn, Main.login_member_no); break;
+		case 1: edit.editTitle(conn, editNum, Main.login_member_no); break;
+		case 2: edit.editContent(conn, editNum, Main.login_member_no); break;
+		case 3: edit.editPrice(conn, editNum, Main.login_member_no); break;
 		default: System.out.println("잘못 입력하셨습니다.");
 		return;
 		}
 	}
 
-	public void deleteItem(Connection conn) throws Exception {
-		// 상품 삭제 (delete_YN? delete?)
+	public void deleteItem(Connection conn, int userNo) throws Exception {
+		// 상품 삭제 
 		
 		System.out.println("삭제하실 글의 번호를 입력하시오.");
 		System.out.print("글 번호: ");
@@ -130,9 +181,10 @@ public class Item {
 		
 		//SQL
 		
-		String sql = "DELETE FROM ITEM WHERE ITEM_NO = ?";
+		String sql = "UPDATE ITEM SET TRADE_STATUS = 'D' WHERE ITEM_NO = ? AND USER_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, delete);
+		pstmt.setInt(2, userNo);
 		int result = pstmt.executeUpdate();
 		
 		if(result == 1) {
@@ -177,7 +229,7 @@ public class Item {
 		item.increasingView(conn, itemNo);
 		
 		//SQL
-		String sql = "SELECT ITEM_NO,TITLE,CONTENT,PRICE,USER_NO,WRITE_DATE FROM ITEM WHERE ITEM_NO=?";
+		String sql = "SELECT ITEM_NO,TITLE,CONTENT,PRICE,USER_NO,WRITE_DATE FROM ITEM WHERE ITEM_NO=? AND TRADE_STATUS != 'D'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, itemNo);
 		ResultSet rs = pstmt.executeQuery();
@@ -192,15 +244,18 @@ public class Item {
 			int userNo = rs.getInt("USER_NO");
 			String writeDate = rs.getString("WRITE_DATE");
 			
-			System.out.print(item_no);
+			System.out.print("아이템 번호: "+item_no);
 			System.out.print(" | ");
-			System.out.print(title);
+			System.out.print("제목: " + title);
+			System.out.println(" | ");
+			System.out.println(" ------------------------------------------------------ ");
+			System.out.println("");
+			System.out.println("내용: " + content);
+			System.out.println("");
+			System.out.println(" ------------------------------------------------------ ");
+			System.out.print("가격: " + price);
 			System.out.print(" | ");
-			System.out.print(content);
-			System.out.print(" | ");
-			System.out.print(price);
-			System.out.print(" | ");
-			System.out.print(userNo);
+			System.out.print("작성자: " + userNo);
 			System.out.print(" | ");
 			System.out.println(writeDate);
 			
