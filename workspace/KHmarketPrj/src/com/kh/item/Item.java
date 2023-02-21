@@ -73,7 +73,7 @@ public class Item {
 		System.out.println("109. 기타");	
 		System.out.print("카테고리: ");			
 		String typeNo = Main.SC.nextLine();		
-		System.out.println("판매를 위한 글인 지 구매를 위한 글인 지 정하십시오.(대문자)");
+		System.out.println("판매를 위한 글인 지 구매를 위한 글인 지 정하십시오.");
 		System.out.println("| 판매: S | 구매: B |");		
 		System.out.print("글 유형: ");			
 		String tradeStatus = Main.SC.nextLine();
@@ -85,7 +85,7 @@ public class Item {
 		String itemPrice = Main.SC.nextLine();
 		
 		//SQL
-		String sql = "INSERT INTO ITEM(ITEM_NO, TYPE_NO, TRADE_STATUS, USER_NO, TITLE,CONTENT,PRICE,WRITE_DATE) VALUES(SEQ_ITEM_NO.NEXTVAL,?,?,?,?,?,?,SYSDATE)";
+		String sql = "INSERT INTO ITEM(ITEM_NO, TYPE_NO, TRADE_STATUS, USER_NO, TITLE,CONTENT,PRICE,WRITE_DATE) VALUES(SEQ_ITEM_NO.NEXTVAL,?,UPPER(?),?,?,?,?,SYSDATE)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, typeNo);
 		pstmt.setString(2, tradeStatus);
