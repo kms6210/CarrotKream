@@ -3,6 +3,7 @@ package com.kh.main;
 import java.sql.Connection;
 import com.kh.account.AccountService;
 import com.kh.auction.AuctionService;
+import com.kh.center.CenterService;
 import com.kh.item.ItemService;
 import com.kh.user.UserService;
 
@@ -40,6 +41,10 @@ public class MainProcess {
 
 	public void executeUser(Connection conn) throws Exception {
 		new UserService().userPage(conn);
+	}
+	
+	public void executeCenter(Connection conn) throws Exception {
+		new CenterService().centerPage(conn);
 	}
 	
 }

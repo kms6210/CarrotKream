@@ -9,7 +9,7 @@ public class MainService {
 	public void showMarket() {
 		// 정보 보여주기 -> 꾸며야함
 		System.out.println("========================= Main Page =========================");
-		System.out.println("1.Account, 2.Admin, 3.Auction, 4.Item, 5.MutualAction, 6.User");
+		System.out.println("1.Account, 2.Admin, 3.Auction, 4.Item, 5.MutualAction, 6.User, 7.Center");
 		System.out.println("9.프로그램 종료 \n");
 	}
 
@@ -47,6 +47,7 @@ public class MainService {
 		case "4": mp.executeItem(conn); break;
 		case "5": mp.executemutualAction(conn); break;
 		case "6": mp.executeUser(conn); break;
+		case "7": mp.executeCenter(conn); break;
 		default: throw new Exception("잘못된 입력입니다."); 
 		}
 
