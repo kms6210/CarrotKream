@@ -238,22 +238,26 @@ public class User {
 		return result;
 	}
 	
-	// 내가한 질문 목록 조회
+	// 내가한 질문 목록 관리
 	public void QuestionList(Connection conn) throws Exception	 {
 		
+		String status = null ;
 		// 질문 번호 담기
-		String[] qnArr = new String[99];
+		int[] qnArr = new int[99];
 		
-		String sql = "SELECT QUESTION_NO, QUESTION, ANSWER FROM QNA WHERE USER_NO = ?";
+		
+		String sql = "SELECT QUESTION_NO, QUESTION, ANSWER FROM QNA WHERE USER_NO = ? AND QUIT_YN = 'N'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, Main.login_member_no);
 		ResultSet rs = pstmt.executeQuery();
+		
+		
 		
 		int i = 0;
 		System.out.println("-------------- 질문 목록 --------------");
 		while (rs.next()) {
 			
-			String questionNo = rs.getString("QUESTION_NO");
+			int questionNo = rs.getInt("QUESTION_NO");
 			qnArr[i] = questionNo;
 			
 			
@@ -263,32 +267,67 @@ public class User {
 			}
 			
 			String answer = rs.getString("ANSWER");
-			if(answer == null) { answer = "미답변"; };
+			if(answer == null) { answer = "미답변"; status = "수정가능";}
+			else if(answer != null) { status = "수정불가"; };
 			
-			System.out.println((++i)+"	|	"+question+"	|	"+answer);
+			System.out.println((++i)+"	|	"+question+"	|	"+answer+"	|	"+ status);
+			if(questionNo == 0) { System.out.println("없음"); };
 		}
 		System.out.println("-------------------------------------");
 		
-		System.out.println("1. 수정 / 2. 삭제 / 3. 뒤로가기");
-		int select = Main.SC.nextInt();
-		
-		if(select == 1) {
-			System.out.print("수정할 질문번호을 선택해 주세요 : ");
-			int questionNo = Main.SC.nextInt();
-			
-			System.out.print("수정할 질문 : ");
-			String cancelQuestion = Main.SC.nextLine();
-			
-			sql = "UPDATE QNA SET QUESTION = ? WHERE QUESTION_NO = ? AND QUIT_YN = 'N'";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, Main.login_member_no);
-			pstmt.setInt(1, Main.login_member_no);
-			int rsQ = pstmt.executeUpdate();
-			
-			
-			
+		System.out.print("1. 수정 / 2. 삭제 / 3. 뒤로가기 : ");
+		int select = Main.SC.nextInt(); Main.SC.nextLine(); 
+		int questionNo;
+		switch (select) {
+			case 1 : 
+				System.out.print("수정할 질문번호을 선택해 주세요 : ");
+				questionNo = Main.SC.nextInt(); Main.SC.nextLine(); 
+				if(questionNo-1 > i || questionNo-1 < 0) {System.out.println("잘못된 입력입니다.");QuestionList(conn);break;};
+				questionNo = qnArr[questionNo-1];
+				
+				System.out.print("수정할 질문 내용 : ");
+				String cancelQuestion = Main.SC.nextLine();
+				
+				sql = "UPDATE QNA SET QUESTION = ? WHERE QUESTION_NO = ? AND QUIT_YN = 'N' ";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, cancelQuestion);
+				pstmt.setInt(2, questionNo);
+				int rsQ = pstmt.executeUpdate();
+				
+				if(rsQ == 0) {
+					System.out.println("수정을 실패했습니다. 이미 답변이 완료된 질문입니다.");
+				} else {
+					System.out.println("질문 수정 성공");
+				}
+				break;
+			case 2 : 
+				System.out.print("삭제할 질문번호를 선택해 주세요 : ");
+				questionNo = Main.SC.nextInt(); Main.SC.nextLine();
+				questionNo = qnArr[questionNo-1];
+				
+				System.out.println("정말로 삭제 하시겠습니까?");
+				System.out.print("1. 네 / 2. 아니오 : ");
+				int deletQuestion = Main.SC.nextInt(); Main.SC.nextLine(); 
+				
+				if(deletQuestion == 1) {
+					sql = "UPDATE QNA SET QUIT_YN = 'Y' WHERE QUESTION_NO = ?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, questionNo);
+					int delQ = pstmt.executeUpdate();
+					
+					if(delQ == 0) {
+						System.out.println("질문 삭제를 실패했습니다.");
+					} else {
+						System.out.println("질문 삭제 성공");
+					}
+				} 
+				else if(deletQuestion == 2) {
+					QuestionList(conn);
+				}
+				break;
+			case 3 : System.out.println("돌아가기"); break;
+			default: System.out.println("잘못된 입력입니다."); QuestionList(conn);
 		}
-		
 	}
 	
 	
