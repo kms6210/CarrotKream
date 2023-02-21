@@ -177,6 +177,46 @@ public class Item {
 	public void deleteItem(Connection conn, int userNo) throws Exception {
 		// 상품 삭제 
 		
+		//SQL
+				System.out.println("=======================================================");
+				System.out.println("[내가 작성한 글 목록]");
+				
+				String sql = "SELECT *\r\n"
+						+ "FROM(\r\n"
+						+ "    SELECT ROWNUM R,ITEM_NO,TITLE,USER_NO,PRICE,WRITE_DATE\r\n"
+						+ "    FROM (\r\n"
+						+ "        SELECT ITEM_NO,TITLE,USER_NO,PRICE,WRITE_DATE\r\n"
+						+ "        FROM ITEM\r\n"
+						+ "        WHERE USER_NO = ? AND TRADE_STATUS != 'D'"
+						+ "        ORDER BY ITEM_NO DESC\r\n"
+						+ "        )\r\n"
+						+ "    )\r\n";
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				pstmt.setLong(1, userNo);
+				ResultSet rs = pstmt.executeQuery();
+				
+				//상품 보기
+				while(rs.next()) {
+					
+					String itemNo = rs.getString("ITEM_NO");
+					String title = rs.getString("TITLE");
+					String user_no = rs.getString("USER_NO");
+					String price = rs.getString("PRICE");
+					String write_date = rs.getString("WRITE_DATE");
+					
+					System.out.print("물건 번호: "+itemNo);
+					System.out.print(" | ");
+					System.out.print("제목: "+title);
+					System.out.print(" | ");
+					System.out.print("유저 번호: "+user_no);
+					System.out.print(" | ");
+					System.out.print("가격: "+price);
+					System.out.print(" | ");
+					System.out.println("작성일: "+write_date);
+					
+				}	
+				System.out.println("=======================================================");
+		
 		System.out.println("삭제하실 글의 번호를 입력하시오.");
 		System.out.print("글 번호: ");
 		
@@ -184,8 +224,8 @@ public class Item {
 		
 		//SQL
 		
-		String sql = "UPDATE ITEM SET TRADE_STATUS = 'D' WHERE ITEM_NO = ? AND USER_NO = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
+		 sql = "UPDATE ITEM SET TRADE_STATUS = 'D' WHERE ITEM_NO = ? AND USER_NO = ?";
+		pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, delete);
 		pstmt.setInt(2, userNo);
 		int result = pstmt.executeUpdate();
