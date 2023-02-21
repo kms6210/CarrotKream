@@ -28,8 +28,9 @@ public class Auction {
 		int[] arr = ai.closeBid(conn);
 
 		if (arr[2] == 1) {
-			System.out.println(arr[0] + "번 상품에 등록된 입찰이 취소 되었습니다.");
-			System.out.println(arr[1] + "원 중 수수료 10%를 차감한 " + Math.floor(arr[1] * 0.9) + "원이 반환되었습니다.");
+			System.out.println("\n" + arr[0] + "번 상품에 등록된 입찰이 취소되었습니다.");
+			System.out.println("입찰 취소로 인해 " + (int)(arr[1] * 0.1) + " 포인트가 차감됩니다.");
+			// 계좌 포인트 변동 구현해야함
 		} else {
 			System.out.println("입찰 취소 실패...");
 		}

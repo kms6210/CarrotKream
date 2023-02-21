@@ -26,11 +26,10 @@ public class AuctionSQL {
 	}
 	
 	public ResultSet showMyAuction(Connection conn) throws Exception {
-		String sql = "SELECT I.ITEM_NO, PRICE, END_TIME - SYSDATE 남은시간 FROM ITEM I JOIN AUCTION A ON I.ITEM_NO = A.ITEM_NO WHERE TRADE_STATUS = ? AND AUCTION_YN = ? AND USER_NO = ? ORDER BY 남은시간";
+		String sql = "SELECT * FROM BID WHERE QUIT_YN = ? AND USER_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, "A");
-		pstmt.setString(2, "N");
-		pstmt.setInt(3, Main.login_member_no);
+		pstmt.setString(1, "N");
+		pstmt.setInt(2, Main.login_member_no);
 		return pstmt.executeQuery();
 	}
 	
@@ -58,7 +57,7 @@ public class AuctionSQL {
 		ResultSet rs = pstmt.executeQuery();
 		
 		if(rs.next()) {
-			return rs.getInt("PRICE");
+			return rs.getInt("최고가");
 		} else {
 			throw new Exception("해당 상품에 입찰한 기록이 없습니다.");
 		}
@@ -85,23 +84,51 @@ public class AuctionSQL {
 			return price;
 		}
 	}
+	
+	public int bid(int item_no, int price, Connection conn) throws Exception {
+		if(selectBid(item_no, conn).next()) {
+			return updateBid(item_no, price, conn);
+		} else {
+			return insertBid(item_no, price, conn);
+		}
+	}
+	
+	private ResultSet selectBid(int item_no, Connection conn) throws Exception {
+		String sql = "SELECT * FROM BID WHERE USER_NO = ? AND ITEM_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, Main.login_member_no);
+		pstmt.setInt(2, item_no);
+		
+		return pstmt.executeQuery();
+	}
 
-	public int insertBid(int user_no, int item_no, int price, Connection conn) throws Exception {
+	private int insertBid(int item_no, int price, Connection conn) throws Exception {
 		String sql = "INSERT INTO BID(BID_NO, USER_NO, ITEM_NO, PRICE, QUIT_YN) VALUES(SEQ_BID_NO.NEXTVAL, ?, ?, ?, ?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, user_no);
+		pstmt.setInt(1, Main.login_member_no);
 		pstmt.setInt(2, item_no);
 		pstmt.setInt(3, price);
-		pstmt.setString(4, "Y");
+		pstmt.setString(4, "N");
 		
 		return pstmt.executeUpdate();
 	}
 	
-	public int updateBid(int user_no, int item_no, int price, Connection conn) throws Exception {
+	private int updateBid(int item_no, int price, Connection conn) throws Exception {
+		String sql = "UPDATE BID SET QUIT_YN = ?, PRICE = ? WHERE USER_NO = ? AND ITEM_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, "N");
+		pstmt.setInt(2, price);
+		pstmt.setInt(3, Main.login_member_no);
+		pstmt.setInt(4, item_no);
+		
+		return pstmt.executeUpdate();
+	}
+	
+	public int updateBidToD(int item_no, int price, Connection conn) throws Exception {
 		String sql = "UPDATE BID SET QUIT_YN = ? WHERE USER_NO = ? AND ITEM_NO = ? AND PRICE = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, "Y");
-		pstmt.setInt(2, user_no);
+		pstmt.setString(1, "D");
+		pstmt.setInt(2, Main.login_member_no);
 		pstmt.setInt(3, item_no);
 		pstmt.setInt(4, price);
 		

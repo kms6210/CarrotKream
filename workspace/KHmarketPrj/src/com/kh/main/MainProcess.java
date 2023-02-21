@@ -19,7 +19,7 @@ public class MainProcess {
 	}
 
 	public void executeAdmin(Connection conn) throws Exception {
-		authenticate();
+//		authenticate();
 		// new AdminService().adminPage(conn);
 	}
 
@@ -34,7 +34,7 @@ public class MainProcess {
 	}
 
 	public void executemutualAction(Connection conn) throws Exception {
-		authenticate();
+//		authenticate();
 		// new MutualActionService().mutualActionPage(conn);
 	}
 
