@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 import com.kh.main.Main;
 
@@ -236,6 +237,60 @@ public class User {
 		
 		return result;
 	}
+	
+	// 내가한 질문 목록 조회
+	public void QuestionList(Connection conn) throws Exception	 {
+		
+		// 질문 번호 담기
+		String[] qnArr = new String[99];
+		
+		String sql = "SELECT QUESTION_NO, QUESTION, ANSWER FROM QNA WHERE USER_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, Main.login_member_no);
+		ResultSet rs = pstmt.executeQuery();
+		
+		int i = 0;
+		System.out.println("-------------- 질문 목록 --------------");
+		while (rs.next()) {
+			
+			String questionNo = rs.getString("QUESTION_NO");
+			qnArr[i] = questionNo;
+			
+			
+			String question = rs.getString("QUESTION");
+			if(question.length() > 10) {
+				question = question.substring(0,7) + "...";
+			}
+			
+			String answer = rs.getString("ANSWER");
+			if(answer == null) { answer = "미답변"; };
+			
+			System.out.println((++i)+"	|	"+question+"	|	"+answer);
+		}
+		System.out.println("-------------------------------------");
+		
+		System.out.println("1. 수정 / 2. 삭제 / 3. 뒤로가기");
+		int select = Main.SC.nextInt();
+		
+		if(select == 1) {
+			System.out.print("수정할 질문번호을 선택해 주세요 : ");
+			int questionNo = Main.SC.nextInt();
+			
+			System.out.print("수정할 질문 : ");
+			String cancelQuestion = Main.SC.nextLine();
+			
+			sql = "UPDATE QNA SET QUESTION = ? WHERE QUESTION_NO = ? AND QUIT_YN = 'N'";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Main.login_member_no);
+			pstmt.setInt(1, Main.login_member_no);
+			int rsQ = pstmt.executeUpdate();
+			
+			
+			
+		}
+		
+	}
+	
 	
 	
 	public ResultSet userList(Connection conn) throws Exception {

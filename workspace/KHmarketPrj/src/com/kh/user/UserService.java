@@ -40,6 +40,7 @@ public class UserService {
 			System.out.println(
 							   "1. 회원 탈퇴\n"
 							 + "2. 질문하기\n"
+							 + "3. 내가 한 질문 조회/삭제\n"
 							 + "33. 로그아웃\n"
 							 + "99. 유저조회(테스트용)");
 			
@@ -50,6 +51,7 @@ public class UserService {
 			switch (input) {
 			case "1" : if(user.dropUser(conn) == 0) {throw new Exception("회원가입 실패"); } break;
 			case "2" : if(user.askQuestion(conn) == 0) { throw new Exception("질문 등록 실패"); } break;
+			case "3" : user.QuestionList(conn); break;
 			case "33" : System.out.println("로그아웃 완료\n"); Main.login_member_no = 0; break;
 			case "99" : if(user.userList(conn) == null) { throw new Exception("유저목록 불러오기 실패"); } break;
 			default: System.out.println("잘못 입력하셨습니다….");
