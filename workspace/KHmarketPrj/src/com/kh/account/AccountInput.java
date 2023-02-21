@@ -65,6 +65,7 @@ public class AccountInput {
 	public void showAccount(Connection conn) throws Exception {
 		// 계좌 내역 출력
 		ResultSet rs = aSQL.showAccount(user_no, conn);
+		System.out.println();
 		
 		while (rs.next()) {
 			int target_no = rs.getInt("TARGET_NO");
