@@ -13,9 +13,10 @@ public class AdminService {
 				+ "3. 아이디 정지하기\n"
 				+ "4. 품질 판정하기\n"
 				+ "5. 수수료 받기 (아직 안함)\n"
-				+ "6. 질문에 대해 작성하기\n"
+				+ "6. 질문에 대해 답변 하기\n"
 				+ "7. 공지사항 작성하기\n"
-				+ "8. 공지사항 삭제하기\n");
+				+ "8. 공지사항 삭제하기\n"
+				+ "9. 자주 묻는 질문 목록\n");
 		
 		System.out.print("번호를 입력 하세요 : ");
 		String inPut = Main.SC.nextLine();
@@ -30,6 +31,7 @@ public class AdminService {
 		case "6" : admin.answerQuestion(conn); {break;} //질문에 대해 답변하기
 		case "7" : admin.writePublic(conn); {break;} // 공지사항 작성하기
 		case "8" : admin.deletePublic(conn); {break;} // 공지사항 삭제하기
+		case "9" : admin.showFaqList(conn); {break;} // 자주묻는 질문 목록
 		default : System.out.println("잘못입력 하셨습니다.");
 		}
 	}

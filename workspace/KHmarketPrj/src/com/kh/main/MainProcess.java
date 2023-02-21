@@ -2,6 +2,8 @@ package com.kh.main;
 
 import java.sql.Connection;
 import com.kh.account.AccountService;
+import com.kh.admin.Admin;
+import com.kh.admin.AdminService;
 import com.kh.auction.AuctionService;
 import com.kh.item.ItemService;
 import com.kh.user.UserService;
@@ -19,8 +21,8 @@ public class MainProcess {
 	}
 
 	public void executeAdmin(Connection conn) throws Exception {
-//		authenticate();
-		// new AdminService().adminPage(conn);
+		authenticate();
+		 new AdminService().adminPage(conn);
 	}
 
 	public void executeAuction(Connection conn) throws Exception {
