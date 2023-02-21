@@ -8,7 +8,9 @@ import com.kh.jdbc.JdbcTemplate;
 public class MainService {
 	public void showMarket() {
 		// 정보 보여주기 -> 꾸며야함
+		System.out.println("========================= Main Page =========================");
 		System.out.println("1.Account, 2.Admin, 3.Auction, 4.Item, 5.MutualAction, 6.User");
+		System.out.println("9.프로그램 종료 \n");
 	}
 
 	public boolean startService() {
@@ -17,16 +19,15 @@ public class MainService {
 		
 		System.out.print("번호를 입력하세요 : ");
 		String input = Main.SC.nextLine();
-		System.out.println();
 		
 		if (input.equals("9")) {
-			System.out.println("프로그램을 종료합니다.");
+			System.out.println("\n프로그램을 종료합니다.");
 			return true;
 		} else {
 			try {
 				processService(input);
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				System.out.println("\n" + e.getMessage() + "\n");
 			}
 			return false;
 		}
