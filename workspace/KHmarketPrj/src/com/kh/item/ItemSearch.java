@@ -167,4 +167,22 @@ public class ItemSearch {
 		
 	}
 	
+	public void buyOrSell(Connection conn) throws Exception{
+		
+		BuyOrSell bos = new BuyOrSell();
+		
+		System.out.println("조회하실 글의 유형을 선택해주십시오.");
+		System.out.println("1. 구매글");
+		System.out.println("2. 판매글");
+		
+		String input = Main.SC.nextLine();
+		
+		switch(input) {
+		case "1": bos.buying(conn); break;
+		case "2": bos.selling(conn); break;
+		default: System.out.println("잘못 입력하셨습니다."); break;
+		}
+		
+		
+	}
 }
