@@ -1,20 +1,35 @@
 package com.kh.user;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Random;
+
 import com.kh.main.Main;
 
 public class UserInput {
 	
 	public boolean tf = false;
-	private String qusCheck = "[0-9]+";
+	
+	private String idCheck = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{5,20}$";
 	private String pwdCheck = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,15}$"; // 영문, 숫자, 특수문자 , 8~15
+	private String qusCheck = "[0-9]+";
+	private String userId = null;
 	private String userPwd = null;
 	private String userQuestion = null;
 	
 	// 회원 가입 정보입력
-	public UserData UserJoinInput() {
+	public UserData UserJoinInput(Connection conn) {
 		
-		System.out.print("아이디 : ");
-		String userId = Main.SC.nextLine();
+		do {
+			tf = false;
+			while(!tf) {
+				System.out.print("아이디 : ");
+				userId = Main.SC.nextLine();
+				tf = applyIdRule(userId, conn);
+			}
+		} while(false);	
 		
 		do {
 			tf = false;
@@ -27,8 +42,11 @@ public class UserInput {
 								
 		System.out.print("닉네임 : ");
 		String userNick = Main.SC.nextLine();
+		
 		System.out.print("전화번호 : ");
 		String userPhone = Main.SC.nextLine();
+		
+		
 		System.out.print("주소 : ");
 		String userAddress = Main.SC.nextLine();
 				
@@ -37,7 +55,7 @@ public class UserInput {
 			while(!tf) {
 				System.out.print("힌트 질문 번호 : ");
 				userQuestion = Main.SC.nextLine();
-				tf = questionCheck(userQuestion);
+				tf = applyQuestionRule(userQuestion);
 			}
 		} while(false);	
 		
@@ -57,18 +75,43 @@ public class UserInput {
 		
 	}
 	
-	// 비밀번호 유효성 체크 (ex. 특수문자포함, 8~15자리 ...)
+	// 아이디 유효성 체크
+	public boolean applyIdRule(String userId, Connection conn) {
+		if (userId.matches(idCheck)) {
+			try {
+				idOverlapCheck(userId, conn);
+			} catch (Exception e) {
+				return true;
+			}
+			System.out.println("이미 사용중인 아이디입니다\n");
+			return false;
+			
+		} else { 
+			System.out.println("아이디는 5~20자 한글자 이상의 영문과 숫자를 포함해야 합니다\n");
+			return false;
+		}
+	}
+
+	private boolean idOverlapCheck(String userId, Connection conn) throws Exception {
+		String sql = "SELECT ID FROM K_USER WHERE UPPER(ID) = UPPER( ? )";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, userId);
+		ResultSet rs = pstmt.executeQuery();
+		return rs.next();
+	}
+	
+	// 비밀번호 유효성 체크 (특수문자포함, 8~15자리 ...)
 	public boolean applyjoinRule(String userPwd) {
 		if (userPwd.matches(pwdCheck)) {
 			return true;
 		} else {
-			System.out.println("8~15자 영문, 숫자, 특수문자를 포함해야합니다\n");
+			System.out.println("비밀번호는 8~15자 영문, 숫자, 특수문자를 포함해야합니다\n");
 			return false;
 		}
 	}
 
 	// 힌트 번호 유효성 체크
-	private boolean questionCheck(String userQuestion)	{
+	private boolean applyQuestionRule(String userQuestion)	{
 		if (userQuestion.matches(qusCheck)) {
 			return true;
 		} else {
@@ -122,6 +165,23 @@ public class UserInput {
 		}
 		
 		return joinPhoneNo;
+	}
+	
+	
+	// 비밀번호 찾기 임시 비밀번호
+	public StringBuffer ramdomPwd() {
+		Random ramdom = new Random();
+		StringBuffer buf = new StringBuffer();
+		
+		for(int i = 0 ; i < 15 ; i++) {
+			if(ramdom.nextBoolean()) {
+				buf.append((char)((int)(ramdom.nextInt(26))+97));
+			} else {
+				buf.append((ramdom.nextInt(10)));
+			}
+			
+		}
+		return buf;
 	}
 	
 }
