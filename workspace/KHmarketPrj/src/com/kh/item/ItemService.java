@@ -1,6 +1,7 @@
 package com.kh.item;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import com.kh.main.Main;
 
@@ -22,13 +23,42 @@ public class ItemService {
 		System.out.println("");
 		
 		switch (input) {
-		case "1" : { item.registSellItem(conn, Main.login_member_no); break; }
-		case "2" : { item.editItem(conn, Main.login_member_no); break; }
-		case "3" : { item.deleteItem(conn, Main.login_member_no); break; }
-		case "4" : { item.findItem(conn); break; }
-		case "5" : { item.findItemAbb(conn); break; }
-		default: { System.out.println("잘못된 입력입니다."); } 
+		case "1" : 
+			try {
+				item.registSellItem(conn, Main.login_member_no);
+			} catch (Exception e1) {
+				System.out.println("잘못된 입력값입니다.");
+			} break;
+		case "2" : 
+			try {
+				 item.editItem(conn, Main.login_member_no);
+			} catch (Exception e) {
+				System.out.println("잘못 입력하셨습니다");
+			} break;
+		case "3" : 
+			try {
+				item.deleteItem(conn, Main.login_member_no);
+			} catch (Exception e) {
+				System.out.println("입력값을 다시 확인해부십시오.");
+			} break;
+		case "4" :
+			try {
+				item.findItem(conn);
+			} catch (Exception e) {
+				System.out.println("잘못된 입력값입니다.");
+			} break;
+		case "5" :
+			try {
+				item.findItemAbb(conn);
+			} catch (Exception e) {
+				System.out.println("글 번호를 다시 한번 확인해 주시기 바랍니다.");
+			} break;
+		default:
+			System.out.println("잘못 입력하셨습니다….");
 		}
+		
+		
+		
 	}
 	
 }

@@ -101,7 +101,7 @@ public class Item {
 		else {
 			System.out.println("작성 실패");
 		}
-		
+				
 	}
 	
 	public void editItem(Connection conn, int userNo) throws Exception {
