@@ -12,7 +12,8 @@ import com.kh.main.Main;
 public class Item {
 	
 	public void selectItemCategory(Connection conn) throws Exception {
-
+		//여기는 일단 서비스 종료
+		
 		Category ca = new Category();
 		
 		/*
@@ -108,7 +109,8 @@ public class Item {
 		EditItem edit = new EditItem();
 		
 		//SQL
-		System.out.println("내가 작성한 글 목록");
+		System.out.println("=======================================================");
+		System.out.println("[내가 작성한 글 목록]");
 		
 		String sql = "SELECT *\r\n"
 				+ "FROM(\r\n"
@@ -144,10 +146,9 @@ public class Item {
 			System.out.println("작성일: "+write_date);
 			
 		}	
-
+		System.out.println("=======================================================");
 		
 		// 상품 수정
-		System.out.println("=======================================================");
 		
 		System.out.println("[수정하실 글의 번호를 입력해 주십시오.]");
 		System.out.print("수정 할 글의 번호:");
@@ -161,6 +162,8 @@ public class Item {
 		System.out.print("번호를 입력하세요 : ");
 		
 		int input = Main.SC.nextInt();
+		
+		String emptyClear = Main.SC.nextLine();
 		
 		switch(input) {
 		case 1: edit.editTitle(conn, editNum, Main.login_member_no); break;
@@ -202,17 +205,19 @@ public class Item {
 		
 		System.out.println("조회하실 글들을 선택하십시오.");
 		System.out.println("1. 모든 품목 조회");
-		System.out.println("2. 인기 상품");
-		System.out.println("3. 카테고리로 선택");
-		System.out.println("4. 내 작성 글 조회");
+		System.out.println("2. 구매 혹은 판매글만 보기");
+		System.out.println("3. 인기 상품");
+		System.out.println("4. 카테고리로 선택");
+		System.out.println("5. 내 작성 글 조회");
 		
 		String input = Main.SC.nextLine();
 		
 		switch(input) {
 		case "1": is.itemView(conn); break;
-		case "2": is.rankedByView(conn); break;
-		case "3": is.categoryView(conn); break;
-		case "4": is.myView(conn, Main.login_member_no); break;
+		case "2": is.buyOrSell(conn); break;
+		case "3": is.rankedByView(conn); break;
+		case "4": is.categoryView(conn); break;
+		case "5": is.myView(conn, Main.login_member_no); break;
 		}
 		
 		
@@ -229,7 +234,7 @@ public class Item {
 		item.increasingView(conn, itemNo);
 		
 		//SQL
-		String sql = "SELECT ITEM_NO,TITLE,CONTENT,PRICE,USER_NO,WRITE_DATE FROM ITEM WHERE ITEM_NO=? AND TRADE_STATUS != 'D'";
+		String sql = "SELECT ITEM_NO,TITLE,\"VIEW\",CONTENT,PRICE,USER_NO,WRITE_DATE FROM ITEM WHERE ITEM_NO=? AND TRADE_STATUS != 'D'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, itemNo);
 		ResultSet rs = pstmt.executeQuery();
@@ -239,6 +244,7 @@ public class Item {
 			
 			String item_no = rs.getString("ITEM_NO");
 			String title = rs.getString("TITLE");
+			String view = rs.getString("VIEW");
 			String content = rs.getString("CONTENT");
 			String price = rs.getString("PRICE");
 			int userNo = rs.getInt("USER_NO");
@@ -247,6 +253,8 @@ public class Item {
 			System.out.print("아이템 번호: "+item_no);
 			System.out.print(" | ");
 			System.out.print("제목: " + title);
+			System.out.print(" | ");
+			System.out.print("조회수: " + view);
 			System.out.println(" | ");
 			System.out.println(" ------------------------------------------------------ ");
 			System.out.println("");
