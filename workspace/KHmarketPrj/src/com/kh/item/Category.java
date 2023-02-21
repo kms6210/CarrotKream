@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Category {
-
-	
 	
 	public void category01(Connection conn) throws Exception {
 		String sql = "SELECT TYPE_NO, TYPE_NAME FROM ITEM_TYPE WHERE TYPE_NO = '101'";
@@ -52,9 +50,7 @@ public class Category {
 			System.out.println(typeName);
 			
 		}
-			
 		
-
 	}
 	public void category04(Connection conn) throws Exception {
 		String sql = "SELECT TYPE_NO, TYPE_NAME FROM ITEM_TYPE WHERE TYPE_NO = '104'";
@@ -69,6 +65,7 @@ public class Category {
 			System.out.println(typeName);
 			
 		}
+		
 	}	
 	public void category05(Connection conn) throws Exception {
 		String sql = "SELECT TYPE_NO, TYPE_NAME FROM ITEM_TYPE WHERE TYPE_NO = '105'";

@@ -61,6 +61,14 @@ public class Item {
 	public void registSellItem(Connection conn, int USER_NO) throws Exception {
 		// 상품 등록 				
 		
+		System.out.println("====================================================");
+		System.out.println("  #         #   ##   ###   ###   #########  ######## ");
+		System.out.println("  #         #    # #        #        #      #         ");
+		System.out.println("  #    #    #    #          #        #      ######## ");
+		System.out.println("  #  #   #  #    #          #        #      #         ");
+		System.out.println("  #         #    #          #        #      ######## ");				
+		System.out.println("====================================================");
+		
 		System.out.println("카테고리를 정하십시오");
 		System.out.println("101. 가전");
 		System.out.println("102. 디지털");
@@ -107,6 +115,14 @@ public class Item {
 	public void editItem(Connection conn, int userNo) throws Exception {
 		
 		EditItem edit = new EditItem();
+		
+		System.out.println("==================================");
+		System.out.println(" ######   #####     ###    #######    ");
+		System.out.println(" #        #    #     #        #       ");
+		System.out.println(" ######   #    ##    #        #       ");
+		System.out.println(" #        #    #     #        #       ");
+		System.out.println(" ######	  #####     ###       #       ");				
+		System.out.println("==================================");
 		
 		//SQL
 		System.out.println("=======================================================");
@@ -176,6 +192,14 @@ public class Item {
 
 	public void deleteItem(Connection conn, int userNo) throws Exception {
 		// 상품 삭제 
+				
+		System.out.println("=====================================================");
+		System.out.println(" #####    ######   #        ######   #######   ######  ");
+		System.out.println(" #    #   #        #        #           #      #       ");
+		System.out.println(" #    ##  ######   #        ######      #      ######  ");
+		System.out.println(" #    #   #        #        #           #      #       ");
+		System.out.println(" #####    ######   ######   ######      #      ######  ");				
+		System.out.println("=====================================================");
 		
 		//SQL
 				System.out.println("=======================================================");
@@ -221,6 +245,7 @@ public class Item {
 		System.out.print("글 번호: ");
 		
 		int delete = Main.SC.nextInt();
+		String empty = Main.SC.nextLine();
 		
 		//SQL
 		
@@ -240,7 +265,15 @@ public class Item {
 	}
 	
 	public void findItem(Connection conn) throws Exception {
-			
+		
+		System.out.println("===========================================");
+		System.out.println("###   #######   ######   #       #    ##### ");
+		System.out.println(" #       #      #        ##     ##   #      ");
+		System.out.println(" #       #      ######   #  # #  #    ####  ");
+		System.out.println(" #       #      #        #   #   #        # ");
+		System.out.println("###      #      ######   #   #   #   #####  ");				
+		System.out.println("===========================================");
+		
 		ItemSearch is = new ItemSearch();
 		
 		System.out.println("조회하실 글들을 선택하십시오.");
@@ -260,12 +293,18 @@ public class Item {
 		case "5": is.myView(conn, Main.login_member_no); break;
 		}
 		
-		
-		
 	}
 	
 	public void findItemAbb(Connection conn) throws Exception {
 		// 글 번호로 글 상세 보기 
+		
+		System.out.println("======================================");
+		System.out.println("#       #   ###   ######   #    #    #  ");
+		System.out.println(" #     #     #    #        #    #    #  ");
+		System.out.println("  #   #      #    ######    #   #   #   ");
+		System.out.println("   # #       #    #          # # # #    ");
+		System.out.println("    #       ###   ######      #   #     ");				
+		System.out.println("========================================");
 		
 		System.out.print("검색 할 글 번호: ");
 		String itemNo = Main.SC.nextLine();

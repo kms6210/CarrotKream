@@ -66,6 +66,7 @@ public class EditItem {
 		else {
 			System.out.println("수정 실패");
 		}
+		
 	}
 	
 }
