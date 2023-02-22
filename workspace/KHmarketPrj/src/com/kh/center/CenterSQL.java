@@ -28,7 +28,7 @@ public class CenterSQL {
 			id = rs.getString("ID");
 			System.out.print(id + "  ");
 		}
-		if(id.equals("")) { throw new Exception("전화번호와 일치하는 탈퇴한 아이디가 없습니다."); }
+		if(id.equals("")) { throw new Exception("전화번호와 일치하는 탈퇴한 아이디가 없습니다.\n"); }
 	}
 	
 	public String makePhoneNo() {
@@ -51,12 +51,13 @@ public class CenterSQL {
 		return pstmt.executeUpdate();
 	}
 
-	public int ask(Connection conn) throws Exception{
-		String sql = "INSERT INTO QNA (QUESTION_NO,USER_NO,QUESTION) VALUES (SEQ_QNA_QUESTION_NO.NEXTVAL, 0, ?)";
+	public int ask(int user_no, Connection conn) throws Exception{
+		String sql = "INSERT INTO QNA (QUESTION_NO,USER_NO,QUESTION) VALUES (SEQ_QNA_QUESTION_NO.NEXTVAL, ?, ?)";
 		System.out.print("문의할 내용 : ");
 		String question = Main.SC.nextLine();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, question);
+		pstmt.setInt(1, user_no);
+		pstmt.setString(2, question);
 		return pstmt.executeUpdate();
 	}
 	
