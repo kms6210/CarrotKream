@@ -20,7 +20,7 @@ public class AuctionInput {
 	
 	public void showAuction(Connection conn) throws Exception {
 		ResultSet rs = aSQL.showAuction(conn);
-		System.out.println("\n[경매중인 상품]");
+		System.out.println("[경매중인 상품]");
 		printAuction(rs);
 	}
 

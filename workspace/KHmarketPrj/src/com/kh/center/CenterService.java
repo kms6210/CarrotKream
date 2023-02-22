@@ -11,7 +11,7 @@ public class CenterService {
 		boolean isFinish = false;
 		
 		while(!isFinish) {
-			System.out.println("\n==================");
+			System.out.println("==================");
 			System.out.println("고객센터 페이지");
 			System.out.println("------------------");
 			System.out.println("1. FAQ 보기\n"
@@ -24,10 +24,9 @@ public class CenterService {
 			
 			try {
 				switch (input) {
-					case "1" : { center.showFAQ(conn); break; }
-					case "2" : { center.askIdRestore(conn); break; }
-					case "3" : { center.ask(conn);; break; }
-					case "4" : { ; break; }
+					case "1" : { center.showFAQ(conn); System.out.println(); break; }
+					case "2" : { center.askIdRestore(conn); System.out.println(); break; }
+					case "3" : { center.ask(conn); System.out.println(); break; }
 					case "99" : { isFinish = true; break; }
 					default: { throw new Exception("잘못된 입력입니다."); } 
 				}
