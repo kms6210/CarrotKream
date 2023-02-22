@@ -68,6 +68,7 @@ public class User {
 				} else {
 					System.out.println("생성된 계좌가 없습니다.");
 				}
+                System.out.println("-------------------");
 			}
 			
 			// 정지 계정
@@ -100,8 +101,24 @@ public class User {
 		return Main.login_member_no;
 	}
 	
+	// 아이디 / 비밀번호 찾기
+	public void findIdPwd(Connection conn) throws Exception {
+		boolean back = false;
+		while(!back) {
+			System.out.println("1.Id 찾기 / 2.Pwd 찾기 / 3.뒤로가기"); 
+			String select = Main.SC.nextLine();
+			switch (select)	 {
+			case "1" : if(findId(conn)!=0) {back = true;}; break;
+			case "2" : if(findPwd(conn)!=0) {back = true;}; break;
+			case "3" : back = true ; break;
+			default: System.out.println("잘못 입력하셨습니다"); break;
+			}
+		}
+		
+	}
+	
 	// 아이디 찾기 (전화번호 , 힌트)
-	public void findId(Connection conn) throws Exception {
+	public int findId(Connection conn) throws Exception {
 		
 		// 전화번호 입력 받기
 		String joinPhoneNo = uInput.phoneNoInput();
@@ -111,6 +128,7 @@ public class User {
 		pstmt.setString(1, joinPhoneNo);
 		ResultSet rs = pstmt.executeQuery();
 		
+		int check = 0;
 		// 힌트 답 확인
 		if(rs.next()) {
 			UserData data = uInput.findUserIdInput(joinPhoneNo,rs.getString("QUESTION"));
@@ -128,20 +146,22 @@ public class User {
 			} else {
 				System.out.println("틀린 답변입니다.");
 			}
-			
+			check++;
+			return check;
 		} else {
 			System.out.println("전화번호와 일치하는 회원정보가 없습니다. ");
+			return check;
 		}
-		
 	}
 	
 	// 비밀번호 찾기(아이디 & 힌트)
-	public void findPwd(Connection conn) throws Exception {
+	public int findPwd(Connection conn) throws Exception {
 		
 		// 정보입력 받기
 		System.out.print("가입시 입력한 아이디 : ");
 		String userId = Main.SC.nextLine();
 		String joinPhoneNo = uInput.phoneNoInput();
+		
 		
 		String sql = "SELECT H.QUESTION FROM K_USER U LEFT JOIN HINT_TYPE H ON (U.QUESTION_NO = H.QUESTION_NO) WHERE UPPER(ID) = UPPER( ? ) AND PHONE_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -149,6 +169,7 @@ public class User {
 		pstmt.setString(2, joinPhoneNo);
 		ResultSet rs = pstmt.executeQuery();
 		
+		int check = 0;
 		//결과 출력
 		if(rs.next()) {
 			UserData data = uInput.findUserIdInput(joinPhoneNo,rs.getString("QUESTION"));
@@ -171,11 +192,12 @@ public class User {
 			} else {
 				System.out.println("틀린 답변입니다.");
 			}
-			
+			check++;
+			return check;
 		} else {
 			System.out.println("전화번호와 일치하는 회원정보가 없습니다. ");
+			return check;
 		}
-		
 	}
 	
 	// 회원 탈퇴

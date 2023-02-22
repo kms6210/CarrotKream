@@ -10,9 +10,14 @@ import com.kh.item.ItemSearch;
 import com.kh.item.ItemService;
 import com.kh.jdbc.JdbcTemplate;
 import com.kh.user.User;
+import com.kh.user.UserInput;
 import com.kh.user.UserService;
 
+
+
 public class MainProcess {
+	public static final int ARAMDOM = (int) (Math.round(Math.random()*10000)+1);
+	
 	private User user = new User();
 	private ItemSearch ish = new ItemSearch();
 	private Auction auction = new Auction();
@@ -26,14 +31,18 @@ public class MainProcess {
 	private String showVPage() {
 		System.out.println("==================");
 		System.out.println("방문자 페이지");
+        System.out.println("방문자 페이지");
+        System.out.println("\n안녕하세요");
+        System.out.println("방문자 "+ ARAMDOM  +" 님\n");
 		System.out.println("------------------");
-		System.out.println("1.회원가입, 2.로그인, 3.Id/Pwd 찾기");
-		System.out.println("4.상품조회, 5.경매조회, 6.고객센터 페이지, 9. 프로그램 종료\n");
+        System.out.println("1.회원가입, 2.로그인, 3.Id/Pwd 찾기");
+        System.out.println("4.상품조회, 5.경매조회, 6.고객센터 페이지, 9. 프로그램 종료\n");
 		return inputNum();
 	}
 	
-	private String showUPage() {
+    private String showUPage(Connection conn) throws Exception {
 		System.out.println("===== 사용자 페이지 =====");
+        UserInput.userInfo(conn);
 		System.out.println("1.마이페이지, 2.채팅하기, 3.상품 페이지");
 		System.out.println("4.경매 페이지, 5.고객센터 페이지, 9.프로그램 종료 \n");
 		return inputNum();
@@ -71,7 +80,7 @@ public class MainProcess {
 			if(closeProgram(input)) { return true;}
 			processVservice(input, conn);
 		} else if (user_no != 0) {
-			String input = showUPage();
+            String input = showUPage(conn);
 			if(closeProgram(input)) { return true;}
 			processUservice(input, conn);
 		} else {
@@ -91,12 +100,7 @@ public class MainProcess {
 		switch (input) {
 			case "1": if(user.join(conn) == 0) { throw new Exception("회원가입 실패"); } else { System.out.println("\n회원등록 완료"); } break;
 			case "2": if(user.login(conn) == 0) { throw new Exception("로그인 실패"); } break;
-			case "3": 
-				System.out.println("1.Id 찾기 / 2.Pwd 찾기"); 
-				String num = inputNum();
-				if(num.equals("1")) { user.findId(conn); } 
-				else if (num.equals("2")){ user.findPwd(conn); } 
-				else { throw new Exception("잘못 입력했습니다.");} break;
+			case "3": user.findIdPwd(conn); break;
 			case "4": ish.itemView(conn); break;
 			case "5": auction.showAuction(conn); break;
 			case "6": cs.centerPage(conn); break;
@@ -110,7 +114,7 @@ public class MainProcess {
 				System.out.println("1.계좌 페이지 / 2.유저 페이지"); 
 				String num = inputNum();
 				if(num.equals("1")) { acs.accountPage(conn); } 
-				else if (num.equals("2")){ us.userPage(conn); } 
+                else if (num.equals("2")){ us.userPage(conn , ARAMDOM); } 
 				else { throw new Exception("잘못 입력했습니다.");} break;
 			case "2": break;
 			case "3": ise.itemPage(conn); break;
