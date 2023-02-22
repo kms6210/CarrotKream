@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import com.kh.admin.Admin;
 import com.kh.main.Main;
 
 // 테이블 : 유저, 힌트 질문 유형, 제재 내역, Q&A
@@ -40,7 +41,17 @@ public class User {
 	public int login(Connection conn) throws Exception {
 		
 		//데이터 입력받기
-		UserData data = uInput.UserLoginInput();
+		
+		UserData data;
+		System.out.print("아이디 : ");
+		String userId = Main.SC.nextLine();
+		if(userId.equals("aaa")) {
+		      new Admin().adminlogin(conn);
+		      return Main.login_admin_no;
+		} 
+		else {
+			data = uInput.UserLoginInput(conn,userId);
+		}
 		
 		String sql = "SELECT * FROM K_USER WHERE UPPER(ID) = UPPER( ? ) AND PWD = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -105,12 +116,13 @@ public class User {
 	public void findIdPwd(Connection conn) throws Exception {
 		boolean back = false;
 		while(!back) {
-			System.out.println("1.Id 찾기 / 2.Pwd 찾기 / 3.뒤로가기"); 
+			System.out.println("1.Id 찾기 / 2.Pwd 찾기");
+			System.out.println("번호를 입력하세요 : ");
 			String select = Main.SC.nextLine();
 			switch (select)	 {
 			case "1" : if(findId(conn)!=0) {back = true;}; break;
 			case "2" : if(findPwd(conn)!=0) {back = true;}; break;
-			case "3" : back = true ; break;
+			case "99" : back = true ; break;
 			default: System.out.println("잘못 입력하셨습니다"); break;
 			}
 		}
@@ -297,7 +309,8 @@ public class User {
 		}
 		System.out.println("-------------------------------------");
 		
-		System.out.print("1. 수정 / 2. 삭제 / 3. 뒤로가기 : ");
+		System.out.print("1. 수정 / 2. 삭제");
+		System.out.println("번호를 입력해 주세요 :");
 		int select = Main.SC.nextInt(); Main.SC.nextLine(); 
 		int questionNo;
 		switch (select) {
@@ -347,7 +360,7 @@ public class User {
 					QuestionList(conn);
 				}
 				break;
-			case 3 : System.out.println("돌아가기"); break;
+			case 99 : System.out.println("돌아가기"); break;
 			default: System.out.println("잘못된 입력입니다."); QuestionList(conn);
 		}
 	}

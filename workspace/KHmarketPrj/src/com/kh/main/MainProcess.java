@@ -30,7 +30,6 @@ public class MainProcess {
 	
 	private String showVPage() {
 		System.out.println("==================");
-		System.out.println("방문자 페이지");
         System.out.println("방문자 페이지");
         System.out.println("\n안녕하세요");
         System.out.println("방문자 "+ ARAMDOM  +" 님\n");
@@ -82,7 +81,7 @@ public class MainProcess {
 		} else if (user_no != 0) {
             String input = showUPage(conn);
 			if(closeProgram(input)) { return true;}
-			processUservice(input, conn);
+			processUservice(conn);
 		} else {
 			String input = showAPage();
 			if(closeProgram(input)) { return true;}
@@ -108,18 +107,14 @@ public class MainProcess {
 		}
 	}
 	
-	private void processUservice(String input, Connection conn) throws Exception {
-		switch (input) {
-			case "1": 
-				System.out.println("1.계좌 페이지 / 2.유저 페이지"); 
-				String num = inputNum();
-				if(num.equals("1")) { acs.accountPage(conn); } 
-                else if (num.equals("2")){ us.userPage(conn , ARAMDOM); } 
-				else { throw new Exception("잘못 입력했습니다.");} break;
-			case "2": break;
-			case "3": ise.itemPage(conn); break;
+	private void processUservice(Connection conn) throws Exception {
+		System.out.println("1.계좌 페이지 / 2. 로그아웃 / 3. 회원 탈퇴"); 
+		String num = inputNum();
+		switch (num) {
+			case "1": acs.accountPage(conn);
+			case "2" : System.out.println("로그아웃 완료\n"); Main.login_member_no = 0; break;
+			case "3" : if(user.dropUser(conn) == 0) {throw new Exception("회원가입 실패"); } break;
 			case "4": ats.auctionPage(conn); break;
-			case "5": cs.centerPage(conn); break;
 			default: throw new Exception("잘못된 입력입니다.");
 		}
 	}

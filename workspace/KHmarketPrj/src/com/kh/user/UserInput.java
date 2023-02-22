@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
 
+import com.kh.admin.Admin;
 import com.kh.main.Main;
 
 public class UserInput {
@@ -108,7 +109,7 @@ public class UserInput {
 			}
 			
 		} else { 
-			System.out.println("아이디는 5~20자 한글자 이상의 영문과 숫자를 포함해야 합니다\n");
+			System.out.println("아이디는 5~20자 한글자 이상의 영문과 숫자이루어져야 합니다\n");
 			return false;
 		}
 	}
@@ -135,11 +136,11 @@ public class UserInput {
 	// 비번 설정시 보안 등급 출력 (ex. 낮음 중간 높음 ...)
 		public void showPwdGrade(String userPwd) {
 			if(userPwd.length() == 15) {
-				System.out.println("보안등급 높음"); 
+				System.out.println("[ 보안등급 높음 ✔✔✔]"); 
 			} else if (userPwd.length() >= 10 && userPwd.length() < 15 ) {
-				System.out.println("보안등급 보통");
+				System.out.println("[보안등급 보통 ✔✔]");
 			} else if (userPwd.length() < 10) {
-				System.out.println("보안등급 낮음");
+				System.out.println("[보안등급 낮음 ✔]");
 			}
 		}
 	
@@ -206,10 +207,8 @@ public class UserInput {
 	}
 	
 	//로그인 정보 입력
-	public UserData UserLoginInput() {
+	public UserData UserLoginInput(Connection conn, String userId) throws Exception {
 		
-		System.out.print("아이디 : ");
-		String userId = Main.SC.nextLine();
 		System.out.print("비밀번호 : ");
 		String userPwd = Main.SC.nextLine();
 		
