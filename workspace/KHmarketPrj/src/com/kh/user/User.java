@@ -41,13 +41,17 @@ public class User {
 	public int login(Connection conn) throws Exception {
 		
 		//데이터 입력받기
+		System.out.println("┌─────────────────────────────────────────────────┐");
+		System.out.println("		   🥕 로그인 🥕");
+		System.out.println("		   ---------\n");
 		
 		UserData data;
-		System.out.print("아이디 : ");
+		System.out.print("		아이디　　: ");
 		String userId = Main.SC.nextLine();
 		if(userId.equals("aaa")) {
-		      new Admin().adminlogin(conn);
-		      return Main.login_admin_no;
+			System.out.println("\n└─────────────────────────────────────────────────┘");
+		    new Admin().adminlogin(conn);
+		    return Main.login_admin_no;
 		} 
 		else {
 			data = uInput.UserLoginInput(conn,userId);
@@ -73,13 +77,7 @@ public class User {
 				String trustLevel = rs.getString("TRUST_LEVEL");
 				
 				System.out.println("\n"+nick + " 님 환영합니다.");
-				System.out.println("매너온도	: "+ trustLevel);
-				if(balance != null) {
-					System.out.println("잔액	: "+ balance);
-				} else {
-					System.out.println("생성된 계좌가 없습니다.");
-				}
-                System.out.println("-------------------");
+                
 			}
 			
 			// 정지 계정
@@ -116,8 +114,10 @@ public class User {
 	public void findIdPwd(Connection conn) throws Exception {
 		boolean back = false;
 		while(!back) {
-			System.out.println("1.Id 찾기 / 2.Pwd 찾기");
-			System.out.println("번호를 입력하세요 : ");
+			System.out.println("┌──────────────────┤ 계정  찾기 ├──────────────────┐\n");
+			System.out.println("		1.Id 찾기  2.Pwd 찾기");
+			System.out.println("\n└────────────────────────────────────────────────┘");
+			System.out.print("	       ▶ 번호를 입력하세요 : ");
 			String select = Main.SC.nextLine();
 			switch (select)	 {
 			case "1" : if(findId(conn)!=0) {back = true;}; break;
@@ -131,7 +131,7 @@ public class User {
 	
 	// 아이디 찾기 (전화번호 , 힌트)
 	public int findId(Connection conn) throws Exception {
-		
+		System.out.println("\n ┌-----------------┤ ID  찾기 ├-----------------┐");
 		// 전화번호 입력 받기
 		String joinPhoneNo = uInput.phoneNoInput();
 		
@@ -154,23 +154,26 @@ public class User {
 			//결과 출력
 			if(rs.next()) {
 				System.out.println("");
-				System.out.println("회원님의 아이디는 "+rs.getString("ID")+"입니다.");
+				System.out.println("\n	   회원님의 아이디는 [ "+rs.getString("ID")+" ] 입니다.");
+				System.out.println("\n └----------------------------------------------┘");
 			} else {
+				System.out.println("\n └----------------------------------------------┘");
 				System.out.println("틀린 답변입니다.");
 			}
 			check++;
 			return check;
 		} else {
-			System.out.println("전화번호와 일치하는 회원정보가 없습니다. ");
+			System.out.println("\n └----------------------------------------------┘");
+			System.out.println("전화번호와 일치하는 회원정보가 없습니다.\n");
 			return check;
 		}
 	}
 	
 	// 비밀번호 찾기(아이디 & 힌트)
 	public int findPwd(Connection conn) throws Exception {
-		
+		System.out.println("\n ┌-----------------┤ PWD 찾기 ├-----------------┐");
 		// 정보입력 받기
-		System.out.print("가입시 입력한 아이디 : ");
+		System.out.print("\n	  가입시 입력한 아이디 : ");
 		String userId = Main.SC.nextLine();
 		String joinPhoneNo = uInput.phoneNoInput();
 		
@@ -199,15 +202,17 @@ public class User {
 				pstmt.setString(1, userId);
 				pstmt.setString(2, data.getUserPhone());
 				
-				System.out.println("");
-				System.out.println("회원님의 비밀번호는 "+rs.getString("PWD")+"입니다.");
+				System.out.println("\n	       회원님의 비밀번호는 [ "+rs.getString("PWD")+"] 입니다.");
+				System.out.println("\n └----------------------------------------------┘");
 			} else {
+				System.out.println("\n └----------------------------------------------┘");
 				System.out.println("틀린 답변입니다.");
 			}
 			check++;
 			return check;
 		} else {
-			System.out.println("전화번호와 일치하는 회원정보가 없습니다. ");
+			System.out.println("\n └----------------------------------------------┘");
+			System.out.println("전화번호와 일치하는 회원정보가 없습니다.\n");
 			return check;
 		}
 	}

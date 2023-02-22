@@ -25,11 +25,13 @@ public class UserInput {
 	
 	// 회원 가입 정보입력
 	public UserData UserJoinInput(Connection conn) throws Exception {
-		
+		System.out.println("┌─────────────────────────────────────────────────┐");
+		System.out.println("		   🥕 회원가입 🥕");
+		System.out.println("		   -----------\n");
 		do {
 			tf = false;
 			while(!tf) {
-				System.out.print("아이디 : ");
+				System.out.print("		아이디 : ");
 				userId = Main.SC.nextLine();
 				try {
 					tf = applyIdRule(userId, conn);
@@ -42,47 +44,49 @@ public class UserInput {
 		do {
 			tf = false;
 			while(!tf) {
-				System.out.print("비밀번호 : ");
+				System.out.print("		비밀번호 : ");
 				userPwd = Main.SC.nextLine();
 				tf = applyjoinRule(userPwd);
 				if(tf) { showPwdGrade(userPwd); }
 			}
 		} while(false);	
 								
-		System.out.print("닉네임 : ");
+		System.out.print("		닉네임 : ");
 		String userNick = Main.SC.nextLine();
 		
 		do {
 			tf = false;
 			while(!tf) {
-				System.out.print("전화번호 : ");
+				System.out.print("\n		전화번호 : ");
 				String userPhone = Main.SC.nextLine();
 				tf = applyPhonNoRule(userPhone);
 				if(tf) {
 					userPhone = castPhonNo(userPhone);
 					if(phoneOverlapCheck(userPhone,conn)) {
-						System.out.println("이미 등록된 전화 번호입니다.");
+						System.out.println("		⚠이미 등록된 전화 번호입니다.");
 						tf = false;
 					}
 				}
 			}
 		} while(false);	
 		
-		System.out.print("주소 : ");
+		System.out.print("\n		주소 : ");
 		String userAddress = Main.SC.nextLine();
 				
 		do {
 			tf = false;
 			while(!tf) {
 				if(showHintList(conn) == 0) {throw new Exception("힌트 목록을 불러오지 못했습니다.");}
-				System.out.print("힌트 질문 번호 : ");
+				System.out.print("		힌트 질문 번호 : ");
 				userQuestion = Main.SC.nextLine();
 				tf = applyQuestionRule(userQuestion);
 			}
 		} while(false);	
 		
-		System.out.print("힌트 답변 : ");
+		System.out.print("\n		힌트 답변 : ");
 		String userAnswer = Main.SC.nextLine();	
+		
+		System.out.println("\n└─────────────────────────────────────────────────┘");
 		
 		UserData data = new UserData();
 		data.setUserId(userId);
@@ -104,12 +108,12 @@ public class UserInput {
 				System.out.println();
 				return true;
 			} else {
-				System.out.println("이미 사용중인 아이디입니다\n");
+				System.out.println("		⚠이미 사용중인 아이디입니다\n");
 				return false;
 			}
 			
 		} else { 
-			System.out.println("아이디는 5~20자 한글자 이상의 영문과 숫자이루어져야 합니다\n");
+			System.out.println("		⚠아이디는 5~20자 \n	→ 한글자 이상의 영문과 숫자로 이루어져야 합니다\n");
 			return false;
 		}
 	}
@@ -128,7 +132,7 @@ public class UserInput {
 		if (userPwd.matches(pwdCheck)) {
 			return true;
 		} else {
-			System.out.println("비밀번호는 8~15자 영문, 숫자, 특수문자를 포함해야합니다\n");
+			System.out.println("		⚠비밀번호는 8~15자 \n	→ 영문, 숫자, 특수문자를 포함해야합니다\n");
 			return false;
 		}
 	}
@@ -136,11 +140,11 @@ public class UserInput {
 	// 비번 설정시 보안 등급 출력 (ex. 낮음 중간 높음 ...)
 		public void showPwdGrade(String userPwd) {
 			if(userPwd.length() == 15) {
-				System.out.println("[ 보안등급 높음 ✔✔✔]"); 
+				System.out.println("		[보안등급 높음 ✔✔✔]\n"); 
 			} else if (userPwd.length() >= 10 && userPwd.length() < 15 ) {
-				System.out.println("[보안등급 보통 ✔✔]");
+				System.out.println("		[보안등급 보통 ✔✔]\n");
 			} else if (userPwd.length() < 10) {
-				System.out.println("[보안등급 낮음 ✔]");
+				System.out.println("		[보안등급 낮음 ✔]\n");
 			}
 		}
 	
@@ -150,7 +154,7 @@ public class UserInput {
 			return true;
 		}
 		else {
-			System.out.println("전화번호는 11~13자 01로 시작하는 숫자나 01*-****-**** 형식으로 입력하세요");
+			System.out.println("		⚠전화번호는 11~13자 \n		→ 01로 시작하는 숫자나 \n		→ 01*-****-**** 형식으로 입력하세요");
 			return false;
 		}
 	}
@@ -182,16 +186,12 @@ public class UserInput {
 		ResultSet rs = pstmt.executeQuery();
 		
 		int i = 0;
+		System.out.println("\n ┌------------------┤ 질문 목록 ├------------------┐\n");
 		while(rs.next()) {
 			String question = rs.getString("QUESTION");
-			System.out.println("------- 질문 목록 -------");
-			if(i%5 == 0) {
-				System.out.println("\n");
-			} else if(i!=0) {
-				System.out.print("|");
-			}
-			System.out.print(++i +". "+question+" ");
+			System.out.println("	"+(++i) +". "+question+" ");
 		}
+		System.out.println("\n └----------------------------------------------┘");
 		System.out.println("");
 		return i;
 	}
@@ -201,7 +201,7 @@ public class UserInput {
 		if(userQuestion.matches(qusCheck)) {
 			return true;
 		} else {
-			System.out.println("숫자만 입력하세요\n");
+			System.out.println("		⚠숫자만 입력하세요\n");
 			return false;
 		}
 	}
@@ -209,8 +209,9 @@ public class UserInput {
 	//로그인 정보 입력
 	public UserData UserLoginInput(Connection conn, String userId) throws Exception {
 		
-		System.out.print("비밀번호 : ");
+		System.out.print("		비밀번호ㅤ: ");
 		String userPwd = Main.SC.nextLine();
+		System.out.println("\n└─────────────────────────────────────────────────┘");
 		
 		UserData data = new UserData();
 		data.setUserId(userId);
@@ -221,8 +222,8 @@ public class UserInput {
 	
 	// 아이디 찾기 입력 받기
 	public UserData findUserIdInput(String phoneNo, String question) {
-		System.out.println("질문 : "+question);
-		System.out.print("답변 : ");
+		System.out.println("\n		    질문 : "+question);
+		System.out.print("\n		    답변 : ");
 		String joinAnswer = Main.SC.nextLine();
 		
 		UserData data = new UserData();
@@ -240,7 +241,7 @@ public class UserInput {
         
         
         while(!check) {
-            System.out.print("가입시 입력한 전화번호 : ");
+            System.out.print("\n	 가입시 입력한 전화번호 : ");
             joinPhoneNo = Main.SC.nextLine();
             if(applyPhonNoRule(joinPhoneNo)) {
                 joinPhoneNo = joinPhoneNo.replaceAll("-", "");
@@ -274,14 +275,14 @@ public class UserInput {
             String balance = rs.getString("BALANCE");
             String trustLevel = rs.getString("TRUST_LEVEL");
             
-            System.out.println("\n"+nick + " 님 환영합니다.");
-            System.out.println("매너온도    : "+ trustLevel);
+            System.out.println("\n              "+nick + " 님 환영합니다.");
+            System.out.println("\n               매너온도  : "+ trustLevel);
             if(balance != null) {
-                System.out.println("잔액    : "+ balance);
+                System.out.println("\n                  잔액  : "+ balance);
             } else {
-                System.out.println("생성된 계좌가 없습니다.");
+                System.out.println("\n               생성된 계좌가 없습니다.");
             }
-            System.out.println("\n-------------------");
+            
         }
         return check;
     }
