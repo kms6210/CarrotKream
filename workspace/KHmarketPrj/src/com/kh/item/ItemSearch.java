@@ -185,4 +185,44 @@ public class ItemSearch {
 		
 	}
 	
+	public void tradeEnd(Connection conn, int userNo) throws Exception {
+		
+		//SQL
+		String sql = "SELECT *\r\n"
+				+ "FROM(\r\n"
+				+ "    SELECT ROWNUM R,ITEM_NO,TITLE,USER_NO,PRICE,WRITE_DATE\r\n"
+				+ "    FROM (\r\n"
+				+ "        SELECT ITEM_NO,TITLE,USER_NO,PRICE,WRITE_DATE\r\n"
+				+ "        FROM ITEM\r\n"
+				+ "        WHERE USER_NO = ? AND TRADE_STATUS != 'D'"
+				+ "		   AND TRADE_STATUS = 'Y'"
+				+ "        ORDER BY ITEM_NO DESC\r\n"
+				+ "        )\r\n"
+				+ "    )\r\n";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setLong(1, userNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		//상품 보기
+		while(rs.next()) {
+			
+			String itemNo = rs.getString("ITEM_NO");
+			String title = rs.getString("TITLE");
+			String user_no = rs.getString("USER_NO");
+			String price = rs.getString("PRICE");
+			String write_date = rs.getString("WRITE_DATE");
+			
+			System.out.print("상품 번호: "+itemNo);
+			System.out.print(" | ");
+			System.out.print("제목: "+title);
+			System.out.print(" | ");
+			System.out.print("유저 번호: "+user_no);
+			System.out.print(" | ");
+			System.out.print("가격: "+price);
+			System.out.print(" | ");
+			System.out.println("작성일: "+write_date);
+		
+		}
+	}
+	
 }
