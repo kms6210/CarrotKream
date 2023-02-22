@@ -31,6 +31,6 @@ public class CenterInput {
 	}
 	
 	public int ask(Connection conn) throws Exception {
-		return cSQL.ask(conn);
+		return cSQL.ask(Main.login_member_no, conn);
 	}
 }

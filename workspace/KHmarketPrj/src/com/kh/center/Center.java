@@ -23,6 +23,4 @@ public class Center {
 		if(result == 1) { System.out.println("문의 완료"); }
 		else { throw new Exception("문의 오류"); }
 	}
-	
-	// 매너온도 
 }
