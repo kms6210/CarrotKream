@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.kh.auction.Auction;
 import com.kh.main.Main;
 
 import com.kh.user.UserData;
@@ -137,11 +138,29 @@ public void judgeQuality(Connection conn) throws Exception {
 	}
 }
 
-public void receiveFee(Connection conn) {
-	// 수수료(요금) 취득
-	//일단 아이템 테이블 불러오고 거기서 판매완료된 상품 가격의 10%를 가져와야함 근데 어떻게가져오냐?
-	//구매자가 상품을구매하면
+public int receiveFee(int user_no , Connection conn) throws Exception {
+	// 수수료(요금) 취득    , ADMIN_ACCOUNT테이블에서 1번 ADMIN의 잔액 UPDATE문
 
+		int balance = 0;
+		String sql = "SELECT BALANCE FROM ADMIN_ACCOUNT WHERE ADMIN_NO = 1";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1,balance);
+		ResultSet rs = pstmt.executeQuery();
+		if (rs.next()) { balance = rs.getInt("BALANCE"); 
+	}
+		return balance;
+}
+public int updateAdminBalance(int user_no, int price, int balance, Connection conn) throws Exception {
+	// k_Admin 테이블에서 1번 ADMIN의  balance update문
+	String sql = "UPDATE K_ADMIN SET BALANCE = ? WHERE ADMIN_NO = 1";
+	PreparedStatement pstmt = conn.prepareStatement(sql);
+	pstmt.setInt(1, price + balance);
+	
+	int result = pstmt.executeUpdate();
+	if(result ==1) {
+		System.out.println("완료");
+	}
+	return pstmt.executeUpdate();
 }
 
 public void answerQuestion(Connection conn) throws Exception {
