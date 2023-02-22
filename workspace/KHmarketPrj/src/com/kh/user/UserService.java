@@ -7,10 +7,12 @@ import com.kh.main.Main;
 
 public class UserService {
 	
-	public static final int ARAMDOM = (int) (Math.round(Math.random()*10000)+1);
+	
 	private User user = new User();
 	
-	public void userPage(Connection conn) throws Exception{
+    
+    
+    public void userPage(Connection conn , int ARAMDOM) throws Exception{
 		boolean back = false;
 		while(!back) {
 			System.out.println("==================");
@@ -58,7 +60,7 @@ public class UserService {
 				case "1" : if(user.dropUser(conn) == 0) {throw new Exception("회원가입 실패"); } break;
 				case "2" : if(user.askQuestion(conn) == 0) { throw new Exception("질문 등록 실패"); } break;
 				case "3" : user.QuestionList(conn); break;
-				case "33" : System.out.println("로그아웃 완료\n"); Main.login_member_no = 0; break;
+                case "33" : System.out.println("로그아웃 완료\n"); Main.login_member_no = 0; back = true; break;
 				case "99" : back = true; break;
 				case "999" : if(user.userList(conn) == null) { throw new Exception("유저목록 불러오기 실패"); } break;
 				default: System.out.println("잘못 입력하셨습니다….");

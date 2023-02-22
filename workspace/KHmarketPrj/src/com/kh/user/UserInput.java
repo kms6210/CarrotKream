@@ -236,21 +236,59 @@ public class UserInput {
 	
 	//전화번호 입력 받기
 	public String phoneNoInput() {
-		System.out.print("가입시 입력한 전화번호 : ");
-		String joinPhoneNo = Main.SC.nextLine();
-		joinPhoneNo = joinPhoneNo.replaceAll("-", "");
-		String s1 = joinPhoneNo.substring(0, 3);
-		String s2 = joinPhoneNo.substring(3, 7);
-		String s3 = joinPhoneNo.substring(7, 11);
-		
-		joinPhoneNo = s1 + "-" + s2 + "-" + s3;
-				
+        boolean check = false;
+        String joinPhoneNo = null;
+        
+        
+        while(!check) {
+            System.out.print("가입시 입력한 전화번호 : ");
+            joinPhoneNo = Main.SC.nextLine();
+            if(applyPhonNoRule(joinPhoneNo)) {
+                joinPhoneNo = joinPhoneNo.replaceAll("-", "");
+                String s1 = joinPhoneNo.substring(0, 3);
+                String s2 = joinPhoneNo.substring(3, 7);
+                String s3 = joinPhoneNo.substring(7, 11);
+                
+                joinPhoneNo = s1 + "-" + s2 + "-" + s3;
+            }
+                    
+            if(joinPhoneNo.matches(PhoneCheck)) {
+                return joinPhoneNo;
+            }
+            
+        }
 		return joinPhoneNo;
 	}
-	
-	
-	// 비밀번호 찾기 임시 비밀번호
-	public StringBuffer ramdomPwd() {
+		
+    // 유저 정보 출력
+    public static int userInfo(Connection conn) throws Exception {
+        String sql = "SELECT * FROM K_USER WHERE USER_NO = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, Main.login_member_no);
+        ResultSet rs = pstmt.executeQuery();
+        
+        int check = 0;
+        if(rs.next()) {
+            check++;
+            Main.login_member_no = rs.getInt("USER_NO");
+            String nick = rs.getString("NICK");
+            String balance = rs.getString("BALANCE");
+            String trustLevel = rs.getString("TRUST_LEVEL");
+            
+            System.out.println("\n"+nick + " 님 환영합니다.");
+            System.out.println("매너온도    : "+ trustLevel);
+            if(balance != null) {
+                System.out.println("잔액    : "+ balance);
+            } else {
+                System.out.println("생성된 계좌가 없습니다.");
+            }
+            System.out.println("\n-------------------");
+        }
+        return check;
+    }
+    
+    // 비밀번호 찾기 임시 비밀번호
+    public StringBuffer ramdomPwd() {
 		Random ramdom = new Random();
 		StringBuffer buf = new StringBuffer();
 		
