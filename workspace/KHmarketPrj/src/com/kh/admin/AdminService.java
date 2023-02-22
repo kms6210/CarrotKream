@@ -12,7 +12,7 @@ public class AdminService {
 				+ "2. 물건 판매 여부 처리하기\n"
 				+ "3. 아이디 정지하기\n"
 				+ "4. 품질 판정하기\n"
-				+ "5. 수수료 받기 (아직 안함)\n"
+				+ "5. 수수료 받기\n"
 				+ "6. 질문에 대해 답변 하기\n"
 				+ "7. 공지사항 작성하기\n"
 				+ "8. 공지사항 삭제하기\n"
@@ -27,7 +27,7 @@ public class AdminService {
 		case "2" : admin.deleteItem(conn); {break;} //물건 판매여부 처리하기
 		case "3" : admin.banId(conn); {break;} //아이디 정지하기
 		case "4" : admin.judgeQuality(conn); {break;} // 품질 판정하기
-		case "5" : admin.receiveFee(conn); {break;} // 수수료 받기
+		case "5" : admin.updateAdminBalance(conn); {break;} // 수수료 받기
 		case "6" : admin.answerQuestion(conn); {break;} //질문에 대해 답변하기
 		case "7" : admin.writePublic(conn); {break;} // 공지사항 작성하기
 		case "8" : admin.deletePublic(conn); {break;} // 공지사항 삭제하기
