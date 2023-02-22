@@ -141,20 +141,33 @@ public void judgeQuality(Connection conn) throws Exception {
 }
 
 
-public int updateAdminBalance(int user_no, int price, int balance, Connection conn) throws Exception {
-	//1,상품이랑 품질 테이블이랑 join 후 가격 상품번호 유저번호 select -품질판정하기
-	//2.admin balance <- admin테이블에서 balcan 값을 가져오기 select
+public void updateAdminBalance(Connection conn) throws Exception {
 	//3.updateAdminBalance (유저번호 가격 밸런스)
-	// k_Admin 테이블에서 1번 ADMIN의  balance update문
-	String sql = "UPDATE K_ADMIN SET BALANCE = ? WHERE ADMIN_NO = 1";
-	PreparedStatement pstmt = conn.prepareStatement(sql);
-	pstmt.setInt(1, price + balance);
+//	//1,상품이랑 품질 테이블이랑 join 후 가격 상품번호 유저번호 select -품질판정하기 
+//	String sql = "SELECT Q.ITEM_NO ,I.PRICE , I.USER_NO FROM ITEM I JOIN QUALITY Q ON I.ITEM_NO = Q.ITEM_NO";
+//	PreparedStatement pstmt = conn.prepareStatement(sql);
+//	ResultSet rs = pstmt.executeQuery();
+//	
+//	while(rs.next()) {
+//		String qItemNo = rs.getString("Q.ITEM_NO");
+//		String iPrice = rs.getString("I.PRICE");
+//		String userNo = rs.getString("I.USER_NO");
+//		System.out.println(userNo+"번 유저의 "+qItemNo+"번 상품은 "+iPrice+"원 입니다" );
+//	}
 	
-	int result = pstmt.executeUpdate();
-	if(result ==1) {
-		System.out.println("완료");
+	
+	//2.admin balance <- admin테이블에서 balcan 값을 조회하기 select
+	String sql = "SELECT BALANCE FROM K_ADMIN WHERE ADMIN_NO =1";
+	PreparedStatement pstmt = conn.prepareStatement(sql);
+	ResultSet rs = pstmt.executeQuery();
+	
+	if(rs.next()) {
+		String balance = rs.getString("BALANCE");
+		System.out.println("관리자의 잔액은"+ balance+"원 입니다.");
+	}else {
+		System.out.println("실패...");
 	}
-	return pstmt.executeUpdate();
+	
 }
 
 public void answerQuestion(Connection conn) throws Exception {
