@@ -15,13 +15,13 @@ public class ItemService {
 		while(keep) {
 
 			System.out.println("==================");
-			System.out.println("게시판 페이지");
+			System.out.println("상품 페이지");
 			System.out.println("------------------");
-			System.out.println("1. 게시글 등록 및 게시\n"
-					+ "2. 게시글 수정\n"
-					+ "3. 게시글 삭제\n"
-					+ "4. 게시글 조회\n"
-					+ "5. 게시글 상세보기\n"
+			System.out.println("1. 상품 등록 및 게시\n"
+					+ "2. 상품 수정\n"
+					+ "3. 상품 삭제\n"
+					+ "4. 상품 조회\n"
+					+ "5. 상품 상세보기\n"
 					+ "99. 메인 메뉴로 나가기\n");
 			
 			System.out.print("번호를 입력하세요 : ");

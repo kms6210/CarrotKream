@@ -33,7 +33,7 @@ public class BuyOrSell {
 					String price = rs.getString("PRICE");
 					String write_date = rs.getString("WRITE_DATE");
 					
-					System.out.print("물건 번호: " + itemNo);
+					System.out.print("상품 번호: " + itemNo);
 					System.out.print(" | ");
 					System.out.print("제목: "+ title);
 					System.out.print(" | ");
@@ -73,7 +73,7 @@ public class BuyOrSell {
 					String price = rs.getString("PRICE");
 					String write_date = rs.getString("WRITE_DATE");
 					
-					System.out.print("물건 번호: " + itemNo);
+					System.out.print("상품 번호: " + itemNo);
 					System.out.print(" | ");
 					System.out.print("제목: "+ title);
 					System.out.print(" | ");
