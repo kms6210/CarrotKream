@@ -16,8 +16,7 @@ public class AuctionService {
 			System.out.println("------------------");
 			System.out.println("1. 경매 페이지 출력\n"
 						 	 + "2. 입찰\n"
-						 	 + "3. 입찰 취소\n"
-							 + "99. 메인 페이지로 돌아가기");
+						 	 + "3. 입찰 취소\n");
 			
 			System.out.print("\n번호를 입력하세요 : ");
 			String input = Main.SC.nextLine();
