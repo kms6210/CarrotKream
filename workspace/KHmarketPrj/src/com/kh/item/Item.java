@@ -70,15 +70,15 @@ public class Item {
 		System.out.println("====================================================");
 		
 		System.out.println("카테고리를 정하십시오");
-		System.out.println("101. 가전");
-		System.out.println("102. 디지털");
-		System.out.println("103. 의류");
-		System.out.println("104. 식품");
-		System.out.println("105. 피시 모바일");
-		System.out.println("106. 가구");
-		System.out.println("107. 생필품");
-		System.out.println("108. 잡화");
-		System.out.println("109. 기타");	
+		System.out.println("1. 가전");
+		System.out.println("2. 디지털");
+		System.out.println("3. 의류");
+		System.out.println("4. 식품");
+		System.out.println("5. 피시 모바일");
+		System.out.println("6. 가구");
+		System.out.println("7. 생필품");
+		System.out.println("8. 잡화");
+		System.out.println("9. 기타");	
 		System.out.print("카테고리: ");			
 		String typeNo = Main.SC.nextLine();		
 		System.out.println("판매를 위한 글인 지 구매를 위한 글인 지 정하십시오.");
@@ -151,7 +151,7 @@ public class Item {
 			String price = rs.getString("PRICE");
 			String write_date = rs.getString("WRITE_DATE");
 			
-			System.out.print("물건 번호: "+itemNo);
+			System.out.print("상품 번호: "+itemNo);
 			System.out.print(" | ");
 			System.out.print("제목: "+title);
 			System.out.print(" | ");
@@ -166,8 +166,8 @@ public class Item {
 		
 		// 상품 수정
 		
-		System.out.println("[수정하실 글의 번호를 입력해 주십시오.]");
-		System.out.print("수정 할 글의 번호:");
+		System.out.println("[수정하실 상품의 번호를 입력해 주십시오.]");
+		System.out.print("수정 할 상품의 번호:");
 		
 		int editNum = Main.SC.nextInt();
 		
@@ -185,8 +185,7 @@ public class Item {
 		case 1: edit.editTitle(conn, editNum, Main.login_member_no); break;
 		case 2: edit.editContent(conn, editNum, Main.login_member_no); break;
 		case 3: edit.editPrice(conn, editNum, Main.login_member_no); break;
-		default: System.out.println("잘못 입력하셨습니다.");
-		return;
+		default: throw new Exception("잘못 입력하셨습니다.");
 		}
 	}
 
@@ -203,7 +202,7 @@ public class Item {
 		
 		//SQL
 				System.out.println("=======================================================");
-				System.out.println("[내가 작성한 글 목록]");
+				System.out.println("[내가 작성한 상품 목록]");
 				
 				String sql = "SELECT *\r\n"
 						+ "FROM(\r\n"
@@ -228,7 +227,7 @@ public class Item {
 					String price = rs.getString("PRICE");
 					String write_date = rs.getString("WRITE_DATE");
 					
-					System.out.print("물건 번호: "+itemNo);
+					System.out.print("상품 번호: "+itemNo);
 					System.out.print(" | ");
 					System.out.print("제목: "+title);
 					System.out.print(" | ");
@@ -242,7 +241,7 @@ public class Item {
 				System.out.println("=======================================================");
 		
 		System.out.println("삭제하실 글의 번호를 입력하시오.");
-		System.out.print("글 번호: ");
+		System.out.print("상품 번호: ");
 		
 		int delete = Main.SC.nextInt();
 		String empty = Main.SC.nextLine();
@@ -290,7 +289,8 @@ public class Item {
 		case "2": is.buyOrSell(conn); break;
 		case "3": is.rankedByView(conn); break;
 		case "4": is.categoryView(conn); break;
-		case "5": is.myView(conn, Main.login_member_no); break;
+		case "5": is.myView(conn, Main.login_member_no); 
+		default: throw new Exception("잘못 입력하셨습니다.");
 		}
 		
 	}
@@ -306,7 +306,7 @@ public class Item {
 		System.out.println("    #       ###   ######      #   #     ");				
 		System.out.println("========================================");
 		
-		System.out.print("검색 할 글 번호: ");
+		System.out.print("검색 상품 번호: ");
 		String itemNo = Main.SC.nextLine();
 		
 		Item item = new Item();
@@ -329,7 +329,7 @@ public class Item {
 			int userNo = rs.getInt("USER_NO");
 			String writeDate = rs.getString("WRITE_DATE");
 			
-			System.out.print("아이템 번호: "+item_no);
+			System.out.print("상품 번호: "+item_no);
 			System.out.print(" | ");
 			System.out.print("제목: " + title);
 			System.out.print(" | ");

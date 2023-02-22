@@ -34,7 +34,7 @@ public class ItemSearch {
 			String price = rs.getString("PRICE");
 			String write_date = rs.getString("WRITE_DATE");
 			
-			System.out.print("물건 번호: " + itemNo);
+			System.out.print("상품 번호: " + itemNo);
 			System.out.print(" | ");
 			System.out.print("제목: "+ title);
 			System.out.print(" | ");
@@ -67,7 +67,7 @@ public class ItemSearch {
 			String view = rs.getString("VIEW");
 			String write_date = rs.getString("WRITE_DATE");
 			
-			System.out.print("물건 번호: "+itemNo);
+			System.out.print("상품 번호: "+itemNo);
 			System.out.print(" | ");
 			System.out.print("제목: "+title);
 			System.out.print(" | ");
@@ -85,16 +85,16 @@ public class ItemSearch {
 
 	public void categoryView(Connection conn) throws Exception {
 		
-		System.out.println("조회하실 물건의 카테고리를 입력하시오.");
-		System.out.println("101. 가전");
-		System.out.println("102. 디지털");
-		System.out.println("103. 의류");
-		System.out.println("104. 식품");
-		System.out.println("105. 피시 모바일");
-		System.out.println("106. 가구");
-		System.out.println("107. 생필품");
-		System.out.println("108. 잡화");
-		System.out.println("109. 기타");	
+		System.out.println("조회하실 상품의 카테고리를 입력하시오.");
+		System.out.println("1. 가전");
+		System.out.println("2. 디지털");
+		System.out.println("3. 의류");
+		System.out.println("4. 식품");
+		System.out.println("5. 피시 모바일");
+		System.out.println("6. 가구");
+		System.out.println("7. 생필품");
+		System.out.println("8. 잡화");
+		System.out.println("9. 기타");	
 		System.out.println("카테고리: ");
 		String input = Main.SC.nextLine();
 		
@@ -113,7 +113,7 @@ public class ItemSearch {
 			String price = rs.getString("PRICE");
 			String write_date = rs.getString("WRITE_DATE");
 			
-			System.out.print("물건 번호: "+itemNo);
+			System.out.print("상품 번호: "+itemNo);
 			System.out.print(" | ");
 			System.out.print("제목: "+title);
 			System.out.print(" | ");
@@ -153,7 +153,7 @@ public class ItemSearch {
 			String price = rs.getString("PRICE");
 			String write_date = rs.getString("WRITE_DATE");
 			
-			System.out.print("물건 번호: "+itemNo);
+			System.out.print("상품 번호: "+itemNo);
 			System.out.print(" | ");
 			System.out.print("제목: "+title);
 			System.out.print(" | ");
