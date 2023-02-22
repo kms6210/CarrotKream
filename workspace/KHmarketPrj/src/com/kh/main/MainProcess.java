@@ -13,8 +13,6 @@ import com.kh.user.User;
 import com.kh.user.UserInput;
 import com.kh.user.UserService;
 
-
-
 public class MainProcess {
 	public static final int ARAMDOM = (int) (Math.round(Math.random()*10000)+1);
 	
@@ -23,7 +21,6 @@ public class MainProcess {
 	private Auction auction = new Auction();
 
 	private AccountService acs = new AccountService();
-	private UserService us = new UserService();
 	private ItemService ise = new ItemService();
 	private AuctionService ats = new AuctionService();
 	private CenterService cs = new CenterService();
@@ -35,7 +32,7 @@ public class MainProcess {
         System.out.println("방문자 "+ ARAMDOM  +" 님\n");
 		System.out.println("------------------");
         System.out.println("1.회원가입, 2.로그인, 3.Id/Pwd 찾기");
-        System.out.println("4.상품조회, 5.경매조회, 6.고객센터 페이지, 9. 프로그램 종료\n");
+        System.out.println("4.상품조회, 5.경매조회, 6.고객센터 페이지\n");
 		return inputNum();
 	}
 	
@@ -43,13 +40,13 @@ public class MainProcess {
 		System.out.println("===== 사용자 페이지 =====");
         UserInput.userInfo(conn);
 		System.out.println("1.마이페이지, 2.채팅하기, 3.상품 페이지");
-		System.out.println("4.경매 페이지, 5.고객센터 페이지, 9.프로그램 종료 \n");
+		System.out.println("4.경매 페이지, 5.고객센터 페이지\n");
 		return inputNum();
 	}
 	
 	private String showAPage() {
 		System.out.println("===== 관리자 페이지 =====");
-		System.out.println("1.마이페이지, 2.상품관리, 3.유저관리, 4.공지사항관리, 5.QNA관리, 9.프로그램 종료 \n");
+		System.out.println("1.마이페이지, 2.상품관리, 3.유저관리, 4.공지사항관리, 5.QNA관리\n");
 		return inputNum();
 	}
 	
@@ -81,7 +78,7 @@ public class MainProcess {
 		} else if (user_no != 0) {
             String input = showUPage(conn);
 			if(closeProgram(input)) { return true;}
-			processUservice(conn);
+			processUservice(input, conn);
 		} else {
 			String input = showAPage();
 			if(closeProgram(input)) { return true;}
@@ -107,14 +104,25 @@ public class MainProcess {
 		}
 	}
 	
-	private void processUservice(Connection conn) throws Exception {
+	private void processUservice(String input, Connection conn) throws Exception {
+		switch (input) {
+		case "1": processMyPage(conn);
+		case "2": break;
+		case "3": ise.itemPage(conn); break;
+		case "4": ats.auctionPage(conn); break;
+		case "5": cs.centerPage(conn); break;
+		default: throw new Exception("잘못된 입력입니다.");
+	}
+	}
+	
+	
+	private void processMyPage(Connection conn) throws Exception {
 		System.out.println("1.계좌 페이지 / 2. 로그아웃 / 3. 회원 탈퇴"); 
 		String num = inputNum();
 		switch (num) {
-			case "1": acs.accountPage(conn);
+			case "1": acs.accountPage(conn); break;
 			case "2" : System.out.println("로그아웃 완료\n"); Main.login_member_no = 0; break;
-			case "3" : if(user.dropUser(conn) == 0) {throw new Exception("회원가입 실패"); } break;
-			case "4": ats.auctionPage(conn); break;
+			case "3" : if(user.dropUser(conn) == 0) {throw new Exception("회원 탈퇴 실패"); } break;
 			default: throw new Exception("잘못된 입력입니다.");
 		}
 	}
