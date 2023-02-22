@@ -280,7 +280,6 @@ public class Item {
 		System.out.println("2. 구매 혹은 판매글만 보기");
 		System.out.println("3. 인기 상품");
 		System.out.println("4. 카테고리로 선택");
-		System.out.println("5. 내 작성 글 조회");
 		
 		String input = Main.SC.nextLine();
 		
@@ -289,7 +288,6 @@ public class Item {
 		case "2": is.buyOrSell(conn); break;
 		case "3": is.rankedByView(conn); break;
 		case "4": is.categoryView(conn); break;
-		case "5": is.myView(conn, Main.login_member_no); 
 		default: throw new Exception("잘못 입력하셨습니다.");
 		}
 		
@@ -311,6 +309,8 @@ public class Item {
 		
 		Item item = new Item();
 		item.increasingView(conn, itemNo);
+		
+		PickMe pm = new PickMe();
 		
 		//SQL
 		String sql = "SELECT ITEM_NO,TITLE,\"VIEW\",CONTENT,PRICE,USER_NO,WRITE_DATE FROM ITEM WHERE ITEM_NO=? AND TRADE_STATUS != 'D'";
@@ -345,6 +345,26 @@ public class Item {
 			System.out.print("작성자: " + userNo);
 			System.out.print(" | ");
 			System.out.println(writeDate);
+			
+			System.out.println("");
+			
+			boolean keep = true;
+			
+			while(keep) {
+				
+				System.out.println("1. 좋아요 2. 좋아요 취소 ");
+				System.out.print("입력: ");
+				String input = Main.SC.nextLine();
+				System.out.println("");
+				
+				switch(input) {
+				case "1": pm.like(conn, userNo); break;
+				case "2": pm.unlike(conn, userNo); break;
+				case "99": System.out.println("돌아갑니다."); keep = false; break;
+					default: throw new Exception("잘못된 입력값입니다.");
+				}
+			}
+			
 			
 		}
 		
