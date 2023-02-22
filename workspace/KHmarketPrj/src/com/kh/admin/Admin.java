@@ -21,6 +21,8 @@ public class Admin {
 		String sql = "SELECT * FROM K_ADMIN WHERE UPPER(ID) = UPPER( ? ) AND PWD = ? AND KEY = ? AND QUIT_YN ='N' ";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 
+		System.out.println("\n관리자 로그인");
+		
 		System.out.print("ID 입력 :");
 		String id = Main.SC.nextLine();
 
@@ -138,19 +140,11 @@ public void judgeQuality(Connection conn) throws Exception {
 	}
 }
 
-public int receiveFee(int user_no , Connection conn) throws Exception {
-	// 수수료(요금) 취득    , ADMIN_ACCOUNT테이블에서 1번 ADMIN의 잔액 UPDATE문
 
-		int balance = 0;
-		String sql = "SELECT BALANCE FROM ADMIN_ACCOUNT WHERE ADMIN_NO = 1";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1,balance);
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) { balance = rs.getInt("BALANCE"); 
-	}
-		return balance;
-}
 public int updateAdminBalance(int user_no, int price, int balance, Connection conn) throws Exception {
+	//1,상품이랑 품질 테이블이랑 join 후 가격 상품번호 유저번호 select -품질판정하기
+	//2.admin balance <- admin테이블에서 balcan 값을 가져오기 select
+	//3.updateAdminBalance (유저번호 가격 밸런스)
 	// k_Admin 테이블에서 1번 ADMIN의  balance update문
 	String sql = "UPDATE K_ADMIN SET BALANCE = ? WHERE ADMIN_NO = 1";
 	PreparedStatement pstmt = conn.prepareStatement(sql);
