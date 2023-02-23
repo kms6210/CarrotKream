@@ -39,7 +39,7 @@ public class Act {
 		case "3": item.deleteItem(conn, Main.login_member_no); break;
 		case "4": is.myView(conn, Main.login_member_no);  break;
 		case "5": is.tradeEnd(conn, Main.login_member_no); break;
-		default: throw new Exception("잘못 입력하셨습니다.");
+		default: throw new Exception("※ 잘못 입력하셨습니다 ※");
 		}
 		
 		
