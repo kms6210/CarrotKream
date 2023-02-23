@@ -146,12 +146,12 @@ public class User {
 				System.out.println("");
 				System.out.println("회원님의 아이디는 "+rs.getString("ID")+"입니다");
 			} else {
-				System.out.println("답변이 일치하지 않습니다");
+				System.out.println("※ 답변이 일치하지 않습니다 ※\n");
 			}
 			check++;
 			return check;
 		} else {
-			System.out.println("전화번호와 일치하는 회원정보가 없습니다 ");
+			System.out.println("※ 전화번호와 일치하는 회원정보가 없습니다 ※\n");
 			return check;
 		}
 	}
@@ -239,7 +239,7 @@ public class User {
 		}
 		else if (yn.equals("2")) {
 			throw new Exception("※ 회원 탈퇴 취소 ※");
-		} else { throw new Exception("\n※ 잘못된 입력입니다 ※"); }
+		} else { throw new Exception("\n※ 잘못된 입력입니다 ※\n"); }
 		
 		return rrs; 
 	}

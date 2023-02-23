@@ -20,7 +20,7 @@ public class UserInput {
 	private String userPhone = null;
 	private String userAddress = null;
 	private String userQuestion = null;
-
+	private String userAnswer = null;
 	
 	// 회원 가입 정보입력
 	public UserData UserJoinInput(Connection conn) throws Exception {
@@ -51,7 +51,7 @@ public class UserInput {
 		
 		System.out.print("닉네임 : ");
 		String userNick = Main.SC.nextLine();
-		if(userNick == null) { userNick = userId; } 
+		if(userNick == null || userNick.isBlank()) { userNick = userId; } 
 		
 		do {
 			tf = false;
@@ -73,8 +73,8 @@ public class UserInput {
 		while(true) {
 			System.out.print("주소 : ");
 			userAddress = Main.SC.nextLine();
-			if(userAddress.length() != 0) {break;}
-			throw new Exception("※ 주소를 채워주세요 ※\n");
+			if(userAddress.length() != 0 && !userAddress.isBlank()) {break;}
+			else { System.out.println("※ 주소를 채워주세요 ※\n"); }
 		}
 		
 		
@@ -89,8 +89,12 @@ public class UserInput {
 			}
 		} while(false);	
 		
-		System.out.print("해당 질문에 대한 답변을 입력하세요 : ");
-		String userAnswer = Main.SC.nextLine();	
+		while(true) {
+			System.out.print("해당 질문에 대한 답변을 입력하세요 : ");
+			String userAnswer = Main.SC.nextLine();
+			if(userAnswer.length() != 0 && !userAnswer.isBlank()) {break;}
+			else { System.out.println("※ 답변을 채워주세요 ※\n"); }
+		}
 		
 		UserData data = new UserData();
 		data.setUserId(userId);

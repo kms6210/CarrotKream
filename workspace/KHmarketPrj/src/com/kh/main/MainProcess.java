@@ -10,6 +10,7 @@ import com.kh.center.CenterService;
 import com.kh.item.ItemSearch;
 import com.kh.item.ItemService;
 import com.kh.jdbc.JdbcTemplate;
+import com.kh.mutualAction.MutualActionService;
 import com.kh.user.User;
 import com.kh.user.UserInput;
 import com.kh.user.UserService;
@@ -26,6 +27,7 @@ public class MainProcess {
 	private ItemService ise = new ItemService();
 	private AuctionService ats = new AuctionService();
 	private CenterService cs = new CenterService();
+	private MutualActionService mas = new MutualActionService();
 	
 	private String showVPage() {
 		System.out.println("================== 방문자  페이지 ====================");
@@ -128,7 +130,7 @@ public class MainProcess {
 	private void processUservice(String input, Connection conn) throws Exception {
 		switch (input) {
 		case "1": processMyPage(conn);
-		case "2": break;
+		case "2": mas.chatPage(conn); break;
 		case "3": ise.itemPage(conn); break;
 		case "4": ats.auctionPage(conn); break;
 		case "5": cs.centerPage(conn); break;
@@ -148,7 +150,7 @@ public class MainProcess {
 			case "1": acs.accountPage(conn); break;
 			case "2" : System.out.println("※ 로그아웃 완료 ※"); Main.login_member_no = 0; break;
 			case "3" : if(user.dropUser(conn) == 0) {throw new Exception("※ 회원 탈퇴 실패 ※\n"); } break;
-			case "99" : throw new Exception("※ 메인 페이지입니다 ※");
+			case "99" : throw new Exception("※ 메인 페이지입니다 ※\n");
 			default: throw new Exception("※ 잘못된 입력입니다 ※\n");
 		}
 	}
@@ -160,7 +162,7 @@ public class MainProcess {
 			case "3": admin.userAdmin(conn); break;
 			case "4": admin.publicWandD(conn); break;
 			case "5": break;
-			case "99" : throw new Exception("※ 메인 페이지입니다 ※");
+			case "99" : throw new Exception("※ 메인 페이지입니다 ※\n");
 			default: throw new Exception("※ 잘못된 입력입니다 ※\n");
 		}
 		
