@@ -112,8 +112,8 @@ public class User {
 			switch (select)	 {
 			case "1" : if(findId(conn)!=0) {back = true;}; break;
 			case "2" : if(findPwd(conn)!=0) {back = true;}; break;
-			case "99" : back = true ; break;
-			default: System.out.println("잘못 입력하셨습니다"); break;
+			case "99" : System.out.println("\n"); back = true ; break;
+			default: System.out.println("※ 잘못 입력하셨습니다 ※\n"); break;
 			}
 		}
 		
@@ -151,7 +151,7 @@ public class User {
 			check++;
 			return check;
 		} else {
-			System.out.println("전화번호와 일치하는 회원정보가 없습니다 ");
+			System.out.println("※ 전화번호와 일치하는 회원정보가 없습니다 ※\n");
 			return check;
 		}
 	}
