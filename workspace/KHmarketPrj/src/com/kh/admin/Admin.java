@@ -14,6 +14,7 @@ import com.kh.user.UserInput;
 // 테이블 : 유저, 상품, 제재 내역, 품질 검증, 계좌, Q&A, 공지사항
 
 public class Admin {
+	AdminTemp adminTemp = new AdminTemp();
 
 	public void adminlogin(Connection conn) throws Exception {
 		//관리자 로그인
@@ -119,6 +120,9 @@ public void banId(Connection conn) throws Exception {
 }
 
 public void judgeQuality(Connection conn) throws Exception {
+	// 품질 판정 전에 아이템, 가격, 유저번호 보여주기   (상품이랑 품질 테이블이랑 join 후 가격 상품번호 유저번호 select)
+	adminTemp.showItmeList(conn);
+	
 	// 품질 판정하기
 	String sql = "UPDATE QUALITY SET GRADE  = ?   WHERE ITEM_NO= ?";
 	PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -143,36 +147,31 @@ public void judgeQuality(Connection conn) throws Exception {
 
 public void updateAdminBalance(Connection conn) throws Exception {
 	//3.updateAdminBalance (유저번호 가격 밸런스)
-//	//1,상품이랑 품질 테이블이랑 join 후 가격 상품번호 유저번호 select -품질판정하기 
-//	String sql = "SELECT Q.ITEM_NO ,I.PRICE , I.USER_NO FROM ITEM I JOIN QUALITY Q ON I.ITEM_NO = Q.ITEM_NO";
-//	PreparedStatement pstmt = conn.prepareStatement(sql);
-//	ResultSet rs = pstmt.executeQuery();
-//	
-//	while(rs.next()) {
-//		String qItemNo = rs.getString("Q.ITEM_NO");
-//		String iPrice = rs.getString("I.PRICE");
-//		String userNo = rs.getString("I.USER_NO");
-//		System.out.println(userNo+"번 유저의 "+qItemNo+"번 상품은 "+iPrice+"원 입니다" );
-//	}
-	
-	
-	//2.admin balance <- admin테이블에서 balcan 값을 조회하기 select
-	String sql = "SELECT BALANCE FROM K_ADMIN WHERE ADMIN_NO =1";
+	adminTemp.showItmeList(conn); // 상품 가격 먼저 보여준후
+
+	String sql = "UPDATE K_ADMIN SET BALANCE = ? WHERE ADMIN_NO =1";
 	PreparedStatement pstmt = conn.prepareStatement(sql);
-	ResultSet rs = pstmt.executeQuery();
+
+	System.out.print("등급 판정이 완료된 상품 가격의 10% 수수료 차감: ");
+	String balance = Main.SC.nextLine(); 
 	
-	if(rs.next()) {
-		String balance = rs.getString("BALANCE");
-		System.out.println("관리자의 잔액은"+ balance+"원 입니다.");
+	pstmt.setString(1, balance);
+	
+	int result = pstmt.executeUpdate();
+	
+	if(result ==1) {
+		System.out.println("관리자의 잔고에"+balance+"원이 입금되었습니다");
+		adminTemp.adminBalanceList(conn);
+		
 	}else {
-		System.out.println("실패...");
+		System.out.println("실패..");
 	}
+	
 	
 }
 
 public void answerQuestion(Connection conn) throws Exception {
 	//질문 목록 보여주기
-	AdminTemp adminTemp = new AdminTemp();
 	adminTemp.showQuestionList(conn);
 
 	// 답변하기
