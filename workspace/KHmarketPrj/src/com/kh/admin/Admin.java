@@ -4,18 +4,69 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import com.kh.item.ItemSearch;
 import com.kh.main.Main;
 import com.kh.main.MainProcess;
 
 // 테이블 : 유저, 상품, 제재 내역, 품질 검증, 계좌, Q&A, 공지사항
 
 public class Admin {
+	public void itemAdmin(Connection conn) throws Exception {
+		System.out.print("1. 상품 조회 / 2. 상품 삭제 : ");
+		String input = Main.SC.nextLine();
+		if (input.equals("1")) {
+			new ItemSearch().itemView(conn);
+		} else if(input.equals("2")) {
+			deleteItem(conn);
+		} else {
+			throw new Exception("※ 잘못된 입력입니다 ※");
+		}
+	}
+	
+	public void showAccount(Connection conn) throws Exception {
+		// 계좌 내역 출력
+		String sql = "SELECT * FROM ADMIN_ACCOUNT WHERE ADMIN_NO = ? ORDER BY USE_DATE";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, Main.login_admin_no);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while (rs.next()) {
+			int user_no = rs.getInt("USER_NO");
+			int price = rs.getInt("PRICE");
+			String use_date = rs.getString("USE_DATE");
+			 
+			System.out.println("[+] " + user_no + "번 유저에게서 " + price + " 포인트 입금받음    " + use_date);
+		}
+		System.out.println();
+	}
+	
+//	public void adminPage(Connection conn) throws Exception {
+//		boolean isFinish = false;
+//		while(!isFinish) {
+//		System.out.println("\n==================");
+//        System.out.println("★ 관리자 페이지 ★");
+//        getAdminBalance(conn);
+//		System.out.println("\n1.계좌 내역 조회");
+//		System.out.println("==================");
+//		
+//		String num = new MainProcess().inputNum();
+//		if(num.equals("1")) {
+//			showUserList(conn);
+//		} else if(num.equals("99")){
+//			System.out.println(); isFinish = true;
+//		} else {
+//			System.out.println("\n※ 잘못된 입력입니다 ※\n");
+//		}
+//		}
+//	}
+	
+	
 	public void userAdmin(Connection conn) throws Exception {
 		boolean isFinish = false;
 		while(!isFinish) {
 		System.out.println("\n==================");
         System.out.println("★ 유저 관리 페이지 ★");
-        System.out.println("");
+        System.out.print("[총 회원 수 : " + userNum(conn) + "]");
 		System.out.println("\n1.회원 목록 조회\n2.계정 정지");
 		System.out.println("==================");
 
@@ -25,7 +76,9 @@ public class Admin {
 		} else if (num.equals("2")) {
 			banId(conn);
 		} else if(num.equals("99")){
-			isFinish = true;
+			System.out.println(); isFinish = true;
+		} else {
+			System.out.println("\n※ 잘못된 입력입니다 ※\n");
 		}
 		}
 	}
@@ -60,6 +113,17 @@ public class Admin {
 		}
 	}
 
+	public int userNum(Connection conn) throws Exception {
+		String sql = "SELECT * FROM K_USER";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		int num = 0;
+		while(rs.next()) {
+			num++;
+		}
+		return num;
+	}
+	
 	// 회원 목록 조회
 	public void showUserList(Connection conn) throws Exception {
 
@@ -88,7 +152,7 @@ public class Admin {
 	}
 
 public void deleteItem(Connection conn) throws Exception {
-	// 상품 거래 상태
+	// 상품 삭제
 	String sql = "UPDATE ITEM SET TRADE_STATUS =? WHERE ITEM_NO =? ";
 	PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -102,7 +166,7 @@ public void deleteItem(Connection conn) throws Exception {
 	int result = pstmt.executeUpdate();
 
 	if (result ==1) {
-		System.out.println("\n※" +  itemNo + "번 상품을 삭제하였습니다 ※\n");
+		System.out.println("\n※ " +  itemNo + "번 상품을 삭제하였습니다 ※\n");
 	}else {
 		throw new Exception("※ 실패 ※");
 	}
