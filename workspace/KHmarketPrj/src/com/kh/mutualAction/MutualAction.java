@@ -210,7 +210,7 @@ public class MutualAction {
 	
 	public void buyReview(Connection conn) throws Exception {
 		//구매 후기 작성
-		System.out.print("거래완료한 상품 번호 : ");
+		System.out.print("구매완료한 상품 번호 : ");
 		int item_no = Main.integerParseInt();
 		
 		System.out.print("구매 후기를 작성해주세요: ");
@@ -226,13 +226,13 @@ public class MutualAction {
 			System.out.println("후기작성이 완되었습니다.");
 		}
 		else {
-			throw new Exception("후기 작성 실패");
+			throw new Exception("구매한 상품이 아닙니다.");
 		}
 	}
 	
 	public void sellReview(Connection conn) throws Exception {
 		//판매 후기 작성
-		System.out.print("거래완료한 상품의 번호 : ");
+		System.out.print("판매완료한 상품의 번호 : ");
 		int item_no = Main.integerParseInt();
 		
 		System.out.print("판매 후기를 작성해주세요: ");
@@ -248,33 +248,49 @@ public class MutualAction {
 			System.out.println("후기작성이 완료되었습니다.");
 		}
 		else {
-			throw new Exception("후기 작성 실패");
+			throw new Exception("판매한 상품이 아닙니다.");
 		}
 	}
 	
 	public void makeChatRoom(Connection conn) throws Exception {
-		//채팅방 개설
-		
+		//채팅방 조회 후 없는 채팅방 개설
 		System.out.print("상품을 선택하세요 : ");
 		int item_no = Main.integerParseInt();
 		
-		String sql = "INSERT INTO CHAT_ROOM(ROOM_NO,ITEM_NO,USER_NO) VALUES (?,?,?)";
+		String sql ="UPDATE CHAT_ROOM SET CREATE_DATE = SYSDATE WHERE ITEM_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, item_no);
-		pstmt.setInt(2, Main.login_member_no);
 		int result = pstmt.executeUpdate();
 		
 		if(result==1) {
 			System.out.println("채팅방이 개설되었습니다.");
 		}
 		else {
-			throw new Exception("채팅방 개설 실패");
+			throw new Exception("이미 개설된 채팅방 입니다.");
 		}
+		
+		
+//		System.out.print("상품을 선택하세요 : ");
+//		int item_no = Main.integerParseInt();
+		
+		sql = "INSERT INTO CHAT_ROOM(ROOM_NO,ITEM_NO,USER_NO) VALUES (SEQ_ROOM_NO.NEXTVAL,?,?)";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, item_no);
+		pstmt.setInt(2, Main.login_member_no);
+		result = pstmt.executeUpdate();
+//		
+//		if(result==1) {
+//			System.out.println("채팅방이 개설되었습니다.");
+//		}
+//		else {
+//			throw new Exception("이미 개설된 채팅방 입니다.");
+//		}
 		
 	}
 	
 	public void SearchChatRoomByUserNumber(Connection conn) throws Exception {
 		// 유저번호로 채팅방 목록 조회하는 메소드
+		System.out.println();
 		System.out.print("찾으시려는 채팅방에 유저번호를 입력하세요 : ");
 		int user_no = Main.integerParseInt();
 		
