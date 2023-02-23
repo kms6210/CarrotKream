@@ -6,89 +6,92 @@ import java.sql.ResultSet;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 import com.kh.main.Main;
+import com.kh.user.UserInput;
 
 // 테이블 : 좋아요 목록, 거래 후기, 상품, 채팅방, 채팅 내용 
 
 public class MutualAction {
 	
-	public void setLikeList(Connection conn) throws Exception{
+	public void reviewPage(Connection conn) throws Exception {
+		while(true) {
+		System.out.println("\n==================");
+        System.out.println("★ 후기작성 페이지 ★\n");
+		System.out.println("\n1.구매 후기 작성\n2.판매 후기 작성");
+		System.out.println("==================");
+		
+		System.out.print("번호를 입력하세요 : ");
+		int num = Main.integerParseInt();
+		if(num == 99) {
+			break;
+		}
+		if(num == 1) {
+			buyReview(conn);
+		} else if (num == 2) {
+			sellReview(conn);
+		} else {
+			System.out.println("※ 잘못된 입력입니다 ※");
+		}
+		}
+	}
+	
+	public void setLikeList(int item_no, Connection conn) throws Exception{
 		// 좋아요(찜) 하기 
 	try	 {
-		System.out.println("===========");
-		System.out.println("  상품 목록  ");
-		System.out.println("===========");
-		String sql ="SELECT * FROM ITEM WHERE TRADE_STATUS ='N'";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery();
+//		System.out.println("=== [좋아요 등록한 상품 목록] ===");
+//		String sql ="SELECT * FROM ITEM WHERE TRADE_STATUS ='N'";
+//		PreparedStatement pstmt = conn.prepareStatement(sql);
+//		ResultSet rs = pstmt.executeQuery();
+//		
+//		sql="SELECT * FROM LIKELIST WHERE USER_NO = ? ";
+//		pstmt = conn.prepareStatement(sql);
+//		pstmt.setInt(1, Main.login_member_no);
+//		rs = pstmt.executeQuery();
+//		
+//		int num = 1;
+//		while(rs.next()) {
+//			int itemNo = rs.getInt("ITEM_NO");
+//			System.out.println(num++ + ". " + itemNo+"번 상품");
+//		}
+//		System.out.println("\n===========================");
+//		
+//		System.out.print("상품 번호를 입력하세요 : ");
+//		int item_no = Main.integerParseInt();
+		System.out.print("1. 좋아요 등록 / 2. 좋아요 삭제 : "); 
+		String no = Main.SC.nextLine();
 		
-		while(rs.next()) {
-			int itemNo = rs.getInt("ITEM_NO");
-			int typeNo = rs.getInt("TYPE_NO");
-			String title = rs.getString("TITLE");
-			String content = rs.getString("CONTENT");
-			int price = rs.getInt("PRICE");
-			int view = rs.getInt("VIEW");
-			String tradeStatus = rs.getString("TRADE_STATUS");
+		if(no.equals("1")) {
+			String sql = "INSERT INTO LIKELIST(ITEM_NO, USER_NO) VALUES(?,?)";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, item_no);
+			pstmt.setInt(2, Main.login_member_no);
 			
-			System.out.print("상품 번호: "+itemNo);
-			System.out.print(" | ");
-			System.out.print("카테고리: "+typeNo);
-			System.out.print(" | ");
-			System.out.print("제목: "+title);
-			System.out.print(" | ");
-			System.out.print("내용: "+content);
-			System.out.print(" | ");
-			System.out.println("가격: "+price);
-			System.out.print(" | ");
-			System.out.println("조회 수: "+view);
-			System.out.print(" | ");
-			System.out.println("거래 상태: "+tradeStatus);
-		}
-		
-		sql="SELECT * FROM LIKELIST WHERE USER_NO = ? ";
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, Main.login_member_no);
-		rs = pstmt.executeQuery();
-		
-		while(rs.next()) {
-			int itemNo = rs.getInt("ITEM_NO");
-			int userNo = rs.getInt("USER_NO");
+			int result = pstmt.executeUpdate();
 			
-			System.out.println(userNo+"번 유저님의 좋아요 하신 상품 목록은 : "+itemNo+"번 입니다.");
+			if(result==1) {
+				System.out.println("\n※ 해당 상품을 '좋아요' 표시했습니다 ※");
+			}
+			else {
+				throw new Exception("※ 해당 상품이 존재하지 않습니다 ※");
+			}
+		} else if(no.equals("2")){
+			deleteLikeList(item_no, conn);
+		} else {
+			throw new Exception("※ 잘못된 입력입니다 ※ ");
 		}
-		
-		System.out.print("좋아요 등록하실 상품 번호를 입력하세요 : ");
-		int item_no = Main.integerParseInt();
-		
-		sql = "INSERT INTO LIKELIST(ITEM_NO, USER_NO) VALUES(?,?)";
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, item_no);
-		pstmt.setInt(2, Main.login_member_no);
-		
-		int result = pstmt.executeUpdate();
-		
-		if(result==1) {
-			System.out.println("좋아요 등록이 되었습니다.");
-		}
-		else {
-			throw new Exception("없는 상품입니다.");
-		}
-		
+				
 	} 
 	catch (SQLIntegrityConstraintViolationException e) {
-		throw new Exception("이미 등록된 상품입니다.");
+		throw new Exception("※ 이미 찜한 상품입니다 ※ ");
 	}
 	catch (Exception e) {
-		throw new Exception("없는 상품입니다.");
+		throw new Exception("※ 해당 상품을 찾을 수 없습니다 ※ ");
 	}
 		
 	}//method
 	
-	public void deleteLikeList(Connection conn) throws Exception {
+	public void deleteLikeList(int item_no, Connection conn) throws Exception {
 		// 좋아요(찜) 삭제하기 
 		
-		System.out.print("상품 번호를 입력하세요 : ");
-		int item_no = Main.integerParseInt();
 		
 		String sql ="DELETE LIKELIST WHERE ITEM_NO = ? AND USER_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -98,10 +101,10 @@ public class MutualAction {
 		int result = pstmt.executeUpdate();
 		
 		if(result == 1) {
-			System.out.println("좋아요 가 삭제 되었습니다.");
+			System.out.println("\n※ 해당 상품의 '좋아요' 를 삭제했습니다 ※");
 		}
 		else {
-			throw new Exception("좋아요 삭제 실패");
+			throw new Exception("※ 좋아요 삭제 실패 ※");
 		}
 	}
 	
@@ -119,20 +122,15 @@ public class MutualAction {
 		}
 	}
 	
-	public void sellItem(Connection conn) throws Exception {
+	public void sellItem(int item_no, Connection conn) throws Exception {
 		// 판매
-		System.out.print("판매 할 상품번호 : ");
-		int item_no = Main.integerParseInt();
 		String sql ="UPDATE ITEM SET TRADE_STATUS = 'Y' WHERE ITEM_NO =? and trade_status != 'Y'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, item_no);
 		int result = pstmt.executeUpdate();
 		
-		if(result==1) {
-			System.out.println("판매 되었습니다.");
-		}
-		else {
-			throw new Exception("이미 판매된 상품입니다.");
+		if(result != 1) {
+			throw new Exception("※ 거래 완료된 상품입니다 ※");
 		}
 		
 		sql="INSERT INTO REVIEW(REVIEW_NO, USER_NO, ITEM_NO) VALUES (SEQ_REVIEW_NO.NEXTVAL,?,?)";
@@ -141,93 +139,96 @@ public class MutualAction {
 		pstmt.setInt(2, item_no);
 		result=pstmt.executeUpdate();
 		if(result==1) {
-			System.out.println("거래가 완료되었습니다.");
+			System.out.println("※ 거래가 완료되었습니다 ※ ");
 		}
 		else {
-			throw new Exception("이미 판매된 상품입니다.");
+			throw new Exception("※ 거래 완료된 상품입니다 ※ ");
 		}
 		
 		
 	}//method
 	
 	
-	public void buyItem(Connection conn) throws Exception {
-		// 구매
-		System.out.println("===========");
-		System.out.println("  상품 목록  ");
-		System.out.println("===========");
-		String sql ="SELECT * FROM ITEM WHERE TRADE_STATUS = 'N' ";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery();
-		
-		while(rs.next()) {
-			int itemNo = rs.getInt("ITEM_NO");
-			int typeNo = rs.getInt("TYPE_NO");
-			String title = rs.getString("TITLE");
-			String content = rs.getString("CONTENT");
-			int price = rs.getInt("PRICE");
-			int view = rs.getInt("VIEW");
-			String tradeStatus = rs.getString("TRADE_STATUS");
-		
-			System.out.print("상품 번호: "+itemNo);
-			System.out.print(" | ");
-			System.out.print("카테고리: "+typeNo);
-			System.out.print(" | ");
-			System.out.print("제목: "+title);
-			System.out.print(" | ");
-			System.out.print("내용: "+content);
-			System.out.print(" | ");
-			System.out.println("가격: "+price);
-			System.out.print(" | ");
-			System.out.println("조회 수: "+view);
-			System.out.print(" | ");
-			System.out.println("거래 상태: "+tradeStatus);
-		}
-		
-		System.out.print("구매 하고싶은 상품의 번호를 입력하세요 : ");
-		int item_no = Main.integerParseInt();
-		
-		sql ="UPDATE ITEM SET TRADE_STATUS ='Y' WHERE ITEM_NO=? AND TRADE_STATUS ='N'";
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, item_no);
-		int result = pstmt.executeUpdate();
-		
-		if(result==1) {
-			System.out.println("구매가 완료되었습니다.");
-		}
-		else {
-			throw new Exception("판매된 상품입니다.");
-		}
-		
-		sql = "INSERT INTO REVIEW(REVIEW_NO,ITEM_NO,USER_NO) VALUES(SEQ_REVIEW_NO.NEXTVAL,?,?)";
-		pstmt=conn.prepareStatement(sql);
-		pstmt.setInt(1, item_no);
-		pstmt.setInt(2, Main.login_member_no);
-		result=pstmt.executeUpdate();
-		if(result==1) {
-			System.out.println("거래가 완료되었습니다.");
-		}
-		else {
-			throw new Exception("거래가 취소되었습니다.");
-		}
-	}
+//	public void buyItem(int item_no, Connection conn) throws Exception {
+//		// 구매
+////		PreparedStatement pstmt = conn.prepareStatement(sql);
+////		ResultSet rs = pstmt.executeQuery();
+////		
+////		while(rs.next()) {
+////			int itemNo = rs.getInt("ITEM_NO");
+////			int typeNo = rs.getInt("TYPE_NO");
+////			String title = rs.getString("TITLE");
+////			String content = rs.getString("CONTENT");
+////			int price = rs.getInt("PRICE");
+////			int view = rs.getInt("VIEW");
+////			String tradeStatus = rs.getString("TRADE_STATUS");
+////		
+////			System.out.print("상품 번호: "+itemNo);
+////			System.out.print(" | ");
+////			System.out.print("카테고리: "+typeNo);
+////			System.out.print(" | ");
+////			System.out.print("제목: "+title);
+////			System.out.print(" | ");
+////			System.out.print("내용: "+content);
+////			System.out.print(" | ");
+////			System.out.println("가격: "+price);
+////			System.out.print(" | ");
+////			System.out.println("조회 수: "+view);
+////			System.out.print(" | ");
+////			System.out.println("거래 상태: "+tradeStatus);
+////		}
+//		
+//		String sql ="UPDATE ITEM SET TRADE_STATUS ='Y' WHERE ITEM_NO=? AND TRADE_STATUS ='N'";
+//		PreparedStatement pstmt = conn.prepareStatement(sql);
+//		pstmt.setInt(1, item_no);
+//		int result = pstmt.executeUpdate();
+//		
+//		if(result!=1) {
+//			throw new Exception("※ 거래 완료된 상품입니다 ※ ");
+//		}
+//		
+//		sql = "INSERT INTO REVIEW(REVIEW_NO,ITEM_NO,USER_NO) VALUES(SEQ_REVIEW_NO.NEXTVAL,?,?)";
+//		pstmt=conn.prepareStatement(sql);
+//		pstmt.setInt(1, item_no);
+//		pstmt.setInt(2, Main.login_member_no);
+//		result=pstmt.executeUpdate();
+//		if(result==1) {
+//			System.out.println("※ 거래가 완료되었습니다 ※ ");
+//		}
+//		else {
+//			throw new Exception("※ 거래 완료된 상품입니다 ※");
+//		}
+//	}
 	
 	public void buyReview(Connection conn) throws Exception {
 		//구매 후기 작성
-		System.out.print("거래완료한 상품 번호 : ");
+		System.out.println("=== [구매한 상품 목록] ===");
+		String sql ="SELECT * FROM REVIEW WHERE USER_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, Main.login_member_no);
+		ResultSet rs = pstmt.executeQuery();
+		
+		int num = 1;
+		while(rs.next()) {
+			int itemNo = rs.getInt("ITEM_NO");
+			System.out.println(num++ + ". " + itemNo+"번 상품");
+		}
+		System.out.println("\n===========================");
+		
+		System.out.print("리뷰 쓸 상품 번호 : ");
 		int item_no = Main.integerParseInt();
 		
 		System.out.print("구매 후기를 작성해주세요: ");
 		String buyReview = Main.SC.nextLine();
 		
-		String sql = "UPDATE REVIEW SET BUY_REVIEW = ? WHERE ITEM_NO = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
+		sql = "UPDATE REVIEW SET BUY_REVIEW = ? WHERE ITEM_NO = ?";
+		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, buyReview);
 		pstmt.setInt(2, item_no);
 		int result = pstmt.executeUpdate();
 
 		if(result==1) {
-			System.out.println("후기작성이 완되었습니다.");
+			System.out.println("후기작성이 완료되었습니다.");
 		}
 		else {
 			throw new Exception("후기 작성 실패");
@@ -236,23 +237,36 @@ public class MutualAction {
 	
 	public void sellReview(Connection conn) throws Exception {
 		//판매 후기 작성
-		System.out.print("거래완료한 상품의 번호 : ");
+		System.out.println("=== [구매한 상품 목록] ===");
+		String sql ="SELECT * FROM REVIEW WHERE USER_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, Main.login_member_no);
+		ResultSet rs = pstmt.executeQuery();
+		
+		int num = 1;
+		while(rs.next()) {
+			int itemNo = rs.getInt("ITEM_NO");
+			System.out.println(num++ + ". " + itemNo+"번 상품");
+		}
+		System.out.println("\n===========================");
+		
+		System.out.print("리뷰 쓸 상품 번호 : ");
 		int item_no = Main.integerParseInt();
 		
-		System.out.print("판매 후기를 작성해주세요: ");
+		System.out.print("판매 후기를 작성해주세요 : ");
 		String sellReview = Main.SC.nextLine();
 		
-		String sql = "UPDATE REVIEW SET SELL_REVIEW = ? WHERE ITEM_NO = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
+		sql = "UPDATE REVIEW SET SELL_REVIEW = ? WHERE ITEM_NO = ?";
+		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, sellReview);
 		pstmt.setInt(2, item_no);
 		int result = pstmt.executeUpdate();
 		
 		if(result == 1 ) {
-			System.out.println("후기작성이 완료되었습니다.");
+			System.out.println("※ 후기작성이 완료되었습니다 ※");
 		}
 		else {
-			throw new Exception("후기 작성 실패");
+			throw new Exception("※ 후기 작성 실패 ※ ");
 		}
 	}
 	

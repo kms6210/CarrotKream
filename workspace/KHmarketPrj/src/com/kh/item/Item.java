@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import com.kh.account.Account;
 import com.kh.jdbc.JdbcTemplate;
 import com.kh.main.Main;
+import com.kh.mutualAction.MutualAction;
 
 // 테이블 : 상품 유형, 상품
 public class Item {
@@ -277,7 +278,7 @@ public class Item {
 			System.out.print("번호를 입력하세요 : ");
 			String input = Main.SC.nextLine();
 			System.out.println();
-			
+		try {
 			switch(input) {
 				case "1": is.itemView(conn); break;
 				case "2": is.buyOrSell(conn); break;
@@ -288,6 +289,9 @@ public class Item {
 				default: System.out.println("※ 잘못된 입력입니다 ※\n");
 			}
 			System.out.println();
+		} catch (Exception e) {
+			System.out.println("\n" + e.getMessage() + "\n");
+		}
 		}
 	}
 	
@@ -345,23 +349,18 @@ public class Item {
 			
 			System.out.println("");
 			
-			boolean keep = true;
-			
-			while(keep) {
-				
-				System.out.print("1. 좋아요 2. 좋아요 취소 : ");
+			int itemNo1 = Integer.parseInt(item_no);
+					
+				System.out.print("1. 좋아요 / 2. 거래하기 : ");
 				String input = Main.SC.nextLine();
-				System.out.println("");
 				
 				switch(input) {
-				case "1": pm.like(conn, userNo); break;
-				case "2": pm.unlike(conn, userNo); break;
-				case "99": keep = false; break;
+				case "1": new MutualAction().setLikeList(itemNo1, conn); break;
+				case "2": new MutualAction().sellItem(itemNo1, conn); break;
 				default: throw new Exception("※ 잘못된 입력입니다 ※");
 				}
 			}
 			
-		}
 		
 	}
 	

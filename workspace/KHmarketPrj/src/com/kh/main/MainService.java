@@ -13,7 +13,7 @@ public class MainService {
 				return true;
 			}
 		} catch (Exception e) {
-			System.out.println("※ jar 파일을 연결해주세요 ※");
+			System.out.println("※ 데이터베이스와 연결해주세요 ※");
 		}
 		
 		return false;
