@@ -11,13 +11,16 @@ import com.kh.main.MainProcess;
 // 테이블 : 유저, 상품, 제재 내역, 품질 검증, 계좌, Q&A, 공지사항
 
 public class Admin {
+	
 	public void publicWandD(Connection conn) throws Exception {
-		System.out.print("1. 공지사항 작성 / 2. 공지사항 삭제 : ");
+		System.out.print("1.조회 / 2.작성 / 3.삭제 : ");
 		String input = Main.SC.nextLine();
 		if (input.equals("1")) {
-		writePublic(conn);
+			new AdminTemp().showNoticeList(conn);
 		} else if (input.equals("2")) {
-		deletePublic(conn);
+			writePublic(conn);
+		} else if (input.equals("3")){
+			deletePublic(conn);
 		} else {
 			throw new Exception("※ 잘못된 입력입니다 ※");
 		}
@@ -191,10 +194,10 @@ public void banId(Connection conn) throws Exception {
 	String sql = "UPDATE BANNED SET STOP_REASON = ? WHERE USER_NO =?";
 	PreparedStatement pstmt = conn.prepareStatement(sql);
 
-	System.out.print("정지할 유저 번호 :");
+	System.out.print("정지할 유저 번호 : ");
 	String userNo = Main.SC.nextLine();
 
-	System.out.print("정지 사유 :");
+	System.out.print("정지 사유 : ");
 	String stopReason = Main.SC.nextLine();
 
 	pstmt.setString(1, stopReason);
@@ -317,10 +320,10 @@ public void deletePublic(Connection conn) throws Exception {
 	String sql = "UPDATE NOTICE SET QUIT_YN =? WHERE PUBLIC_NO =? ";
 	PreparedStatement pstmt = conn.prepareStatement(sql);
 
-	System.out.print("삭제할 공지사항 번호 선택 :");
+	System.out.print("삭제할 공지사항 번호 선택 : ");
 	String publicNo = Main.SC.nextLine();
 
-	System.out.print("삭제 하시겠습니까? (Y / N) :");
+	System.out.print("삭제 하시겠습니까? (Y / N) : ");
 	String quitYn = Main.SC.nextLine();
 
 	pstmt.setString(1, quitYn);

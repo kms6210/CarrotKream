@@ -3,6 +3,7 @@ package com.kh.center;
 import java.sql.Connection;
 
 import com.kh.main.Main;
+import com.kh.main.MainProcess;
 import com.kh.user.User;
 import com.kh.user.UserInput;
 
@@ -14,7 +15,8 @@ public class CenterService {
 		
 		while(!isFinish) {
 			System.out.println("\n==================");
-			System.out.println("★ 방문자 고객센터 페이지 ★\n\n");
+			System.out.println("★ 방문자 고객센터 페이지 ★");
+			System.out.println("방문자 "+ new MainProcess().ARAMDOM  +" 님\n");
 			System.out.println("1. FAQ 보기\n"
 						 	 + "2. 탈퇴 계정 복구\n"
 							 + "3. 일반 문의 하기");
@@ -42,9 +44,9 @@ public class CenterService {
 		
 		while(!isFinish) {
 			System.out.println("\n==================");
-			System.out.println("★ 사용자 고객센터 페이지 ★\n");
+			System.out.println("★ 사용자 고객센터 페이지 ★");
 			UserInput.usernick(conn);
-			System.out.println("1. FAQ 보기\n"
+			System.out.println("\n1. FAQ 보기\n"
 							 + "2. 내가 쓴 QnA 확인하기 \n"
 							 + "3. 일반 문의하기");
 			System.out.println("==================");

@@ -190,6 +190,7 @@ public class ItemSearch {
 		ResultSet rs = pstmt.executeQuery();
 		
 		//상품 보기
+		System.out.println();
 		while(rs.next()) {
 			
 			String itemNo = rs.getString("ITEM_NO");

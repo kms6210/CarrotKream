@@ -30,11 +30,8 @@ public class UserInput {
 			while(!tf) {
 				System.out.print("아이디 : ");
 				userId = Main.SC.nextLine();
-				try {
-					tf = applyIdRule(userId, conn);
-				} catch (Exception e) {
-					
-				}
+				tf = applyIdRule(userId, conn);
+				
 			}
 		} while(false);	
 		
@@ -91,7 +88,7 @@ public class UserInput {
 		
 		while(true) {
 			System.out.print("해당 질문에 대한 답변을 입력하세요 : ");
-			String userAnswer = Main.SC.nextLine();
+			userAnswer = Main.SC.nextLine();
 			if(userAnswer.length() != 0 && !userAnswer.isBlank()) {break;}
 			else { System.out.println("※ 답변을 채워주세요 ※\n"); }
 		}
@@ -284,13 +281,14 @@ public class UserInput {
 //                String trustLevel = rs.getString("TRUST_LEVEL");
                 if(balance != null) {
                 	System.out.println("\n                 "+nick + " 님 환영합니다");
-                    System.out.println("\n                     잔액  : "+ balance);
+                    System.out.println("\n                    잔고 : "+ balance);
                 } else {
                 	System.out.println("\n                 "+nick + " 님 환영합니다.");
                 	throw new Exception("생성된 계좌가 없습니다\n");
                 }
         	 } 
         	} else {
+        	rs.next();
        		 check++;
              Main.login_member_no = rs.getInt("USER_NO");
              String nick = rs.getString("NICK");
@@ -298,10 +296,10 @@ public class UserInput {
              String trustLevel = rs.getString("TRUST_LEVEL");
              
              if(balance != null) {
-            	 System.out.println(nick + " 님 환영합니다");
-                 System.out.println("잔액  : "+ balance);
+            	 System.out.println(nick + " 님의 마이페이지");
+                 System.out.println("[잔고 : "+ balance +"]");
              } else {
-            	 System.out.println(nick + " 님 환영합니다");
+            	 System.out.println(nick + " 님의 마이페이지");
              }
        
             
