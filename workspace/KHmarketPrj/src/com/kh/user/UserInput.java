@@ -268,7 +268,13 @@ public class UserInput {
             String balance = rs.getString("BALANCE");
             String trustLevel = rs.getString("TRUST_LEVEL");
             
-            System.out.println("★ " + nick + "님의 마이 페이지 ★");
+            System.out.println("\n                 "+nick + " 님 환영합니다.");
+            System.out.println("\n                  매너온도  : "+ trustLevel);
+            if(balance != null) {
+                System.out.println("\n                     잔액  : "+ balance);
+            } else {
+                System.out.println("\n                 생성된 계좌가 없습니다.");
+            }
             
         }
         return check;
