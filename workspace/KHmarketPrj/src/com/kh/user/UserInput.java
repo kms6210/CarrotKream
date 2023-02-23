@@ -3,10 +3,8 @@ package com.kh.user;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Random;
 
-import com.kh.admin.Admin;
 import com.kh.main.Main;
 
 public class UserInput {
@@ -61,7 +59,7 @@ public class UserInput {
 				if(tf) {
 					userPhone = castPhonNo(userPhone);
 					if(phoneOverlapCheck(userPhone,conn)) {
-						System.out.println("이미 등록된 전화 번호입니다.");
+						System.out.println("※ 해당 전화번호로 생성된 계정이 존재합니다 ※\n");
 						tf = false;
 					}
 				}
@@ -75,13 +73,13 @@ public class UserInput {
 			tf = false;
 			while(!tf) {
 				if(showHintList(conn) == 0) {throw new Exception("힌트 목록을 불러오지 못했습니다.");}
-				System.out.print("힌트 질문 번호 : ");
+				System.out.print("질문 번호를 입력하세요 : ");
 				userQuestion = Main.SC.nextLine();
 				tf = applyQuestionRule(userQuestion);
 			}
 		} while(false);	
 		
-		System.out.print("힌트 답변 : ");
+		System.out.print("해당 질문에 대한 답변을 입력하세요 : ");
 		String userAnswer = Main.SC.nextLine();	
 		
 		UserData data = new UserData();
@@ -101,15 +99,14 @@ public class UserInput {
 	public boolean applyIdRule(String userId, Connection conn) throws Exception {
 		if (userId.matches(idCheck)) {
 			if(!idOverlapCheck(userId, conn)) {
-				System.out.println();
 				return true;
 			} else {
-				System.out.println("이미 사용중인 아이디입니다\n");
+				System.out.println("※ 이미 사용중인 아이디입니다 ※\n");
 				return false;
 			}
 			
 		} else { 
-			System.out.println("아이디는 5~20자 한글자 이상의 영문과 숫자이루어져야 합니다\n");
+			System.out.println("※ 아이디는 5~20자의 영문과 숫자만 가능합니다 ※\n");
 			return false;
 		}
 	}
@@ -128,20 +125,22 @@ public class UserInput {
 		if (userPwd.matches(pwdCheck)) {
 			return true;
 		} else {
-			System.out.println("비밀번호는 8~15자 영문, 숫자, 특수문자를 포함해야합니다\n");
+			System.out.println("※ 비밀번호는 8~15자 영문, 숫자, 특수문자를 포함해야합니다 ※\n");
 			return false;
 		}
 	}
 	
 	// 비번 설정시 보안 등급 출력 (ex. 낮음 중간 높음 ...)
 		public void showPwdGrade(String userPwd) {
+			System.out.print(">>>");
 			if(userPwd.length() == 15) {
-				System.out.println("[ 보안등급 높음 ✔✔✔]"); 
+				System.out.println("  ☆☆☆☆☆ 보안등급 높음 ☆☆☆☆☆"); 
 			} else if (userPwd.length() >= 10 && userPwd.length() < 15 ) {
-				System.out.println("[보안등급 보통 ✔✔]");
+				System.out.println("  ☆☆☆ 보안등급 보통 ☆☆☆");
 			} else if (userPwd.length() < 10) {
-				System.out.println("[보안등급 낮음 ✔]");
+				System.out.println("  ☆ 보안등급 낮음 ☆");
 			}
+			System.out.println();
 		}
 	
 	// 전화번호 유효성 체크
@@ -150,7 +149,7 @@ public class UserInput {
 			return true;
 		}
 		else {
-			System.out.println("전화번호는 11~13자 01로 시작하는 숫자나 01*-****-**** 형식으로 입력하세요");
+			System.out.println("※ 형식에 맞춰 입력해주세요 (ex. 010-1234-5678 or 01012345678) ※\n");
 			return false;
 		}
 	}
@@ -182,17 +181,12 @@ public class UserInput {
 		ResultSet rs = pstmt.executeQuery();
 		
 		int i = 0;
+		System.out.println("\n------- 비밀번호 찾기 질문 목록 -------");
 		while(rs.next()) {
 			String question = rs.getString("QUESTION");
-			System.out.println("------- 질문 목록 -------");
-			if(i%5 == 0) {
-				System.out.println("\n");
-			} else if(i!=0) {
-				System.out.print("|");
-			}
-			System.out.print(++i +". "+question+" ");
+			System.out.print(++i +". "+question + "\n");
 		}
-		System.out.println("");
+		System.out.println("-----------------------------------");
 		return i;
 	}
 		
@@ -201,7 +195,7 @@ public class UserInput {
 		if(userQuestion.matches(qusCheck)) {
 			return true;
 		} else {
-			System.out.println("숫자만 입력하세요\n");
+			System.out.println("※ 숫자만 입력하세요 ※\n");
 			return false;
 		}
 	}
@@ -274,14 +268,27 @@ public class UserInput {
             String balance = rs.getString("BALANCE");
             String trustLevel = rs.getString("TRUST_LEVEL");
             
-            System.out.println("\n"+nick + " 님 환영합니다.");
-            System.out.println("매너온도    : "+ trustLevel);
-            if(balance != null) {
-                System.out.println("잔액    : "+ balance);
-            } else {
-                System.out.println("생성된 계좌가 없습니다.");
-            }
-            System.out.println("\n-------------------");
+            System.out.println("★ " + nick + "님의 마이 페이지 ★");
+            
+        }
+        return check;
+    }
+    
+    public static int usernick(Connection conn) throws Exception {
+        String sql = "SELECT * FROM K_USER WHERE USER_NO = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, Main.login_member_no);
+        ResultSet rs = pstmt.executeQuery();
+        
+        int check = 0;
+        if(rs.next()) {
+            check++;
+            Main.login_member_no = rs.getInt("USER_NO");
+            String nick = rs.getString("NICK");
+            String balance = rs.getString("BALANCE");
+            String trustLevel = rs.getString("TRUST_LEVEL");
+            
+            System.out.println(nick);
         }
         return check;
     }

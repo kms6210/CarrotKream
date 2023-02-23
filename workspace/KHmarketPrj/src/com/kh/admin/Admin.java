@@ -7,13 +7,29 @@ import java.sql.SQLException;
 
 import com.kh.auction.Auction;
 import com.kh.main.Main;
-
+import com.kh.main.MainProcess;
 import com.kh.user.UserData;
 import com.kh.user.UserInput;
 
 // 테이블 : 유저, 상품, 제재 내역, 품질 검증, 계좌, Q&A, 공지사항
 
 public class Admin {
+	public void userAdmin(Connection conn) throws Exception {
+		System.out.println("\n==================");
+        System.out.println("★ 유저 관리 페이지 ★");
+        System.out.println("");
+		System.out.println("\n1.회원 목록 조회\n2.계정 정지");
+		System.out.println("==================");
+
+		String num = new MainProcess().inputNum();
+		if(num.equals("1")) {
+			showUserList(conn);
+		} else if (num.equals("2")) {
+			
+		} else {
+			
+		}
+	}
 
 	public void adminlogin(Connection conn) throws Exception {
 		//관리자 로그인
@@ -21,15 +37,14 @@ public class Admin {
 		String sql = "SELECT * FROM K_ADMIN WHERE UPPER(ID) = UPPER( ? ) AND PWD = ? AND KEY = ? AND QUIT_YN ='N' ";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 
-		System.out.println("\n관리자 로그인");
-		
-		System.out.print("ID 입력 :");
+		System.out.println("\n[관리자 계정 로그인]");
+		System.out.print("ID 입력 : ");
 		String id = Main.SC.nextLine();
 
-		System.out.print("PWD 입력 :");
+		System.out.print("PWD 입력 : ");
 		String pwd = Main.SC.nextLine();
 
-		System.out.print("KEY 입력 :");
+		System.out.print("KEY 입력 : ");
 		String key = Main.SC.nextLine();
 
 		pstmt.setString(1, id);
@@ -39,10 +54,10 @@ public class Admin {
 		ResultSet rs = pstmt.executeQuery();
 
 		if(rs.next()) {
-			System.out.println("관리자 로그인 완료");
+			System.out.println("\n※ 관리자 로그인 완료 ※");
 			Main.login_admin_no = rs.getInt("ADMIN_NO");
 		}else {
-			System.out.println("로그인 실패..");
+			throw new Exception("※ 관리자 로그인 실패 ※");
 		}
 	}
 

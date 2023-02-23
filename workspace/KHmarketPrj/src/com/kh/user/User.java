@@ -3,8 +3,6 @@ package com.kh.user;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Scanner;
 
 import com.kh.admin.Admin;
 import com.kh.main.Main;
@@ -45,7 +43,7 @@ public class User {
 		UserData data;
 		System.out.print("아이디 : ");
 		String userId = Main.SC.nextLine();
-		if(userId.equals("aaa")) {
+		if(userId.equals("admin")) {
 		      new Admin().adminlogin(conn);
 		      return Main.login_admin_no;
 		} 
@@ -72,14 +70,10 @@ public class User {
 				String balance = rs.getString("BALANCE");
 				String trustLevel = rs.getString("TRUST_LEVEL");
 				
-				System.out.println("\n"+nick + " 님 환영합니다.");
+				System.out.println("\n★★★★★ "+nick + "님 환영합니다 ★★★★★");
 				System.out.println("매너온도	: "+ trustLevel);
-				if(balance != null) {
-					System.out.println("잔액	: "+ balance);
-				} else {
-					System.out.println("생성된 계좌가 없습니다.");
-				}
-                System.out.println("-------------------");
+				System.out.println("잔고	: " + balance + "\n");
+				
 			}
 			
 			// 정지 계정
@@ -96,7 +90,7 @@ public class User {
 					System.out.println("정지된 이유 : " + rs.getString("STOP_REASON"));
 					System.out.println("정지 해제일 : " + rs.getDate("RELEASE_DATE"));
 					
-					System.out.println("\n자동으로 로그아웃 됩니다.");
+					System.out.println("\n자동으로 로그아웃 됩니다");
 					Main.login_member_no = 0;
 				}
 			}
@@ -104,7 +98,7 @@ public class User {
 			// 탈퇴 계정
 			else if(userTatus.equals("Q")) {
 				System.out.println("\n탈퇴한 회원입니다");
-				System.out.println("\n자동으로 로그아웃 됩니다.");
+				System.out.println("\n자동으로 로그아웃 됩니다");
 				Main.login_member_no = 0;
 			} 
 		}
@@ -117,7 +111,7 @@ public class User {
 		boolean back = false;
 		while(!back) {
 			System.out.println("1.Id 찾기 / 2.Pwd 찾기");
-			System.out.println("번호를 입력하세요 : ");
+			System.out.print("번호를 입력하세요 : ");
 			String select = Main.SC.nextLine();
 			switch (select)	 {
 			case "1" : if(findId(conn)!=0) {back = true;}; break;
@@ -154,14 +148,14 @@ public class User {
 			//결과 출력
 			if(rs.next()) {
 				System.out.println("");
-				System.out.println("회원님의 아이디는 "+rs.getString("ID")+"입니다.");
+				System.out.println("회원님의 아이디는 "+rs.getString("ID")+"입니다");
 			} else {
-				System.out.println("틀린 답변입니다.");
+				System.out.println("답변이 일치하지 않습니다");
 			}
 			check++;
 			return check;
 		} else {
-			System.out.println("전화번호와 일치하는 회원정보가 없습니다. ");
+			System.out.println("전화번호와 일치하는 회원정보가 없습니다 ");
 			return check;
 		}
 	}
@@ -230,7 +224,7 @@ public class User {
 			
 			// 아이디 일치 체크
 			if(rs.next()) {
-				System.out.println("탈퇴 하려면 [" + rs.getString("ID") + "]을 입력하세요");
+				System.out.print("탈퇴 하시려면 \'" + rs.getString("ID") + "\'을(를) 입력하세요 : ");
 				String input = Main.SC.nextLine();
 				
 				// 탈퇴 처리
@@ -242,13 +236,15 @@ public class User {
 					rrs = pstmt.executeUpdate();
 					
 					if(rrs != 0) {
-						System.out.println("탈퇴처리를 완료했습니다.");
+						System.out.println("※ 탈퇴처리를 완료했습니다 ※");
 						Main.login_member_no = 0;
 					}
-				} else { System.out.println("입력한 값이 다릅니다."); }
+				} else { System.out.println("※ 입력한 값이 다릅니다 ※"); }
 			}
 		}
-		else { System.out.println("탈퇴 취소"); }
+		else if (yn.equals("2")) {
+			throw new Exception("※ 회원 탈퇴 취소 ※");
+		} else { throw new Exception("\n※ 잘못된 입력입니다 ※"); }
 		
 		return rrs; 
 	}

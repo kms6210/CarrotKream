@@ -21,7 +21,7 @@ public class AuctionSQL {
 	}
 	
 	public ResultSet showAuction(Connection conn) throws Exception {
-		String sql = "SELECT I.ITEM_NO, PRICE, END_TIME - SYSDATE 남은시간 FROM ITEM I JOIN AUCTION A ON I.ITEM_NO = A.ITEM_NO WHERE TRADE_STATUS = ? AND AUCTION_YN = ? ORDER BY 남은시간";
+		String sql = "SELECT I.ITEM_NO, TITLE, PRICE, END_TIME - SYSDATE 남은시간 FROM ITEM I JOIN AUCTION A ON I.ITEM_NO = A.ITEM_NO WHERE TRADE_STATUS = ? AND AUCTION_YN = ? ORDER BY 남은시간";
 		return selectAuction(sql, conn);
 	}
 	

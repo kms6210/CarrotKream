@@ -11,7 +11,7 @@ public class Main {
 		try {
 			return Integer.parseInt(SC.nextLine());
 		} catch (Exception e){
-			throw new Exception("숫자를 입력해주세요.");
+			throw new Exception("※ 숫자를 입력해주세요 ※");
 		}
 	}
 	
