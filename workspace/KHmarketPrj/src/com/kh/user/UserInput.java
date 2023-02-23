@@ -18,6 +18,7 @@ public class UserInput {
 	private String userId = null;
 	private String userPwd = null;
 	private String userPhone = null;
+	private String userAddress = null;
 	private String userQuestion = null;
 
 	
@@ -46,9 +47,11 @@ public class UserInput {
 				if(tf) { showPwdGrade(userPwd); }
 			}
 		} while(false);	
-								
+		
+		
 		System.out.print("닉네임 : ");
 		String userNick = Main.SC.nextLine();
+		if(userNick == null) { userNick = userId; } 
 		
 		do {
 			tf = false;
@@ -66,9 +69,16 @@ public class UserInput {
 			}
 		} while(false);	
 		
-		System.out.print("주소 : ");
-		String userAddress = Main.SC.nextLine();
-				
+		
+		while(true) {
+			System.out.print("주소 : ");
+			String userAddress = Main.SC.nextLine();
+			if(userAddress.length() != 0) {break;}
+			throw new Exception("※ 주소를 채워주세요 ※\n");
+		}
+		
+		
+		
 		do {
 			tf = false;
 			while(!tf) {
@@ -254,31 +264,48 @@ public class UserInput {
 	}
 		
     // 유저 정보 출력
-    public static int userInfo(Connection conn) throws Exception {
+    public static int userInfo(Connection conn, int set) throws Exception {
         String sql = "SELECT * FROM K_USER WHERE USER_NO = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, Main.login_member_no);
         ResultSet rs = pstmt.executeQuery();
         
         int check = 0;
-        if(rs.next()) {
-            check++;
-            Main.login_member_no = rs.getInt("USER_NO");
-            String nick = rs.getString("NICK");
-            String balance = rs.getString("BALANCE");
-            String trustLevel = rs.getString("TRUST_LEVEL");
-            
-            System.out.println("\n                 "+nick + " 님 환영합니다.");
-            System.out.println("\n                  매너온도  : "+ trustLevel);
-            if(balance != null) {
-                System.out.println("\n                     잔액  : "+ balance);
-            } else {
-                System.out.println("\n                 생성된 계좌가 없습니다.");
-            }
+        if(set == 1) {
+        	if(rs.next()) {
+                check++;
+                Main.login_member_no = rs.getInt("USER_NO");
+                String nick = rs.getString("NICK");
+                String balance = rs.getString("BALANCE");
+//                String trustLevel = rs.getString("TRUST_LEVEL");
+                if(balance != null) {
+                	System.out.println("\n                 "+nick + " 님 환영합니다");
+                    System.out.println("\n                     잔액  : "+ balance);
+                } else {
+                	System.out.println("\n                 "+nick + " 님 환영합니다.");
+                	throw new Exception("생성된 계좌가 없습니다\n");
+                }
+        	 } 
+        	} else {
+       		 check++;
+             Main.login_member_no = rs.getInt("USER_NO");
+             String nick = rs.getString("NICK");
+             String balance = rs.getString("BALANCE");
+             String trustLevel = rs.getString("TRUST_LEVEL");
+             
+             if(balance != null) {
+            	 System.out.println(nick + " 님 환영합니다");
+                 System.out.println("잔액  : "+ balance);
+             } else {
+            	 System.out.println(nick + " 님 환영합니다");
+             }
+       
             
         }
         return check;
     }
+    
+    
     
     public static int usernick(Connection conn) throws Exception {
         String sql = "SELECT * FROM K_USER WHERE USER_NO = ?";

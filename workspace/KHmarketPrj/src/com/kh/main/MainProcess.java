@@ -38,15 +38,13 @@ public class MainProcess {
         System.out.println("┠─────────────────────────────────────────────────┨");
         System.out.println("┃ 4.상품조회	| 5.경매조회	| 6.고객센터 페이지	  ┃");
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-        System.out.println("==================");
 		return inputNum();
 	}
 	
     private String showUPage(Connection conn) throws Exception {
     	System.out.println("==================== 사용자 페이지 ====================");
 		System.out.println("┏━                                               ━┓");
-        UserInput.userInfo(conn);
-        System.out.println("");
+        UserInput.userInfo(conn,1);
         System.out.println("┗━                                               ━┛");
         System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
         System.out.println("┃ 1.마이페이지	| 2.채팅하기	| 3.상품 페이지	  ┃");
@@ -58,6 +56,7 @@ public class MainProcess {
 	
 	private String showAPage(Connection conn) throws Exception {
 		System.out.println("================== 관리자  페이지 ====================");
+		System.err.println("");
 		System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
         System.out.println("┃ 1.마이페이지	| 2.상품관리	| 3.유저관리	  ┃");
         System.out.println("┠─────────────────────────────────────────────────┨");
@@ -114,14 +113,14 @@ public class MainProcess {
 	
 	private void processVservice(String input, Connection conn) throws Exception {
 		switch (input) {
-			case "1": if(user.join(conn) == 0) { throw new Exception("※ 회원가입 실패 ※"); } else { System.out.println("\n※ 회원등록 완료 ※"); } break;
-			case "2": if(user.login(conn) == 0) { throw new Exception("※ 로그인 실패 ※"); } break;
+			case "1": if(user.join(conn) == 0) { throw new Exception("※ 회원가입 실패 ※\n"); } else { System.out.println("※ 회원등록 완료 ※\n"); } break;
+			case "2": if(user.login(conn) == 0) { throw new Exception("※ 로그인 실패 ※\n"); } break;
 			case "3": user.findIdPwd(conn); break;
 			case "4": ish.itemView(conn); System.out.println(); break;
 			case "5": auction.showAuction(conn); break;
 			case "6": cs.centerPage(conn); break;
 			case "99" : throw new Exception("※ 메인 페이지입니다 ※");
-			default: throw new Exception("※ 잘못된 입력입니다 ※");
+			default: throw new Exception("※ 잘못된 입력입니다 ※\n");
 		}
 	}
 	
@@ -140,16 +139,16 @@ public class MainProcess {
 	
 	private void processMyPage(Connection conn) throws Exception {
 		System.out.println("\n==================");
-		UserInput.userInfo(conn);
+		UserInput.userInfo(conn,2);
         System.out.println("\n1. 계좌 페이지\n2. 로그아웃\n3. 회원탈퇴");
         System.out.println("==================");
 		String num = inputNum();
 		switch (num) {
 			case "1": acs.accountPage(conn); break;
-			case "2" : System.out.println("※ 로그아웃 완료 ※\n"); Main.login_member_no = 0; break;
-			case "3" : if(user.dropUser(conn) == 0) {throw new Exception("※ 회원 탈퇴 실패 ※"); } break;
+			case "2" : System.out.println("※ 로그아웃 완료 ※"); Main.login_member_no = 0; break;
+			case "3" : if(user.dropUser(conn) == 0) {throw new Exception("※ 회원 탈퇴 실패 ※\n"); } break;
 			case "99" : throw new Exception("※ 메인 페이지입니다 ※");
-			default: throw new Exception("※ 잘못된 입력입니다 ※");
+			default: throw new Exception("※ 잘못된 입력입니다 ※\n");
 		}
 	}
 	
@@ -161,7 +160,7 @@ public class MainProcess {
 			case "4": break;
 			case "5": break;
 			case "99" : throw new Exception("※ 메인 페이지입니다 ※");
-			default: throw new Exception("※ 잘못된 입력입니다 ※");
+			default: throw new Exception("※ 잘못된 입력입니다 ※\n");
 		}
 		
 	}
