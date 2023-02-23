@@ -28,7 +28,7 @@ public class AuctionSQL {
 	}
 	
 	public ResultSet showMyAuction(Connection conn) throws Exception {
-		String sql = "select * from bid b join item i ON i.item_no = b.item_no where b.user_no = ? AND trade_status = 'A'";
+		String sql = "select * from bid b join item i ON i.item_no = b.item_no where b.user_no = ? AND trade_status = 'A' AND QUIT_YN = 'N'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, Main.login_member_no);
 		return pstmt.executeQuery();
@@ -36,7 +36,7 @@ public class AuctionSQL {
 	
 	public int findItem(Connection conn) throws Exception {
 		int item_no = Main.integerParseInt();
-		String sql = "SELECT ITEM_NO FROM AUCTION WHERE AUCTION_YN = ? AND ITEM_NO = ?";
+		String sql = "SELECT ITEM_NO FROM AUCTION WHERE AUCTION_YN = ? AND ITEM_NO = ? ";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, "N");
 		pstmt.setInt(2, item_no);
@@ -104,6 +104,11 @@ public class AuctionSQL {
 			return insertBid(item_no, price, conn);
 		}
 	}
+	
+//	public int findItem2(int item_no, Connection conn) throws Exception {
+//		ResultSet rs = selectBid(0, conn);
+//		if(rs.next())
+//	}
 	
 	private ResultSet selectBid(int item_no, Connection conn) throws Exception {
 		String sql = "SELECT * FROM BID WHERE USER_NO = ? AND ITEM_NO = ?";

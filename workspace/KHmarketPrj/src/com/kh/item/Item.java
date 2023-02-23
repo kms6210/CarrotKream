@@ -361,17 +361,18 @@ public class Item {
 			
 			System.out.println("");
 			int itemNo1 = Integer.parseInt(item_no);
-
+			int price1 = Integer.parseInt(price);
+			
 			boolean isFinish = false;
 			while(!isFinish) {
-				System.out.print("1. 좋아요 / 2. 거래하기 / 3. 이 글에서 나가기: ");
+				System.out.print("1.좋아요 / 2.거래하기 / 3.이 글에서 나가기: ");
 				String input = Main.SC.nextLine();
 				
 				switch(input) {
 				case "1": new MutualAction().setLikeList(itemNo1, conn); break;
-				case "2": new MutualAction().sellItem(itemNo1, conn); break;
+				case "2": new MutualAction().sellItem(itemNo1, userNo, price1, conn); break;
 				case "3": isFinish = true; break;
-				default: throw new Exception("※ 잘못된 입력입니다 ※");
+				default: System.out.println("\n※ 잘못된 입력입니다 ※\n");
 				}
 			}
 		}

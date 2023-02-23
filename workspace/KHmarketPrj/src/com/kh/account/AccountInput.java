@@ -77,7 +77,7 @@ public class AccountInput {
 				else { System.out.println("[-] 내 kh머니에서 " + -1 * price + " 포인트 인출함    " + use_date); }
 			} else {
 				if(price < 0) {
-					if(target_no < 0) { System.out.println("[-] " + -1 * price + " 포인트 발생함    " + use_date); }
+					if(target_no < 0) { System.out.println("[-] " + -1 * price + " 포인트 수수료 인출    " + use_date); }
 					else {System.out.println("[-] " + target_no + "번 유저에게 " + -1 * price + " 포인트 입금함    " + use_date); }
 				} else {
 					System.out.println("[+] " + target_no + "번 유저에게서 " + price + " 포인트 입금받음    " + use_date);

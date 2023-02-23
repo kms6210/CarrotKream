@@ -30,7 +30,7 @@ public class AccountService {
 					default: { throw new Exception("※ 잘못된 입력입니다 ※"); } 
 				}
 			} catch(Exception e) {
-				System.out.println("\n" + e.getMessage());
+				System.out.println("\n" + e.getMessage() +"\n");
 			}
 		}
 	}

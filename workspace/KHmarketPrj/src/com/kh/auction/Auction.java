@@ -12,6 +12,7 @@ public class Auction {
 	public void showAuction(Connection conn) throws Exception {
 		// 경매 페이지 출력
 		ai.showAuction(conn);
+		System.out.println();
 	}
 
 	public void bid(Connection conn) throws Exception {
@@ -32,14 +33,18 @@ public class Auction {
 		
 		if (arr[2] == 1) {
 			int price = (int) (arr[1] * 0.1);
-			int balance = aSQL.selectBalance(Main.login_member_no, conn);
-			int result1 = aSQL.updateBalance(Main.login_member_no, -1 * price, balance, conn);
+			int balance1 = aSQL.selectBalance(Main.login_member_no, conn);
+			int result1 = aSQL.updateBalance(Main.login_member_no, -1 * price, balance1, conn);
 			int result2 = aSQL.insertAccount(Main.login_member_no, -1, -1 * price, conn);
-			if(result1 == 0 || result2 == 0) {
+			
+			int balance2 = aSQL.selectBalance2(1, conn);
+			int result3 = aSQL.updateBalance2(1, price, balance2, conn);
+			int result4 = aSQL.insertAccount2(Main.login_member_no, 1, -1 * price, conn);
+			if(result1 == 0 || result2 == 0 || result3 == 0 || result4 == 0) {
 				throw new Exception("※ 입찰 취소 오류 ※");
 			}
 			
-			throw new Exception("※ " + arr[0] + "번 상품에 등록된 입찰이 취소되었습니다. ※\n※ 입찰 취소로 인해 \" + price + \" 포인트가 차감됩니다 ※");
+			System.out.println("\n\n※ " + arr[0] + "번 상품에 등록된 입찰이 취소되었습니다 ※\n※ 입찰 취소로 인해 " + price + " 포인트가 차감됩니다 ※\n");
 		} else {
 			throw new Exception("※ 입찰 취소 실패 ※");
 		}

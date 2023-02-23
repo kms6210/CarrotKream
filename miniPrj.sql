@@ -523,13 +523,13 @@ insert into REVIEW (REVIEW_NO, USER_NO, ITEM_NO, TRADE_DATE) values (9, 9, 9, SY
 insert into REVIEW (REVIEW_NO, USER_NO, ITEM_NO, TRADE_DATE) values (10, 10, 10, SYSDATE - 10);
 
 insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (1, 1, 1, '플로어 스탠드', '사용한지 일주일밖에 안됬어요', 10000,'S' ,SYSDATE - 1);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (2, 2, 2, '축구화', '저랑 사이즈가 안맞아서 팝니다', 20000,'B' ,SYSDATE - 2);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (2, 2, 2, '축구화', '저랑 사이즈가 안맞아서 팝니다', 20000,'S' ,SYSDATE - 2);
 insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (3, 3, 3, '40000원 CU기프티콘', '쓸일이 없어서 팔아요~', 30000,'A' ,SYSDATE - 3);
 insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (4, 4, 4, '무쇠냄비', '이사가는데 무거워서 처리합니다..', 40000,'S' ,SYSDATE - 4);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (5, 5, 5, '쿠쿠밥솥', '딱 2번사용한 제품이에요', 50000,'B' ,SYSDATE - 5);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (5, 5, 5, '쿠쿠밥솥', '딱 2번사용한 제품이에요', 50000,'S' ,SYSDATE - 5);
 insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (6, 6, 6, 'LG27인치 모니터 팔아요', 'LG27MP37VQ IPS화면으로 선명하고 깨끗합니다', 60000,'A' ,SYSDATE - 6);
 insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (7, 7, 7, '에어팟 진검승부 하실분', '본체를 잃어버려서 양쪽 유닛만 남은상태고 본체 있으신분 찾아요.', 70000,'S' ,SYSDATE - 7);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (8, 8, 8, '제 위에분  ', '저는 오른쪽만 잃어버려서 왼쪽만 남은 상태입니다. 가위바위보 3세판으로 결판내죠', 80000,'S' ,SYSDATE - 8);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (8, 8, 8, '제 위에분  ', '저는 오른쪽만 잃어버려서 왼쪽만 남은 상태입니다. 가위바위보 3세판으로 결판내죠', 80000,'B' ,SYSDATE - 8);
 insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (9, 9, 9, '마스크 팔아요', '300장 입니다.', 90000,'D' ,SYSDATE - 9);
 insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (10, 10, 10, '일룸 4인용 식탁 판매합니다', '상판에 약간얼룩외에 상태 좋아요~', 100000,'B' ,SYSDATE - 10);
 
@@ -566,8 +566,8 @@ insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (8, '네이버
 insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (9, 'KH마켓 서버 변경 안내', '긴급 서버 변경하였습니다 어떠한 오류가 발생할지 예상할수 없습니다.', SYSDATE - 9);
 insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (10, '모바일 "판매 완료" 버튼 오류 수정', '모바일에서 판매완료 버튼기능이 정상작동 하지 않는 점이 발견되어정상 수정하였습니다.', SYSDATE - 10);
 
-insert into AUCTION (ITEM_NO, END_TIME) values (1, SYSDATE + 1);
-insert into AUCTION (ITEM_NO, END_TIME) values (2, SYSDATE + 2);
+insert into AUCTION (ITEM_NO, END_TIME) values (1, SYSDATE + 0.1);
+insert into AUCTION (ITEM_NO, END_TIME) values (2, SYSDATE + 0.2);
 insert into AUCTION (ITEM_NO, END_TIME) values (3, SYSDATE + 3);
 insert into AUCTION (ITEM_NO, END_TIME) values (4, SYSDATE + 4);
 insert into AUCTION (ITEM_NO, END_TIME) values (5, SYSDATE + 5);

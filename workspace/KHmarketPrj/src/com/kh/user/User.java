@@ -21,7 +21,8 @@ public class User {
 		
 		// 데이터 처리
 		String sql = "INSERT INTO K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, QUESTION_NO, ANSWER)"
-													+ " VALUES (SEQ_USER_NO.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)";
+										+ " VALUES (SEQ_USER_NO.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)";
+		try {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, data.getUserId());
 		pstmt.setString(2, data.getUserPwd());
@@ -30,9 +31,11 @@ public class User {
 		pstmt.setString(5, data.getUserAddress());
 		pstmt.setString(6, data.getUserQuestion());
 		pstmt.setString(7, data.getUserAnswer());
-		
-		//리턴
 		return pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new Exception("※ 입력란에 빠짐없이 입력해주세요 ※");
+		}
+		//리턴
 	}
 	
 	// 로그인

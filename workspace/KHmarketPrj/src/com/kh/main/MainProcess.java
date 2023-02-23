@@ -30,7 +30,7 @@ public class MainProcess {
 	private MutualActionService mas = new MutualActionService();
 	
 	private String showVPage() {
-		System.out.println("================== 방문자  페이지 ====================");
+		System.out.println("\n================== 방문자  페이지 ====================");
 		System.out.println("┏━                                               ━┓");
         System.out.println("\n                    안녕하세요				");
         System.out.println("	          방문자 "+ ARAMDOM  +" 님	      \n");
@@ -44,7 +44,7 @@ public class MainProcess {
 	}
 	
     private String showUPage(Connection conn) throws Exception {
-    	System.out.println("==================== 사용자 페이지 ====================");
+    	System.out.println("\n==================== 사용자 페이지 ====================");
 		System.out.println("┏━                                               ━┓");
         UserInput.userInfo(conn,1);
         System.out.println("┗━                                               ━┛");
@@ -129,7 +129,7 @@ public class MainProcess {
 	
 	private void processUservice(String input, Connection conn) throws Exception {
 		switch (input) {
-		case "1": processMyPage(conn);
+		case "1": processMyPage(conn); break;
 		case "2": mas.chatPage(conn); break;
 		case "3": ise.itemPage(conn); break;
 		case "4": ats.auctionPage(conn); break;
@@ -141,6 +141,8 @@ public class MainProcess {
 	
 	
 	private void processMyPage(Connection conn) throws Exception {
+		boolean isFinish = false;
+		while(!isFinish) {
 		System.out.println("\n==================");
 		UserInput.userInfo(conn,2);
         System.out.println("\n1. 계좌 페이지\n2. 로그아웃\n3. 회원탈퇴");
@@ -150,8 +152,9 @@ public class MainProcess {
 			case "1": acs.accountPage(conn); break;
 			case "2" : System.out.println("※ 로그아웃 완료 ※"); Main.login_member_no = 0; break;
 			case "3" : if(user.dropUser(conn) == 0) {throw new Exception("※ 회원 탈퇴 실패 ※\n"); } break;
-			case "99" : throw new Exception("※ 메인 페이지입니다 ※\n");
-			default: throw new Exception("※ 잘못된 입력입니다 ※\n");
+			case "99" : isFinish = true; break;
+			default: System.out.println("\n※ 잘못된 입력입니다 ※\n");
+		}
 		}
 	}
 	
@@ -161,7 +164,7 @@ public class MainProcess {
 			case "2": admin.itemAdmin(conn); break;
 			case "3": admin.userAdmin(conn); break;
 			case "4": admin.publicWandD(conn); break;
-			case "5": break;
+			case "5": admin.answerQuestion(conn); break;
 			case "99" : throw new Exception("※ 메인 페이지입니다 ※\n");
 			default: throw new Exception("※ 잘못된 입력입니다 ※\n");
 		}

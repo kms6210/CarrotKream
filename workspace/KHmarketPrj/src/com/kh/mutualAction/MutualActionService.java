@@ -49,10 +49,10 @@ public class MutualActionService {
 		
 		while(!isFinish) {
 			System.out.println("\n==================");
-			System.out.println("★ 사용자 채팅 페이지 ★\n\n");
+			System.out.println("★ 사용자 채팅 페이지 ★");
+			System.out.println("[채팅] \n");
 			System.out.println("1. 채팅방 개설\n"
-							 + "2. 유저번호로 채팅방 목록 조회 \n"
-							 + "3. 상품번호로 채팅방 목록 조회");
+							 + "2. 내 채팅방 ");
 			System.out.println("==================");
 			
 			System.out.print("번호를 입력하세요 : ");
@@ -62,7 +62,6 @@ public class MutualActionService {
 			
 			case "1" : ma.makeChatRoom(conn); break;	//채팅방 개설
 			case "2" : ma.SearchChatRoomByUserNumber(conn); break; // 유저번호로 채팅방 목록 조회하는 메소드
-			case "3" : ma.SearchChatRoomByItemNumber(conn); break; // 상품번호로 채팅방 목록 조회하는 메소드
 			case "99" : { System.out.println(); isFinish = true; break; } 
 			default: throw new Exception("※ 잘못된 입력입니다 ※\n");
 			}
