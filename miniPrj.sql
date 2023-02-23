@@ -489,16 +489,16 @@ REFERENCES "ITEM" (
 
 
 -- 더미데이터
-insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER, SIGN_DATE) values (1, 'USER01', '1111', 'NICK01', '010-1111-1111', '주소1', 10000, 1, '답변1', SYSDATE - 1);
-insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER, SIGN_DATE) values (2, 'USER02', '2222', 'NICK02', '010-2222-2222', '주소2', 20000, 1, '답변2', SYSDATE - 2);
-insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER, SIGN_DATE) values (3, 'USER03', '3333', 'NICK03', '010-3333-3333', '주소3', 30000, 1, '답변3', SYSDATE - 3);
-insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER, SIGN_DATE) values (4, 'USER04', '4444', 'NICK04', '010-4444-4444', '주소4', 40000, 1, '답변4', SYSDATE - 4);
-insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER, SIGN_DATE) values (5, 'USER05', '5555', 'NICK05', '010-5555-5555', '주소5', 50000, 1, '답변5', SYSDATE - 5);
-insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER, SIGN_DATE) values (6, 'USER06', '6666', 'NICK06', '010-6666-6666', '주소6', 60000, 1, '답변6', SYSDATE - 6);
-insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER, SIGN_DATE) values (7, 'USER07', '7777', 'NICK07', '010-7777-7777', '주소7', 70000, 1, '답변7', SYSDATE - 7);
-insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER, SIGN_DATE) values (8, 'USER08', '8888', 'NICK08', '010-8888-8888', '주소8', 80000, 1, '답변8', SYSDATE - 8);
-insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER, SIGN_DATE) values (9, 'USER09', '9999', 'NICK09', '010-9999-9999', '주소9', 90000, 1, '답변9', SYSDATE - 9);
-insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER, SIGN_DATE) values (10, 'USER10', '0000', 'NICK10', '010-0000-0000', '주소10', 100000, 1, '답변10', SYSDATE - 10);
+insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER,USER_STATUS, SIGN_DATE) values (1, 'USER01', '1111', 'NICK01', '010-1111-1111', '주소1', 10000, 1, '답변1','N' ,SYSDATE - 1);
+insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER,USER_STATUS, SIGN_DATE) values (2, 'USER02', '2222', 'NICK02', '010-2222-2222', '주소2', 20000, 1, '답변2','S' ,SYSDATE - 2);
+insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER,USER_STATUS, SIGN_DATE) values (3, 'USER03', '3333', 'NICK03', '010-3333-3333', '주소3', 30000, 1, '답변3','S' ,SYSDATE - 3);
+insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER,USER_STATUS, SIGN_DATE) values (4, 'USER04', '4444', 'NICK04', '010-4444-4444', '주소4', 40000, 1, '답변4','N' ,SYSDATE - 4);
+insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER,USER_STATUS, SIGN_DATE) values (5, 'USER05', '5555', 'NICK05', '010-5555-5555', '주소5', 50000, 1, '답변5','N' ,SYSDATE - 5);
+insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER,USER_STATUS, SIGN_DATE) values (6, 'USER06', '6666', 'NICK06', '010-6666-6666', '주소6', 60000, 1, '답변6','N' ,SYSDATE - 6);
+insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER,USER_STATUS, SIGN_DATE) values (7, 'USER07', '7777', 'NICK07', '010-7777-7777', '주소7', 70000, 1, '답변7','S' ,SYSDATE - 7);
+insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER,USER_STATUS, SIGN_DATE) values (8, 'USER08', '8888', 'NICK08', '010-8888-8888', '주소8', 80000, 1, '답변8','N' ,SYSDATE - 8);
+insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER,USER_STATUS, SIGN_DATE) values (9, 'USER09', '9999', 'NICK09', '010-9999-9999', '주소9', 90000, 1, '답변9','Q' ,SYSDATE - 9);
+insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER,USER_STATUS, SIGN_DATE) values (10, 'USER10', '0000', 'NICK10', '010-0000-0000', '주소10', 100000, 1, '답변10','Q', SYSDATE - 10);
 
 insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (1, 1, '물건을 판매 구매하면 수수료가 있나요!?', '네', SYSDATE - 1);
 insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (2, 2, '사기신고는 어디서 하나요?', '경찰서에서 하세요.', SYSDATE - 2);
@@ -522,16 +522,16 @@ insert into REVIEW (REVIEW_NO, USER_NO, ITEM_NO, TRADE_DATE) values (8, 8, 8, SY
 insert into REVIEW (REVIEW_NO, USER_NO, ITEM_NO, TRADE_DATE) values (9, 9, 9, SYSDATE - 9);
 insert into REVIEW (REVIEW_NO, USER_NO, ITEM_NO, TRADE_DATE) values (10, 10, 10, SYSDATE - 10);
 
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (1, 1, 1, '플로어 스탠드', '사용한지 일주일밖에 안됬어요', 10000, SYSDATE - 1);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (2, 2, 2, '축구화', '저랑 사이즈가 안맞아서 팝니다', 20000, SYSDATE - 2);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (3, 3, 3, '40000원 CU기프티콘', '쓸일이 없어서 팔아요~', 30000, SYSDATE - 3);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (4, 4, 4, '무쇠냄비', '이사가는데 무거워서 처리합니다..', 40000, SYSDATE - 4);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (5, 5, 5, '쿠쿠밥솥', '딱 2번사용한 제품이에요', 50000, SYSDATE - 5);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (6, 6, 6, 'LG27인치 모니터 팔아요', 'LG27MP37VQ IPS화면으로 선명하고 깨끗합니다', 60000, SYSDATE - 6);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (7, 7, 7, '에어팟 진검승부 하실분', '본체를 잃어버려서 양쪽 유닛만 남은상태고 본체 있으신분 찾아요.', 70000, SYSDATE - 7);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (8, 8, 8, '제 위에분  ', '저는 오른쪽만 잃어버려서 왼쪽만 남은 상태입니다. 가위바위보 3세판으로 결판내죠', 80000, SYSDATE - 8);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (9, 9, 9, '메가커피 아메리카노 기프티콘 팔아요', '한번밖에 사용 안했습니다', 90000, SYSDATE - 9);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (10, 10, 10, '일룸 4인용 식탁 판매합니다', '상판에 약간얼룩외에 상태 좋아요~', 100000, SYSDATE - 10);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (1, 1, 1, '플로어 스탠드', '사용한지 일주일밖에 안됬어요', 10000,'S' ,SYSDATE - 1);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (2, 2, 2, '축구화', '저랑 사이즈가 안맞아서 팝니다', 20000,'B' ,SYSDATE - 2);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (3, 3, 3, '40000원 CU기프티콘', '쓸일이 없어서 팔아요~', 30000,'A' ,SYSDATE - 3);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (4, 4, 4, '무쇠냄비', '이사가는데 무거워서 처리합니다..', 40000,'S' ,SYSDATE - 4);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (5, 5, 5, '쿠쿠밥솥', '딱 2번사용한 제품이에요', 50000,'B' ,SYSDATE - 5);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (6, 6, 6, 'LG27인치 모니터 팔아요', 'LG27MP37VQ IPS화면으로 선명하고 깨끗합니다', 60000,'A' ,SYSDATE - 6);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (7, 7, 7, '에어팟 진검승부 하실분', '본체를 잃어버려서 양쪽 유닛만 남은상태고 본체 있으신분 찾아요.', 70000,'S' ,SYSDATE - 7);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (8, 8, 8, '제 위에분  ', '저는 오른쪽만 잃어버려서 왼쪽만 남은 상태입니다. 가위바위보 3세판으로 결판내죠', 80000,'S' ,SYSDATE - 8);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (9, 9, 9, '마스크 팔아요', '300장 입니다.', 90000,'D' ,SYSDATE - 9);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE,TRADE_STATUS, WRITE_DATE) values (10, 10, 10, '일룸 4인용 식탁 판매합니다', '상판에 약간얼룩외에 상태 좋아요~', 100000,'B' ,SYSDATE - 10);
 
 insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (1, '분류1');
 insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (2, '분류2');
@@ -548,7 +548,7 @@ insert into HINT_TYPE (QUESTION_NO, QUESTION) values (1, '내가 졸업한 고�
 insert into HINT_TYPE (QUESTION_NO, QUESTION) values (2, '내가 졸업한 대학교이름은?');
 insert into HINT_TYPE (QUESTION_NO, QUESTION) values (3, '내가 졸업한 초등학교이름은?');
 insert into HINT_TYPE (QUESTION_NO, QUESTION) values (4, '내가 졸업한 중학교이름은?');
-insert into HINT_TYPE (QUESTION_NO, QUESTION) values (5, '내가 다니던 유치원이름 은?');
+insert into HINT_TYPE (QUESTION_NO, QUESTION) values (5, '내가 다니던 유치원이름은?');
 insert into HINT_TYPE (QUESTION_NO, QUESTION) values (6, '내가 가장 좋아하는 음식은?');
 insert into HINT_TYPE (QUESTION_NO, QUESTION) values (7, '내가 가장 좋아하는 노래 제목은?');
 insert into HINT_TYPE (QUESTION_NO, QUESTION) values (8, '내가 가장 좋아하는 사람은?');
@@ -564,8 +564,7 @@ insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (6, '22년 연
 insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (7, '영상보고 에어팟 받자~', '영상들 보세요~', SYSDATE - 7);
 insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (8, '네이버 페이 결제 해택', '네이버 페이 결제시 3000포인트 적립', SYSDATE - 8);
 insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (9, 'KH마켓 서버 변경 안내', '긴급 서버 변경하였습니다 어떠한 오류가 발생할지 예상할수 없습니다.', SYSDATE - 9);
-insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (10, '모바일 "판매 완료" 버튼 오류 수정', '모바일에서 판매완료 버튼기능이 정상작동 하지 않는 점이 발견되어
-정상 수정하였습니다.', SYSDATE - 10);
+insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (10, '모바일 "판매 완료" 버튼 오류 수정', '모바일에서 판매완료 버튼기능이 정상작동 하지 않는 점이 발견되어정상 수정하였습니다.', SYSDATE - 10);
 
 insert into AUCTION (ITEM_NO, END_TIME) values (1, SYSDATE + 1);
 insert into AUCTION (ITEM_NO, END_TIME) values (2, SYSDATE + 2);
@@ -633,27 +632,28 @@ insert into QUALITY (ITEM_NO, CHECK_DATE) values (8, SYSDATE - 8);
 insert into QUALITY (ITEM_NO, CHECK_DATE) values (9, SYSDATE - 9);
 insert into QUALITY (ITEM_NO, CHECK_DATE) values (10, SYSDATE - 10);
 
-insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE, BID_DATE) values (1, 1, 1, 10000, SYSDATE - 1);
-insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE, BID_DATE) values (2, 2, 2, 20000, SYSDATE - 2);
-insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE, BID_DATE) values (3, 3, 3, 30000, SYSDATE - 3);
-insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE, BID_DATE) values (4, 4, 4, 40000, SYSDATE - 4);
-insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE, BID_DATE) values (5, 5, 5, 50000, SYSDATE - 5);
-insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE, BID_DATE) values (6, 6, 6, 60000, SYSDATE - 6);
-insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE, BID_DATE) values (7, 7, 7, 70000, SYSDATE - 7);
-insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE, BID_DATE) values (8, 8, 8, 80000, SYSDATE - 8);
-insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE, BID_DATE) values (9, 9, 9, 90000, SYSDATE - 9);
-insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE, BID_DATE) values (10, 10, 10, 100000, SYSDATE - 10);
 
-insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (1, 'USER01', '1111', 'NICK01', 'ABCD');
-insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (2, 'USER02', '2222', 'NICK02', 'ABCD');
-insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (3, 'USER03', '3333', 'NICK03', 'ABCD');
-insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (4, 'USER04', '4444', 'NICK04', 'ABCD');
-insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (5, 'USER05', '5555', 'NICK05', 'ABCD');
-insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (6, 'USER06', '6666', 'NICK06', 'ABCD');
-insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (7, 'USER07', '7777', 'NICK07', 'ABCD');
-insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (8, 'USER08', '8888', 'NICK08', 'ABCD');
-insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (9, 'USER09', '9999', 'NICK09', 'ABCD');
-insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (10, 'USER10', '0000', 'NICK10', 'ABCD');
+insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE,QUIT_YN ,BID_DATE) values (1, 1, 1, 10000,'N' ,SYSDATE - 1);
+insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE,QUIT_YN, BID_DATE) values (2, 2, 2, 20000,'N' ,SYSDATE - 2);
+insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE,QUIT_YN, BID_DATE) values (3, 3, 3, 30000,'D',SYSDATE - 3);
+insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE,QUIT_YN, BID_DATE) values (4, 4, 4, 40000,'N' ,SYSDATE - 4);
+insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE,QUIT_YN, BID_DATE) values (5, 5, 5, 50000,'N' ,SYSDATE - 5);
+insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE,QUIT_YN, BID_DATE) values (6, 6, 6, 60000,'D',SYSDATE - 6);
+insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE,QUIT_YN, BID_DATE) values (7, 7, 7, 70000,'N' ,SYSDATE - 7);
+insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE,QUIT_YN, BID_DATE) values (8, 8, 8, 80000,'N' ,SYSDATE - 8);
+insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE,QUIT_YN, BID_DATE) values (9, 9, 9, 90000,'N' ,SYSDATE - 9);
+insert into BID (BID_NO, USER_NO, ITEM_NO, PRICE,QUIT_YN, BID_DATE) values (10, 10, 10, 100000,'N' ,SYSDATE - 10);
+
+insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (1, 'ADMIN01', '1111', 'NICK01', 'ABCD');
+insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (2, 'ADMIN02', '2222', 'NICK02', 'ABCD');
+insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (3, 'ADMIN03', '3333', 'NICK03', 'ABCD');
+insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (4, 'ADMIN04', '4444', 'NICK04', 'ABCD');
+insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (5, 'ADMIN05', '5555', 'NICK05', 'ABCD');
+insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (6, 'ADMIN06', '6666', 'NICK06', 'ABCD');
+insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (7, 'ADMIN07', '7777', 'NICK07', 'ABCD');
+insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (8, 'ADMIN08', '8888', 'NICK08', 'ABCD');
+insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (9, 'ADMIN09', '9999', 'NICK09', 'ABCD');
+insert into K_ADMIN (ADMIN_NO, ID, PWD, NICK, KEY) values (10,'ADMIN10', '0000', 'NICK10', 'ABCD');
 
 insert into ADMIN_ACCOUNT (USE_NO, ADMIN_NO, USER_NO, PRICE, USE_DATE) values (1, 1, 1, 10000, SYSDATE - 1);
 insert into ADMIN_ACCOUNT (USE_NO, ADMIN_NO, USER_NO, PRICE, USE_DATE) values (2, 2, 2, 20000, SYSDATE - 2);

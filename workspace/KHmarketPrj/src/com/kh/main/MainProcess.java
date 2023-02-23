@@ -58,7 +58,7 @@ public class MainProcess {
 		System.out.println("================== 관리자  페이지 ====================");
 		System.err.println("");
 		System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-        System.out.println("┃ 1.마이페이지	| 2.상품관리	| 3.유저관리	  ┃");
+        System.out.println("┃ 1.계좌내역확인 	| 2.상품관리	| 3.유저관리	  ┃");
         System.out.println("┠─────────────────────────────────────────────────┨");
         System.out.println("┃ 4.공지사항관리	| 5.QNA관리	| 🥕관리자🥕	  ┃");
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
@@ -113,7 +113,7 @@ public class MainProcess {
 	
 	private void processVservice(String input, Connection conn) throws Exception {
 		switch (input) {
-			case "1": if(user.join(conn) == 0) { throw new Exception("※ 회원가입 실패 ※\n"); } else { System.out.println("※ 회원등록 완료 ※\n"); } break;
+			case "1": if(user.join(conn) == 0) { throw new Exception("※ 회원가입 실패 ※\n"); } else { System.out.println("\n※ 회원가입 완료 ※\n"); } break;
 			case "2": if(user.login(conn) == 0) { throw new Exception("※ 로그인 실패 ※\n"); } break;
 			case "3": user.findIdPwd(conn); break;
 			case "4": ish.itemView(conn); System.out.println(); break;
@@ -122,6 +122,7 @@ public class MainProcess {
 			case "99" : throw new Exception("※ 메인 페이지입니다 ※");
 			default: throw new Exception("※ 잘못된 입력입니다 ※\n");
 		}
+		System.out.println();
 	}
 	
 	private void processUservice(String input, Connection conn) throws Exception {
@@ -154,8 +155,8 @@ public class MainProcess {
 	
 	private void processAservice(String input, Connection conn) throws Exception {
 		switch (input) {
-			case "1": break;
-			case "2": break;
+			case "1": admin.showAccount(conn); break;
+			case "2": admin.itemAdmin(conn); break;
 			case "3": admin.userAdmin(conn); break;
 			case "4": break;
 			case "5": break;

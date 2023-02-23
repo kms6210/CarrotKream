@@ -72,7 +72,7 @@ public class UserInput {
 		
 		while(true) {
 			System.out.print("주소 : ");
-			String userAddress = Main.SC.nextLine();
+			userAddress = Main.SC.nextLine();
 			if(userAddress.length() != 0) {break;}
 			throw new Exception("※ 주소를 채워주세요 ※\n");
 		}
