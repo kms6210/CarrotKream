@@ -11,13 +11,27 @@ import com.kh.main.MainProcess;
 // 테이블 : 유저, 상품, 제재 내역, 품질 검증, 계좌, Q&A, 공지사항
 
 public class Admin {
+	public void publicWandD(Connection conn) throws Exception {
+		System.out.print("1. 공지사항 작성 / 2. 공지사항 삭제 : ");
+		String input = Main.SC.nextLine();
+		if (input.equals("1")) {
+		writePublic(conn);
+		} else if (input.equals("2")) {
+		deletePublic(conn);
+		} else {
+			throw new Exception("※ 잘못된 입력입니다 ※");
+		}
+	}
+	
 	public void itemAdmin(Connection conn) throws Exception {
-		System.out.print("1. 상품 조회 / 2. 상품 삭제 : ");
+		System.out.print("1. 상품 조회 / 2. 상품 삭제 / 3. 품질 검사 : ");
 		String input = Main.SC.nextLine();
 		if (input.equals("1")) {
 			new ItemSearch().itemView(conn);
 		} else if(input.equals("2")) {
 			deleteItem(conn);
+		} else if(input.equals("3")) {
+			judgeQuality(conn);
 		} else {
 			throw new Exception("※ 잘못된 입력입니다 ※");
 		}
@@ -66,7 +80,7 @@ public class Admin {
 		while(!isFinish) {
 		System.out.println("\n==================");
         System.out.println("★ 유저 관리 페이지 ★");
-        System.out.print("[총 회원 수 : " + userNum(conn) + "]");
+        System.out.print("[총 회원 수 : " + userNum(conn) + "]\n");
 		System.out.println("\n1.회원 목록 조회\n2.계정 정지");
 		System.out.println("==================");
 
@@ -76,7 +90,7 @@ public class Admin {
 		} else if (num.equals("2")) {
 			banId(conn);
 		} else if(num.equals("99")){
-			System.out.println(); isFinish = true;
+			isFinish = true;
 		} else {
 			System.out.println("\n※ 잘못된 입력입니다 ※\n");
 		}
@@ -106,7 +120,7 @@ public class Admin {
 		ResultSet rs = pstmt.executeQuery();
 
 		if(rs.next()) {
-			System.out.println("\n※ 관리자 로그인 완료 ※");
+			System.out.println("\n※ 관리자 로그인 완료 ※\n");
 			Main.login_admin_no = rs.getInt("ADMIN_NO");
 		}else {
 			throw new Exception("※ 관리자 로그인 실패 ※");
@@ -132,6 +146,7 @@ public class Admin {
 		ResultSet rs = pstmt.executeQuery();
 
 		System.out.println("--------------------------------------------------------회원 목록------------------------------------------------------------------------");
+		System.out.println("\n[ userNo | id | pwd | nick | phone_no | trust_level | address | balance | question_no | answer | user_status | sign_date ]");
 
 		while(rs.next()) {
 			 String userNo= rs.getString("USER_NO");
@@ -146,7 +161,6 @@ public class Admin {
 			 String answer = rs.getString("ANSWER");
 			 String userStatus = rs.getString("USER_STATUS");
 			 String signDate = rs.getString("SIGN_DATE");
-			System.out.println("\n[ userNo | id | pwd | nick | phone_no | trust_level | address | balance | question_no | answer | user_status | sign_date ]");
 			System.out.println(userNo+" | "+id+" | "+pwd+" | "+nick+" | "+phoneNo+" | "+trustLevel+" | "+address+" | "+balance+" | "+questionNo+" | "+answer+" | "+userStatus+" | "+signDate);
 		}
 	}
@@ -188,7 +202,7 @@ public void banId(Connection conn) throws Exception {
 
 	int result = pstmt.executeUpdate();
 	if(result ==1) {
-		System.out.println("※" + userNo + "번 유저의 계정을 정지시켰습니다 ※");
+		System.out.println("\n※ " + userNo + "번 유저의 계정을 정지시켰습니다 ※\n");
 	}else {
 		throw new Exception("※ 실패 ※");
 	}
@@ -203,7 +217,7 @@ public void judgeQuality(Connection conn) throws Exception {
 	System.out.print("상품 번호: ");
 	String itemNo = Main.SC.nextLine();
 
-	System.out.print(itemNo +" 번 상품 등급 점수: ");
+	System.out.print(itemNo +"번 상품 등급 점수: ");
 	String grade = Main.SC.nextLine();
 
 	pstmt.setString(1, grade);
@@ -211,9 +225,9 @@ public void judgeQuality(Connection conn) throws Exception {
 	int result =pstmt.executeUpdate();
 
 	if(result ==1) {
-		System.out.println("※" + itemNo+ "번 상품 등급 판정 완료 ※");
+		System.out.println("\n※ " + itemNo+ "번 상품 등급 판정 완료 ※\n");
 	}else {
-		throw new Exception("실패...");
+		throw new Exception("※ 실패 ※");
 	}
 }
 
@@ -268,7 +282,7 @@ public void answerQuestion(Connection conn) throws Exception {
 	int result = pstmt.executeUpdate();
 
 	if(result ==1) {
-		System.out.println("※ 답변 작성 완료 ※");
+		System.out.println("\n※ 답변 작성 완료 ※\n");
 	}else {
 		throw new Exception("※ 답변 작성 실패 ※");
 	}
@@ -292,7 +306,7 @@ public void writePublic(Connection conn) throws Exception {
 	int result = pstmt.executeUpdate();
 
 	if(result ==1) {
-		System.out.println("※ 공지사항 작성 완료 ※");
+		System.out.println("\n※ 공지사항 작성 완료 ※\n");
 }else {
 	throw new Exception("※ 공지사항 작성 실패 ※");
 }
@@ -315,7 +329,7 @@ public void deletePublic(Connection conn) throws Exception {
 	int result = pstmt.executeUpdate();
 
 	if(result ==1) {
-		System.out.println("※ " + publicNo + "번 공지사항 삭제 완료 ※ ");
+		System.out.println("\n※ " + publicNo + "번 공지사항 삭제 완료 ※ \n");
 	}else {
 		throw new Exception("※ 삭제실패 ※");
 	}
