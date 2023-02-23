@@ -21,10 +21,10 @@ public class EditItem {
 		int result = pstmt.executeUpdate();
 		
 		if(result == 1) {
-			System.out.println("수정 성공");
+			System.out.println("※ 수정 성공 ※");
 		}
 		else {
-			System.out.println("수정 실패");
+			System.out.println("※ 수정 실패 ※");
 		}
 	}
 	
@@ -41,10 +41,10 @@ public class EditItem {
 		int result = pstmt.executeUpdate();
 		
 		if(result == 1) {
-			System.out.println("수정 성공");
+			System.out.println("※ 수정 성공 ※");
 		}
 		else {
-			System.out.println("수정 실패");
+			System.out.println("※ 수정 실패 ※");
 		}
 	}
 	
@@ -61,10 +61,10 @@ public class EditItem {
 		int result = pstmt.executeUpdate();
 		
 		if(result == 1) {
-			System.out.println("수정 성공");
+			System.out.println("※ 수정 성공 ※");
 		}
 		else {
-			System.out.println("수정 실패");
+			System.out.println("※ 수정 실패 ※");
 		}
 		
 	}

@@ -43,32 +43,43 @@ public class ItemSearch {
 	}
 	
 	public void rankedByView(Connection conn) throws Exception {
+		
+		try {
+		
+			//SQL
+			String sql = "SELECT ROWNUM R ,순위 , ITEM_NO, TITLE, USER_NO, PRICE, TRADE_STATUS, \"VIEW\", WRITE_DATE\r\n"
+					+ "FROM (\r\n"
+					+ "SELECT RANK() OVER(ORDER BY \"VIEW\" DESC) AS 순위 ,\r\n"
+					+ "ITEM_NO, TITLE, USER_NO, PRICE, TRADE_STATUS, \"VIEW\", WRITE_DATE\r\n"
+					+ "FROM ITEM\r\n"
+					+ "WHERE TRADE_STATUS != 'D'\r\n"
+					+ ")WHERE ROWNUM < 11";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			
+			//상품 보기
+			while(rs.next()) {
+				
+				String itemNo = rs.getString("ITEM_NO");
+				String title = rs.getString("TITLE");
+				String trade_status = rs.getString("TRADE_STATUS");
+				String price = rs.getString("PRICE");
+				String view = rs.getString("VIEW");
+				String write_date = rs.getString("WRITE_DATE");
+				
+				System.out.print(itemNo + ". " + title);
+				System.out.print("[" + trade_status + "]");
+				System.out.print("    가격: " + price);
+				System.out.print("    조회수: "+view);
+				System.out.println("    작성일: "+ write_date);
+				
+			}
+				
+		} catch (Exception e) {
 
-		//SQL
-		String sql = "SELECT RANK() OVER(ORDER BY \"VIEW\" DESC) AS 순위 ,\r\n"
-				+ "ITEM_NO, TITLE, USER_NO, PRICE, TRADE_STATUS, \"VIEW\", WRITE_DATE\r\n"
-				+ "FROM ITEM\r\n"
-				+ "WHERE TRADE_STATUS != 'D'";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery();
+		System.out.println("※ 오류가 발생했습니다 ※");
 		
-		//상품 보기
-		while(rs.next()) {
-			
-			String itemNo = rs.getString("ITEM_NO");
-			String title = rs.getString("TITLE");
-			String trade_status = rs.getString("TRADE_STATUS");
-			String price = rs.getString("PRICE");
-			String view = rs.getString("VIEW");
-			String write_date = rs.getString("WRITE_DATE");
-			
-			System.out.print(itemNo + ". " + title);
-			System.out.print("[" + trade_status + "]");
-			System.out.print("    가격: " + price);
-			System.out.print("    조회수: "+view);
-			System.out.println("    작성일: "+ write_date);
-		
-		}
+		} 
 	
 	}
 
@@ -108,7 +119,7 @@ public class ItemSearch {
 			System.out.print("    가격: " + price);
 			System.out.println("    작성일: "+ write_date);
 		}
-		if(flag == 0) { throw new Exception("선택한 카테고리에 해당되는 상품이 없습니다");}
+		if(flag == 0) { throw new Exception("※ 선택한 카테고리에 해당되는 상품이 없습니다 ※");}
 	}
 	
 	public void myView(Connection conn, int userNo) throws Exception {
@@ -155,7 +166,7 @@ public class ItemSearch {
 		switch(input) {
 		case "1": bos.buying(conn); break;
 		case "2": bos.selling(conn); break;
-		default: throw new Exception("잘못된 입력입니다");
+		default: throw new Exception("※ 잘못된 입력입니다 ※");
 		}
 		
 	}
