@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import com.kh.account.Account;
 import com.kh.main.Main;
+import com.kh.mutualAction.MutualAction;
 
 public class ItemService {
 	Item item = new Item();
@@ -50,30 +51,27 @@ public class ItemService {
 			System.out.println("\n==================");
 			System.out.println("★ 상품 페이지 ★");
 			new Account().seeBalance(conn);
-			System.out.println("\n1.상품 조회 페이지\n2.내 상품 관리 페이지");
+			System.out.println("\n1.상품 조회 페이지\n2.내 상품 관리 페이지\n3.후기 작성 페이지");
 			System.out.println("==================");
 			System.out.print("번호를 입력하세요 : ");
 			String input = Main.SC.nextLine();
 			System.out.println("");
 			
+			try {
 			switch (input) {
 			case "1" : 
-				try {
-					act.productCategory(conn);
-				} catch (Exception e) {
-					System.out.println("\n" + e.getMessage() + "\n");
-				} break;
+					act.productCategory(conn);	break;
 			case "2" : 
-				try {
-					act.productedit(conn);
-				} catch (Exception e) {
-					System.out.println("\n" + e.getMessage() + "\n");
-				} break;
+					act.productedit(conn);	break;
+			case "3" :
+					new MutualAction().reviewPage(conn);	break;
 			case "99" : keep = false;	break;
 			default:
-				System.out.println("\n※ 잘못된 입력입니다 ※\n");
+				throw new Exception("※ 잘못된 입력입니다 ※");
 			}
-			
+			} catch (Exception e) {
+				System.out.println("\n" + e.getMessage() + "\n");
+			}
 		}
 		
 	}

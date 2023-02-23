@@ -29,11 +29,11 @@ public class MutualActionService {
 		
 		switch(input) {
 		
-		case "1" : ma.setLikeList(conn); break;
-		case "2" : ma.deleteLikeList(conn); break;
+//		case "1" : ma.setLikeList(conn); break;
+//		case "2" : ma.deleteLikeList(conn); break;
 		case "3" : ma.selectLikeList(conn); break;
-		case "4" : ma.sellItem(conn); break;
-		case "5" : ma.buyItem(conn); break;
+//		case "4" : ma.sellItem(conn); break;
+//		case "5" : ma.buyItem(conn); break;
 		case "6" : ma.buyReview(conn);	break;
 		case "7" : ma.sellReview(conn); break;
 		case "8" : ma.makeChatRoom(conn); break;
