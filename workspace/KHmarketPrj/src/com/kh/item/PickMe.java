@@ -27,7 +27,7 @@ public class PickMe {
 			}
 		} catch (Exception e) {
 			
-			throw new Exception("※ 이미 찜 한 상품입니다 ※");
+			throw new Exception("※ 이미 좋아요 한 상품입니다 ※");
 			
 		}
 		

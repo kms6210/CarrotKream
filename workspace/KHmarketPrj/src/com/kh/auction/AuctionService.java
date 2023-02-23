@@ -26,7 +26,7 @@ public class AuctionService {
 					case "2" : { auction.bid(conn); break; }
 					case "3" : { auction.closeBid(conn); break; }
 					case "99" : { isFinish = true; break; }
-					default: { throw new Exception("잘못된 입력입니다."); } 
+					default: { throw new Exception("※ 잘못된 입력입니다 ※"); } 
 				}
 			} catch(Exception e) {
 				System.out.println("\n" + e.getMessage() + "\n");

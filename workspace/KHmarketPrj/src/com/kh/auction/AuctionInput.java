@@ -27,18 +27,17 @@ public class AuctionInput {
 	}
 	
 	public void showAuction(Connection conn) throws Exception {
-		System.out.println();
-		ResultSet rs = aSQL.showAuction(conn);
-		printAuction(rs, conn);
-		System.out.println();
-	}
-
-	public int[] bid(Connection conn) throws Exception {
 		ResultSet rs = aSQL.showDeadlineAuction(conn);
 		System.out.println("\n★★★★★★★★ 마감 임박 상품 ★★★★★★★★");
 		printAuction(rs, conn);
 		System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		
+		rs = aSQL.showAuction(conn);
+		printAuction(rs, conn);
+		System.out.println();
+	}
+
+	public int[] bid(Connection conn) throws Exception {
 		System.out.print("\n입찰할 상품 번호 : ");
 		int[] arr = new int[3];
 		arr[0] = aSQL.findItem(conn);

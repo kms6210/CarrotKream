@@ -55,8 +55,7 @@ public class Item {
 		case "7": ca.category07(conn); break;
 		case "8": ca.category08(conn); break;
 		case "9": ca.category09(conn); break;
-		default: System.out.println("※ 잘못 입력하셨습니다 ※");
-		return;
+		default: throw new Exception("※ 잘못 입력하셨습니다 ※");
 		}
 	}
 	
@@ -361,18 +360,21 @@ public class Item {
 			System.out.println("-----------------------------------------------");
 			
 			System.out.println("");
-			
 			int itemNo1 = Integer.parseInt(item_no);
-					
-				System.out.print("1. 좋아요 / 2. 거래하기 : ");
+
+			boolean isFinish = false;
+			while(!isFinish) {
+				System.out.print("1. 좋아요 / 2. 거래하기 / 3. 이 글에서 나가기: ");
 				String input = Main.SC.nextLine();
 				
 				switch(input) {
 				case "1": new MutualAction().setLikeList(itemNo1, conn); break;
 				case "2": new MutualAction().sellItem(itemNo1, conn); break;
+				case "3": isFinish = true; break;
 				default: throw new Exception("※ 잘못된 입력입니다 ※");
 				}
 			}
+		}
 			
 		
 	}

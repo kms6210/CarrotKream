@@ -24,7 +24,7 @@ public class EditItem {
 			System.out.println("※ 수정 성공 ※");
 		}
 		else {
-			System.out.println("※ 수정 실패 ※");
+			throw new Exception("※ 수정 실패 ※");
 		}
 	}
 	
@@ -44,11 +44,11 @@ public class EditItem {
 			System.out.println("※ 수정 성공 ※");
 		}
 		else {
-			System.out.println("※ 수정 실패 ※");
+			throw new Exception("※ 수정 실패 ※");
 		}
 	}
 	
-	public void editPrice(Connection conn, int editNum, int login_member_no) throws SQLException {
+	public void editPrice(Connection conn, int editNum, int login_member_no) throws Exception {
 		
 		System.out.println("수정할 가격: ");
 		String price = Main.SC.nextLine();
@@ -64,7 +64,7 @@ public class EditItem {
 			System.out.println("※ 수정 성공 ※");
 		}
 		else {
-			System.out.println("※ 수정 실패 ※");
+			throw new Exception("※ 수정 실패 ※");
 		}
 		
 	}
