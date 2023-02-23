@@ -153,9 +153,9 @@ public void updateAdminBalance(Connection conn) throws Exception {
 	PreparedStatement pstmt = conn.prepareStatement(sql);
 
 	System.out.print("등급 판정이 완료된 상품 가격의 10% 수수료 차감: ");
-	String balance = Main.SC.nextLine(); 
+	int balance = Main.integerParseInt(); 
 	
-	pstmt.setString(1, balance);
+	pstmt.setInt(1, balance);
 	
 	int result = pstmt.executeUpdate();
 	
