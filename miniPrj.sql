@@ -57,7 +57,7 @@ CREATE TABLE "K_USER" (
 	"PHONE_NO"	CHAR(13)		NOT NULL,
 	"TRUST_LEVEL"	NUMBER	DEFAULT 36.5	NOT NULL,
 	"ADDRESS"	VARCHAR2(4000)		NOT NULL,
-	"BALANCE"	NUMBER		NULL,
+	"BALANCE"	NUMBER  DEFAULT 0	NOT	NULL,
 	"QUESTION_NO"	NUMBER		NOT NULL,
 	"ANSWER"	VARCHAR2(4000)		NOT NULL,
 	"USER_STATUS"	CHAR(1)	DEFAULT 'N'	NOT NULL,
@@ -500,16 +500,16 @@ insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION
 insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER, SIGN_DATE) values (9, 'USER09', '9999', 'NICK09', '010-9999-9999', '주소9', 90000, 1, '답변9', SYSDATE - 9);
 insert into K_USER (USER_NO, ID, PWD, NICK, PHONE_NO, ADDRESS, BALANCE, QUESTION_NO, ANSWER, SIGN_DATE) values (10, 'USER10', '0000', 'NICK10', '010-0000-0000', '주소10', 100000, 1, '답변10', SYSDATE - 10);
 
-insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (1, 1, '질문1', '답변1', SYSDATE - 1);
-insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (2, 2, '질문2', '답변2', SYSDATE - 2);
-insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (3, 3, '질문3', '답변3', SYSDATE - 3);
-insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (4, 4, '질문4', '답변4', SYSDATE - 4);
-insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (5, 5, '질문5', '답변5', SYSDATE - 5);
-insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (6, 6, '질문6', '답변6', SYSDATE - 6);
-insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (7, 7, '질문7', '답변7', SYSDATE - 7);
-insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (8, 8, '질문8', '답변8', SYSDATE - 8);
-insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (9, 9, '질문9', '답변9', SYSDATE - 9);
-insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (10, 10, '질문10', '답변10', SYSDATE - 10);
+insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (1, 1, '물건을 판매 구매하면 수수료가 있나요!?', '네', SYSDATE - 1);
+insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (2, 2, '사기신고는 어디서 하나요?', '경찰서에서 하세요.', SYSDATE - 2);
+insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (3, 3, '다른사람의 정보(전화번호 등)를 알고싶어요~', '일반적인 경우, 개인정보 보호법에 의해 개인의 정보는 제 3자에게 제공이 불가합니다.', SYSDATE - 3);
+insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (4, 4, '도용을 당한것 같아요!!', '계정 도용으로 인한 피해 발생시 수사기관에 신고 접수 해주세요', SYSDATE - 4);
+insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (5, 5, '판매 잘하는 방법이 궁금해요..', '1.사진 잘찍기 2. 시세 맞는 가격 제시하기 3. 설명 자세하기 적기', SYSDATE - 5);
+insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (6, 6, '가격이 너무 비싼거같아요!', '중고거래인 만큼 KH마켓은 판매자가 자유롭게 가격을 책정하도록 하고 있어요. KH마켓에서 개입하여 판매 가격을 조정하지 않아요.', SYSDATE - 6);
+insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (7, 7, '종량제 봉투를 개인이 판매할수 있나요?!', '종량제봉투를 개인이 판매할 경우 [폐기물관리법] 제14조7항의 규정에 따라 300만 원 이하의 벌금에 처할 수 있어요.', SYSDATE - 7);
+insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (8, 8, '직접 재배하거나 채취한 농수산물도 중고거래할 수 있나요?!', '네 할수있습니다.', SYSDATE - 8);
+insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (9, 9, '주류도 개인이 판매 할수 있나요?', '주류 면허 등에 관한 법률 제 5조 (주류 판매업면허)에 따라 주류는 개인 간 거래할 수 없어요.', SYSDATE - 9);
+insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (10, 10, '"별로예요" 거래 후기를 남기면 상대방이 알 수 있나요?', '누가 나에게 "별로예요" 거래 후기를 남겼는지 알 수 없어요.', SYSDATE - 10);
 
 insert into REVIEW (REVIEW_NO, USER_NO, ITEM_NO, TRADE_DATE) values (1, 1, 1, SYSDATE - 1);
 insert into REVIEW (REVIEW_NO, USER_NO, ITEM_NO, TRADE_DATE) values (2, 2, 2, SYSDATE - 2);
@@ -522,16 +522,16 @@ insert into REVIEW (REVIEW_NO, USER_NO, ITEM_NO, TRADE_DATE) values (8, 8, 8, SY
 insert into REVIEW (REVIEW_NO, USER_NO, ITEM_NO, TRADE_DATE) values (9, 9, 9, SYSDATE - 9);
 insert into REVIEW (REVIEW_NO, USER_NO, ITEM_NO, TRADE_DATE) values (10, 10, 10, SYSDATE - 10);
 
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (1, 1, 1, '제목1', '내용1', 10000, SYSDATE - 1);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (2, 2, 2, '제목2', '내용2', 20000, SYSDATE - 2);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (3, 3, 3, '제목3', '내용3', 30000, SYSDATE - 3);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (4, 4, 4, '제목4', '내용4', 40000, SYSDATE - 4);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (5, 5, 5, '제목5', '내용5', 50000, SYSDATE - 5);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (6, 6, 6, '제목6', '내용6', 60000, SYSDATE - 6);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (7, 7, 7, '제목7', '내용7', 70000, SYSDATE - 7);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (8, 8, 8, '제목8', '내용8', 80000, SYSDATE - 8);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (9, 9, 9, '제목9', '내용9', 90000, SYSDATE - 9);
-insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (10, 10, 10, '제목10', '내용10', 100000, SYSDATE - 10);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (1, 1, 1, '플로어 스탠드', '사용한지 일주일밖에 안됬어요', 10000, SYSDATE - 1);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (2, 2, 2, '축구화', '저랑 사이즈가 안맞아서 팝니다', 20000, SYSDATE - 2);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (3, 3, 3, '40000원 CU기프티콘', '쓸일이 없어서 팔아요~', 30000, SYSDATE - 3);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (4, 4, 4, '무쇠냄비', '이사가는데 무거워서 처리합니다..', 40000, SYSDATE - 4);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (5, 5, 5, '쿠쿠밥솥', '딱 2번사용한 제품이에요', 50000, SYSDATE - 5);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (6, 6, 6, 'LG27인치 모니터 팔아요', 'LG27MP37VQ IPS화면으로 선명하고 깨끗합니다', 60000, SYSDATE - 6);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (7, 7, 7, '에어팟 진검승부 하실분', '본체를 잃어버려서 양쪽 유닛만 남은상태고 본체 있으신분 찾아요.', 70000, SYSDATE - 7);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (8, 8, 8, '제 위에분  ', '저는 오른쪽만 잃어버려서 왼쪽만 남은 상태입니다. 가위바위보 3세판으로 결판내죠', 80000, SYSDATE - 8);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (9, 9, 9, '메가커피 아메리카노 기프티콘 팔아요', '한번밖에 사용 안했습니다', 90000, SYSDATE - 9);
+insert into ITEM (ITEM_NO, TYPE_NO, USER_NO, TITLE, CONTENT, PRICE, WRITE_DATE) values (10, 10, 10, '일룸 4인용 식탁 판매합니다', '상판에 약간얼룩외에 상태 좋아요~', 100000, SYSDATE - 10);
 
 insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (1, '분류1');
 insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (2, '분류2');
@@ -544,27 +544,28 @@ insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (8, '분류8');
 insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (9, '분류9');
 insert into ITEM_TYPE (TYPE_NO, TYPE_NAME) values (10, '분류10');
 
-insert into HINT_TYPE (QUESTION_NO, QUESTION) values (1, '질문1');
-insert into HINT_TYPE (QUESTION_NO, QUESTION) values (2, '질문2');
-insert into HINT_TYPE (QUESTION_NO, QUESTION) values (3, '질문3');
-insert into HINT_TYPE (QUESTION_NO, QUESTION) values (4, '질문4');
-insert into HINT_TYPE (QUESTION_NO, QUESTION) values (5, '질문5');
-insert into HINT_TYPE (QUESTION_NO, QUESTION) values (6, '질문6');
-insert into HINT_TYPE (QUESTION_NO, QUESTION) values (7, '질문7');
-insert into HINT_TYPE (QUESTION_NO, QUESTION) values (8, '질문8');
-insert into HINT_TYPE (QUESTION_NO, QUESTION) values (9, '질문9');
-insert into HINT_TYPE (QUESTION_NO, QUESTION) values (10, '질문10');
+insert into HINT_TYPE (QUESTION_NO, QUESTION) values (1, '내가 졸업한 고등학교는?');
+insert into HINT_TYPE (QUESTION_NO, QUESTION) values (2, '내가 졸업한 대학교이름은?');
+insert into HINT_TYPE (QUESTION_NO, QUESTION) values (3, '내가 졸업한 초등학교이름은?');
+insert into HINT_TYPE (QUESTION_NO, QUESTION) values (4, '내가 졸업한 중학교이름은?');
+insert into HINT_TYPE (QUESTION_NO, QUESTION) values (5, '내가 다니던 유치원이름 은?');
+insert into HINT_TYPE (QUESTION_NO, QUESTION) values (6, '내가 가장 좋아하는 음식은?');
+insert into HINT_TYPE (QUESTION_NO, QUESTION) values (7, '내가 가장 좋아하는 노래 제목은?');
+insert into HINT_TYPE (QUESTION_NO, QUESTION) values (8, '내가 가장 좋아하는 사람은?');
+insert into HINT_TYPE (QUESTION_NO, QUESTION) values (9, '내가 가장 좋아하는 운동은?');
+insert into HINT_TYPE (QUESTION_NO, QUESTION) values (10, '내가 가장 싫어하는 음식은?');
 
-insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (1, '제목1', '내용1', SYSDATE - 1);
-insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (2, '제목2', '내용2', SYSDATE - 2);
-insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (3, '제목3', '내용3', SYSDATE - 3);
-insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (4, '제목4', '내용4', SYSDATE - 4);
-insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (5, '제목5', '내용5', SYSDATE - 5);
-insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (6, '제목6', '내용6', SYSDATE - 6);
-insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (7, '제목7', '내용7', SYSDATE - 7);
-insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (8, '제목8', '내용8', SYSDATE - 8);
-insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (9, '제목9', '내용9', SYSDATE - 9);
-insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (10, '제목10', '내용10', SYSDATE - 10);
+insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (1, '이번달 인기 상품', '이번달 인기상품들입니다~~', SYSDATE - 1);
+insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (2, '첫 결제 수수료 무료!!', '처음 이용하시면 수수료 무료~', SYSDATE - 2);
+insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (3, '편의점 픽업 이용시 수수료 무료!!', '편의점 픽업 하시면 수수료 무료에요', SYSDATE - 3);
+insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (4, '2월 거래 해택 모음', '2월에 거래하면 포인트1000포인트 지급', SYSDATE - 4);
+insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (5, '카카오 페이로 결제시 2만원 적립!', '카카오페이로 결제하면 2만원 적립해드립니다', SYSDATE - 5);
+insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (6, '22년 연말 결산', '22년 KH마켓은 어땠을까?', SYSDATE - 6);
+insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (7, '영상보고 에어팟 받자~', '영상들 보세요~', SYSDATE - 7);
+insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (8, '네이버 페이 결제 해택', '네이버 페이 결제시 3000포인트 적립', SYSDATE - 8);
+insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (9, 'KH마켓 서버 변경 안내', '긴급 서버 변경하였습니다 어떠한 오류가 발생할지 예상할수 없습니다.', SYSDATE - 9);
+insert into NOTICE (PUBLIC_NO, TITLE, CONTENT, WRITE_DATE) values (10, '모바일 "판매 완료" 버튼 오류 수정', '모바일에서 판매완료 버튼기능이 정상작동 하지 않는 점이 발견되어
+정상 수정하였습니다.', SYSDATE - 10);
 
 insert into AUCTION (ITEM_NO, END_TIME) values (1, SYSDATE + 1);
 insert into AUCTION (ITEM_NO, END_TIME) values (2, SYSDATE + 2);
@@ -577,16 +578,16 @@ insert into AUCTION (ITEM_NO, END_TIME) values (8, SYSDATE + 8);
 insert into AUCTION (ITEM_NO, END_TIME) values (9, SYSDATE + 9);
 insert into AUCTION (ITEM_NO, END_TIME) values (10, SYSDATE + 10);
 
-insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (1, '질문1', '답변1');
-insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (2, '질문2', '답변2');
-insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (3, '질문3', '답변3');
-insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (4, '질문4', '답변4');
-insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (5, '질문5', '답변5');
-insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (6, '질문6', '답변6');
-insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (7, '질문7', '답변7');
-insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (8, '질문8', '답변8');
-insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (9, '질문9', '답변9');
-insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (10, '질문10', '답변10');
+insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (1, '판매자 연락처 확인하는 방법', '판매글 본문 우측 상단에 판매자의 연락처 항목이 있습니다.');
+insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (2, '포인트 획득은 어떻게 할수 있나요?', '신규 가입시 10점, 로그인시1점 , 댓글 작성시 2점');
+insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (3, '선입금 해도 괜찮나요..?', '일단 선입금은 구매자분의 선택입니다. 하지만 절대 추천하지않습니다.');
+insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (4, '판매 금지 물품들이 궁금해요', '1)반려동물, 생명이있는 동물 곤충  2)총 3)경유,LPG, 휘발류 등 유류 거래');
+insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (5, '사기를 당했을때는 어떻게 하나요', '1. 경찰서에 신고하기 2.KH마켓이 도와드릴게요');
+insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (6, '거래 분쟁 어떻게 예방할수있나요?', '1. 거래장소는 사람이 많이다니는곳에서 하세요 2.경찰서 파출소 앞에서 하세요');
+insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (7, 'KH마켓은 어떤 서비스 인가요?', '중고물품 거래 서비스 입니다');
+insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (8, '신고하면 상대방이 알수 있나요?', '신고는 익명으로 진행되고있으니 안심하고 신고 해주세요');
+insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (9, '미성년자도 KH마켓을 이용할수 있나요?', 'KH마켓은 만 14세 이상 휴대폰 사용자라면 이용할 수 있으며 가입 과정에서 [만 14세 이상 (필수)] 항목에 대해 동의받고 있어요.');
+insert into FAQ (QUESTION_NO, QUESTION, ANSWER) values (10, '이용 정지된 사용자와 거래해도 괜찮나요?', '저희는 이용 정지된 회원은 로그인 할수 없으므로 거래가 불가능합니다.');
 
 insert into BANNED (STOP_NO, USER_NO, RELEASE_DATE) values (1, 1, SYSDATE + 1);
 insert into BANNED (STOP_NO, USER_NO, RELEASE_DATE) values (2, 2, SYSDATE + 2);
