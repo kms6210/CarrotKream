@@ -287,17 +287,18 @@ public class UserInput {
                 }
         	 } 
         	} else {
-       		 check++;
-             Main.login_member_no = rs.getInt("USER_NO");
-             String nick = rs.getString("NICK");
-             String balance = rs.getString("BALANCE");
-             String trustLevel = rs.getString("TRUST_LEVEL");
-             
-             if(balance != null) {
-            	 System.out.println(nick + " 님 환영합니다");
-                 System.out.println("잔액  : "+ balance);
-             } else {
-            	 System.out.println(nick + " 님 환영합니다");
+        		rs.next();
+	       		check++;
+	            Main.login_member_no = rs.getInt("USER_NO");
+	            String nick = rs.getString("NICK");
+	            String balance = rs.getString("BALANCE");
+	            String trustLevel = rs.getString("TRUST_LEVEL");
+	             
+	            if(balance != null) {
+		        	System.out.println(nick + " 님 환영합니다");
+		            System.out.println("잔액  : "+ balance);
+	            } else {
+	            	System.out.println(nick + " 님 환영합니다");
              }
        
             
