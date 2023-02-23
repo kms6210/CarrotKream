@@ -12,7 +12,7 @@ public class AccountInput {
 	private int inputPrice() throws Exception {
 		System.out.print("금액 : ");
 		int price = Main.integerParseInt();
-		if(price <= 0) { throw new Exception("0 이상의 숫자만 입력가능합니다"); }
+		if(price <= 0) { throw new Exception("※ 0 이상의 숫자만 입력가능합니다 ※"); }
 		return price;
 	}
 
@@ -33,7 +33,7 @@ public class AccountInput {
 		// 포인트 인출
 		int price = inputPrice();
 		int balance = aSQL.selectBalance(user_no, conn);
-		if(balance - price <= 0) { throw new Exception("잔액이 부족합니다"); }	
+		if(balance - price <= 0) { throw new Exception("※ 잔액이 부족합니다 ※"); }	
 		int[] arr = new int[3];
 
 		arr[0] = aSQL.updateBalance(user_no, -1 * price, balance, conn);
@@ -52,10 +52,10 @@ public class AccountInput {
 		int targetBalance = aSQL.selectBalance(target_no, conn);
 		int[] arr = new int[3];
 	
-		if(userBalance - price <= 0) { throw new Exception("잔액이 부족합니다"); }		
+		if(userBalance - price <= 0) { throw new Exception("※ 잔액이 부족합니다 ※"); }		
 		
 		arr[0] =  aSQL.updateBalance(target_no, price, targetBalance, conn);
-		if(arr[0] == 0) { throw new Exception("거래 대상을 찾을 수 없습니다"); }
+		if(arr[0] == 0) { throw new Exception("※ 거래 대상을 찾을 수 없습니다 ※"); }
 		arr[1] = aSQL.updateBalance(user_no, -1 * price, userBalance, conn);
 		arr[2] = aSQL.insertAccount(user_no, target_no, -1 * price, conn);
 		
@@ -84,6 +84,7 @@ public class AccountInput {
 				}
 			}
 		}
+		System.out.println();
 	}
 	
 	public int seeBalance(Connection conn) throws Exception {

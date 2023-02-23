@@ -20,9 +20,9 @@ public class Auction {
 		int[] arr = ai.bid(conn);
 
 		if (arr[2] == 1) {
-			System.out.println(arr[0] + "번 상품에 " + arr[1] + "원 입찰 완료!");
+			System.out.println("\n※ " + arr[0] + "번 상품에 " + arr[1] + "원 입찰 완료 ※\n");
 		} else {
-			throw new Exception("입찰 실패...");
+			throw new Exception("※ 입찰 실패 ※");
 		}
 	}
 
@@ -36,13 +36,12 @@ public class Auction {
 			int result1 = aSQL.updateBalance(Main.login_member_no, -1 * price, balance, conn);
 			int result2 = aSQL.insertAccount(Main.login_member_no, -1, -1 * price, conn);
 			if(result1 == 0 || result2 == 0) {
-				throw new Exception("입찰 취소 오류...");
+				throw new Exception("※ 입찰 취소 오류 ※");
 			}
 			
-			System.out.println("\n☆ " + arr[0] + "번 상품에 등록된 입찰이 취소되었습니다. ☆");
-			System.out.println("입찰 취소로 인해 " + price + " 포인트가 차감됩니다.");
+			throw new Exception("※ " + arr[0] + "번 상품에 등록된 입찰이 취소되었습니다. ※\n※ 입찰 취소로 인해 \" + price + \" 포인트가 차감됩니다 ※");
 		} else {
-			throw new Exception("입찰 취소 실패...");
+			throw new Exception("※ 입찰 취소 실패 ※");
 		}
 	}
 

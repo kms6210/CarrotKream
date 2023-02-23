@@ -26,7 +26,7 @@ public class AccountService {
 					case "2" : { account.withdraw(conn); break; }
 					case "3" : { account.transfer(conn); break; }
 					case "4" : { account.showAccount(conn); break; }
-					case "99" : { isFinish = true; break; }
+					case "99" : { System.out.println(); isFinish = true; break; }
 					default: { throw new Exception("잘못된 입력입니다."); } 
 				}
 			} catch(Exception e) {

@@ -17,7 +17,7 @@ public class CenterInput {
 			String question = rs.getString("QUESTION");
 			String answer = rs.getString("ANSWER");
 			
-			System.out.println(question_no + ". " + question + "?   :   " + answer);
+			System.out.println(question_no + ". " + question + "   :   " + answer);
 		}
 	}
 	

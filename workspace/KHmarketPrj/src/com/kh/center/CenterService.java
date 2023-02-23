@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 import com.kh.main.Main;
 import com.kh.user.User;
+import com.kh.user.UserInput;
 
 public class CenterService {
 	private Center center = new Center();
@@ -41,9 +42,10 @@ public class CenterService {
 		
 		while(!isFinish) {
 			System.out.println("\n==================");
-			System.out.println("★ 사용자 고객센터 페이지 ★\n\n");
+			System.out.println("★ 사용자 고객센터 페이지 ★\n");
+			UserInput.usernick(conn);
 			System.out.println("1. FAQ 보기\n"
-							 + "2. 내가 쓴 QnA 확인하기기 \n"
+							 + "2. 내가 쓴 QnA 확인하기 \n"
 							 + "3. 일반 문의하기");
 			System.out.println("==================");
 			
