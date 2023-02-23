@@ -70,10 +70,6 @@ public class User {
 				String balance = rs.getString("BALANCE");
 				String trustLevel = rs.getString("TRUST_LEVEL");
 				
-				System.out.println("\n★★★★★ "+nick + "님 환영합니다 ★★★★★");
-				System.out.println("매너온도	: "+ trustLevel);
-				System.out.println("잔고	: " + balance + "\n");
-				
 			}
 			
 			// 정지 계정
@@ -193,15 +189,14 @@ public class User {
 				pstmt.setString(1, userId);
 				pstmt.setString(2, data.getUserPhone());
 				
-				System.out.println("");
-				System.out.println("회원님의 비밀번호는 "+rs.getString("PWD")+"입니다.");
+				System.out.println("\n ※ 회원님의 비밀번호는 "+rs.getString("PWD")+" 입니다 \n\n");
 			} else {
-				System.out.println("틀린 답변입니다.");
+				throw new Exception("※ 틀린 답변입니다 ※\n\n");
 			}
 			check++;
 			return check;
 		} else {
-			System.out.println("전화번호와 일치하는 회원정보가 없습니다. ");
+			System.out.println("\n ※ 전화번호와 일치하는 회원정보가 없습니다※ \n\n");
 			return check;
 		}
 	}
