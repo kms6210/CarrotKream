@@ -12,9 +12,9 @@ public class Account {
 		int[] arr = ai.deposit(conn);
 		
 		if (arr[0] == 1 && arr[1] == 1) {
-			System.out.println("\n" + arr[2] + "원 충전 완료!");
+			System.out.println("\n※ " + arr[2] + "포인트 충전 완료 ※\n");
 		} else {
-			throw new Exception("충전 실패...");
+			throw new Exception("※ 충전 실패 ※");
 		}
 	}
 
@@ -23,9 +23,9 @@ public class Account {
 		int[] arr = ai.withdraw(conn);
 		
 		if (arr[0] == 1 && arr[1] == 1) {
-			System.out.println("\n" + arr[2] + "원 인출 완료!");
+			System.out.println("\n※ " + arr[2] + "포인트 인출 완료 ※\n");
 		} else {
-			throw new Exception("충전 실패...");
+			throw new Exception("※ 충전 실패 ※");
 		}
 	}
 
@@ -34,9 +34,9 @@ public class Account {
 		int[] arr = ai.transfer(conn);
 		
 		if (arr[0] == 1 && arr[1] == 1 && arr[2] == 1) {
-			System.out.println("\n이체 완료!");
+			System.out.println("\n※ 이체 완료 ※\n");
 		} else {
-			throw new Exception("이체 실패...");
+			throw new Exception("※ 이체 실패 ※");
 		}
 	}
 

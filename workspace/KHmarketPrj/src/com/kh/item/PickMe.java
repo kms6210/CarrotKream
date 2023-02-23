@@ -20,14 +20,14 @@ public class PickMe {
 			int result = pstmt.executeUpdate();
 			
 			if(result==1) {
-				System.out.println("좋아요 등록이 되었습니다.");
+				System.out.println("※ 좋아요 등록이 되었습니다 ※");
 			}
 			else {
-				System.out.println("좋아요 등록 실패");
+				throw new Exception("※ 좋아요 등록 실패 ※");
 			}
 		} catch (Exception e) {
 			
-			throw new Exception("이미 찜 한 상품입니다.");
+			throw new Exception("※ 이미 찜 한 상품입니다 ※");
 			
 		}
 		
@@ -43,10 +43,10 @@ public class PickMe {
 		int result = pstmt.executeUpdate();
 		
 		if(result == 1) {
-			System.out.println("좋아요 가 삭제 되었습니다.");
+			throw new Exception("※ 좋아요가 삭제 되었습니다 ※");
 		}
 		else {
-			throw new Exception("좋아요 삭제 실패");
+			throw new Exception("※ 좋아요 삭제 실패 ※");
 		}
 		
 		

@@ -13,16 +13,11 @@ public class AccountService {
 		
 		while(!isFinish) {
 			System.out.println("\n==================");
-			System.out.println("계좌 페이지");
-			System.out.println("------------------");
-			account.seeBalance(conn);
-			System.out.println("1. kh머니 충전\n"
-						 	 + "2. kh머니 인출\n"
-							 + "3. 이체\n"
-							 + "4. 계좌 내역\n"
-							 + "99. 메인 페이지로 돌아가기");
-			
-			System.out.print("\n번호를 입력하세요 : ");
+	        System.out.println("★ 계좌 페이지 ★");
+	        account.seeBalance(conn);
+	        System.out.println("\n1. kh머니 충전\n2. kh머니 인출\n3. 이체\n4. 계좌 내역");
+	        System.out.println("==================");
+			System.out.print("번호를 입력하세요 : ");
 			String input = Main.SC.nextLine();
 			
 			try {

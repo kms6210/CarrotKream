@@ -32,8 +32,8 @@ public class UserService {
 				System.out.println("");
 				
 				switch (input) {
-				case "1" : if(user.join(conn) == 0) { throw new Exception("회원가입 실패"); } else { System.out.println("\n회원등록 완료"); } break;
-				case "2" : if(user.login(conn) == 0) { throw new Exception("로그인 실패"); } break;
+				case "1" : if(user.join(conn) == 0) { throw new Exception("※ 회원가입 실패 ※"); } else { System.out.println("\n※ 회원등록 완료 ※"); } break;
+				case "2" : if(user.login(conn) == 0) { throw new Exception("※ 로그인 실패 ※"); } break;
 				case "3" : user.findId(conn); break;
 				case "4" : user.findPwd(conn); break;
 				case "99" : back = true; break;

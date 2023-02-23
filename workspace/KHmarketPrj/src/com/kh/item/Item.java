@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.kh.account.Account;
 import com.kh.jdbc.JdbcTemplate;
 import com.kh.main.Main;
 
@@ -61,36 +62,33 @@ public class Item {
 	public void registSellItem(Connection conn, int USER_NO) throws Exception {
 		// 상품 등록 				
 		
-		System.out.println("====================================================");
-		System.out.println("  #         #   ##   ###   ###   #########  ######## ");
-		System.out.println("  #         #    # #        #        #      #         ");
-		System.out.println("  #    #    #    #          #        #      ######## ");
-		System.out.println("  #  #   #  #    #          #        #      #         ");
-		System.out.println("  #         #    #          #        #      ######## ");				
-		System.out.println("====================================================");
-		
-		System.out.println("카테고리를 정하십시오");
-		System.out.println("1. 가전");
-		System.out.println("2. 디지털");
-		System.out.println("3. 의류");
-		System.out.println("4. 식품");
-		System.out.println("5. 피시 모바일");
-		System.out.println("6. 가구");
-		System.out.println("7. 생필품");
-		System.out.println("8. 잡화");
-		System.out.println("9. 기타");	
-		System.out.print("카테고리: ");			
+//		System.out.println("====================================================");
+//		System.out.println("  #         #   ##   ###   ###   #########  ######## ");
+//		System.out.println("  #         #    # #        #        #      #         ");
+//		System.out.println("  #    #    #    #          #        #      ######## ");
+//		System.out.println("  #  #   #  #    #          #        #      #         ");
+//		System.out.println("  #         #    #          #        #      ######## ");				
+//		System.out.println("====================================================");
+
+		System.out.print("\n[상품 유형] 1. 가전, ");
+		System.out.print("2. 디지털, ");
+		System.out.print("3. 의류, ");
+		System.out.print("4. 식품, ");
+		System.out.print("5. 전자, ");
+		System.out.print("6. 가구, ");
+		System.out.print("7. 생필품, ");
+		System.out.print("8. 잡화, ");
+		System.out.println("9. 기타");
+		System.out.print("번호를 입력하세요 : ");
 		String typeNo = Main.SC.nextLine();		
-		System.out.println("판매를 위한 글인 지 구매를 위한 글인 지 정하십시오.");
-		System.out.println("| 판매: S | 구매: B |");		
-		System.out.print("글 유형: ");			
+		System.out.print("글 유형 (판매: S / 구매: B) : ");		
 		String tradeStatus = Main.SC.nextLine();
 		System.out.print("제목: ");
 		String itemTitle = Main.SC.nextLine();
 		System.out.print("내용: ");
 		String itemContent = Main.SC.nextLine();
 		System.out.print("가격: ");
-		String itemPrice = Main.SC.nextLine();
+		int itemPrice = Main.integerParseInt();
 		
 		//SQL
 		String sql = "INSERT INTO ITEM(ITEM_NO, TYPE_NO, TRADE_STATUS, USER_NO, TITLE,CONTENT,PRICE,WRITE_DATE) VALUES(SEQ_ITEM_NO.NEXTVAL,?,UPPER(?),?,?,?,?,SYSDATE)";
@@ -100,14 +98,14 @@ public class Item {
 		pstmt.setLong(3, USER_NO);
 		pstmt.setString(4, itemTitle);
 		pstmt.setString(5, itemContent);
-		pstmt.setString(6, itemPrice);
+		pstmt.setInt(6, itemPrice);
 		int result = pstmt.executeUpdate();
 		
 		if(result == 1) {
-			System.out.println("작성 성공");
+			System.out.println("\n※ 작성 성공 ※\n");
 		}
 		else {
-			System.out.println("작성 실패");
+			throw new Exception("작성 실패");
 		}
 				
 	}
@@ -116,17 +114,16 @@ public class Item {
 		
 		EditItem edit = new EditItem();
 		
-		System.out.println("==================================");
-		System.out.println(" ######   #####     ###    #######    ");
-		System.out.println(" #        #    #     #        #       ");
-		System.out.println(" ######   #    ##    #        #       ");
-		System.out.println(" #        #    #     #        #       ");
-		System.out.println(" ######	  #####     ###       #       ");				
-		System.out.println("==================================");
+//		System.out.println("==================================");
+//		System.out.println(" ######   #####     ###    #######    ");
+//		System.out.println(" #        #    #     #        #       ");
+//		System.out.println(" ######   #    ##    #        #       ");
+//		System.out.println(" #        #    #     #        #       ");
+//		System.out.println(" ######	  #####     ###       #       ");				
+//		System.out.println("==================================");
 		
 		//SQL
-		System.out.println("=======================================================");
-		System.out.println("[내가 작성한 글 목록]");
+		System.out.println("\n[내가 등록한 상품 목록]");
 		
 		String sql = "SELECT *\r\n"
 				+ "FROM(\r\n"
@@ -162,20 +159,15 @@ public class Item {
 			System.out.println("작성일: "+write_date);
 			
 		}	
-		System.out.println("=======================================================");
+		System.out.println();
 		
 		// 상품 수정
 		
-		System.out.println("[수정하실 상품의 번호를 입력해 주십시오.]");
-		System.out.print("수정 할 상품의 번호:");
+		System.out.print("수정 할 상품의 번호: ");
 		
 		int editNum = Main.SC.nextInt();
 		
-		System.out.println("[수정하실 부분을 정하십시오]");
-		System.out.println("1. 제목");
-		System.out.println("2. 글 내용");
-		System.out.println("3. 가격");
-		System.out.print("번호를 입력하세요 : ");
+		System.out.println("수정할 부분(1.제목 / 2.내용 / 3. 가격) : ");
 		
 		int input = Main.SC.nextInt();
 		
@@ -192,13 +184,13 @@ public class Item {
 	public void deleteItem(Connection conn, int userNo) throws Exception {
 		// 상품 삭제 
 				
-		System.out.println("=====================================================");
-		System.out.println(" #####    ######   #        ######   #######   ######  ");
-		System.out.println(" #    #   #        #        #           #      #       ");
-		System.out.println(" #    ##  ######   #        ######      #      ######  ");
-		System.out.println(" #    #   #        #        #           #      #       ");
-		System.out.println(" #####    ######   ######   ######      #      ######  ");				
-		System.out.println("=====================================================");
+//		System.out.println("=====================================================");
+//		System.out.println(" #####    ######   #        ######   #######   ######  ");
+//		System.out.println(" #    #   #        #        #           #      #       ");
+//		System.out.println(" #    ##  ######   #        ######      #      ######  ");
+//		System.out.println(" #    #   #        #        #           #      #       ");
+//		System.out.println(" #####    ######   ######   ######      #      ######  ");				
+//		System.out.println("=====================================================");
 		
 		//SQL
 				System.out.println("=======================================================");
@@ -265,47 +257,54 @@ public class Item {
 	
 	public void findItem(Connection conn) throws Exception {
 		
-		System.out.println("===========================================");
-		System.out.println("###   #######   ######   #       #    ##### ");
-		System.out.println(" #       #      #        ##     ##   #      ");
-		System.out.println(" #       #      ######   #  # #  #    ####  ");
-		System.out.println(" #       #      #        #   #   #        # ");
-		System.out.println("###      #      ######   #   #   #   #####  ");				
-		System.out.println("===========================================");
-		
-		ItemSearch is = new ItemSearch();
-		
-		System.out.println("조회하실 글들을 선택하십시오.");
-		System.out.println("1. 모든 품목 조회");
-		System.out.println("2. 구매 혹은 판매글만 보기");
-		System.out.println("3. 인기 상품");
-		System.out.println("4. 카테고리로 선택");
-		
-		String input = Main.SC.nextLine();
-		
-		switch(input) {
-		case "1": is.itemView(conn); break;
-		case "2": is.buyOrSell(conn); break;
-		case "3": is.rankedByView(conn); break;
-		case "4": is.categoryView(conn); break;
-		default: throw new Exception("잘못 입력하셨습니다.");
+//		System.out.println("===========================================");
+//		System.out.println("###   #######   ######   #       #    ##### ");
+//		System.out.println(" #       #      #        ##     ##   #      ");
+//		System.out.println(" #       #      ######   #  # #  #    ####  ");
+//		System.out.println(" #       #      #        #   #   #        # ");
+//		System.out.println("###      #      ######   #   #   #   #####  ");				
+//		System.out.println("===========================================");
+		boolean isFinish = false;
+		while(!isFinish) {
+			ItemSearch is = new ItemSearch();
+			
+			System.out.println("\n==================");
+	        System.out.println("★ 상품 조회 페이지 ★");
+	        new Account().seeBalance(conn);
+	        System.out.println("\n1.모든 품목 조회\n2.구매/판매별 조회\n3.금월 인기 상품\n4.카테고리별 조회\n5.상품 상세 조회");
+	        System.out.println("==================");
+			
+			System.out.print("번호를 입력하세요 : ");
+			String input = Main.SC.nextLine();
+			System.out.println();
+			
+			switch(input) {
+				case "1": is.itemView(conn); break;
+				case "2": is.buyOrSell(conn); break;
+				case "3": is.rankedByView(conn); break;
+				case "4": is.categoryView(conn); break;
+				case "5": new Act().productDetail(conn); break;
+				case "99" : isFinish = true; break;
+				default: System.out.println("※ 잘못된 입력입니다 ※\n");
+			}
+			System.out.println();
 		}
-		
 	}
 	
 	public void findItemAbb(Connection conn) throws Exception {
 		// 글 번호로 글 상세 보기 
 		
-		System.out.println("======================================");
-		System.out.println("#       #   ###   ######   #    #    #  ");
-		System.out.println(" #     #     #    #        #    #    #  ");
-		System.out.println("  #   #      #    ######    #   #   #   ");
-		System.out.println("   # #       #    #          # # # #    ");
-		System.out.println("    #       ###   ######      #   #     ");				
-		System.out.println("========================================");
+//		System.out.println("======================================");
+//		System.out.println("#       #   ###   ######   #    #    #  ");
+//		System.out.println(" #     #     #    #        #    #    #  ");
+//		System.out.println("  #   #      #    ######    #   #   #   ");
+//		System.out.println("   # #       #    #          # # # #    ");
+//		System.out.println("    #       ###   ######      #   #     ");				
+//		System.out.println("========================================");
 		
-		System.out.print("검색 상품 번호: ");
+		System.out.print("검색할 상품 번호를 입력하세요 : ");
 		String itemNo = Main.SC.nextLine();
+		System.out.println();
 		
 		Item item = new Item();
 		item.increasingView(conn, itemNo);
@@ -329,22 +328,20 @@ public class Item {
 			int userNo = rs.getInt("USER_NO");
 			String writeDate = rs.getString("WRITE_DATE");
 			
-			System.out.print("상품 번호: "+item_no);
-			System.out.print(" | ");
-			System.out.print("제목: " + title);
-			System.out.print(" | ");
-			System.out.print("조회수: " + view);
-			System.out.println(" | ");
-			System.out.println(" ------------------------------------------------------ ");
-			System.out.println("");
+			System.out.println("-----------------------------------------------");
+			System.out.println("제목: " + title);
 			System.out.println("내용: " + content);
 			System.out.println("");
-			System.out.println(" ------------------------------------------------------ ");
+			System.out.print("상품 번호: "+item_no);
+			System.out.print(" | ");
+			System.out.print("조회수: " + view);
+			System.out.print(" | ");
 			System.out.print("가격: " + price);
 			System.out.print(" | ");
-			System.out.print("작성자: " + userNo);
-			System.out.print(" | ");
+			System.out.println("작성자 번호: " + userNo);
+			System.out.print("작성일: ");
 			System.out.println(writeDate);
+			System.out.println("-----------------------------------------------");
 			
 			System.out.println("");
 			
@@ -352,31 +349,32 @@ public class Item {
 			
 			while(keep) {
 				
-				System.out.println("1. 좋아요 2. 좋아요 취소 ");
-				System.out.print("입력: ");
+				System.out.print("1. 좋아요 2. 좋아요 취소 : ");
 				String input = Main.SC.nextLine();
 				System.out.println("");
 				
 				switch(input) {
 				case "1": pm.like(conn, userNo); break;
 				case "2": pm.unlike(conn, userNo); break;
-				case "99": System.out.println("돌아갑니다."); keep = false; break;
-					default: throw new Exception("잘못된 입력값입니다.");
+				case "99": keep = false; break;
+				default: throw new Exception("※ 잘못된 입력입니다 ※");
 				}
 			}
-			
 			
 		}
 		
 	}
 	
 	public void increasingView(Connection conn, String itemNo) throws Exception {
-		
-		String sql = "UPDATE ITEM SET \"VIEW\" = \"VIEW\" + 1 WHERE ITEM_NO = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, itemNo);
-		int result = pstmt.executeUpdate();
-		
+		try {
+			String sql = "UPDATE ITEM SET \"VIEW\" = \"VIEW\" + 1 WHERE ITEM_NO = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, itemNo);
+			int result = pstmt.executeUpdate();
+			if(result == 0) { throw new Exception("");}
+		} catch (Exception e) {
+			throw new Exception("※ 해당 상품은 존재하지 않습니다 ※");
+		}
 	}
 		
 }

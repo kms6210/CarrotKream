@@ -13,14 +13,14 @@ public class AuctionInput {
 		while (rs.next()) {
 			int item_no = rs.getInt("ITEM_NO");
 			int price = rs.getInt("PRICE");
+			String title = rs.getString("TITLE");
 			String remained_time = rs.getString("남은시간");
-			System.out.println("상품번호 : " + item_no + " | 경매 시작가 : " + price + " || 남은시간 : " + remained_time);
+			System.out.println(item_no + ". " + title + "    시작가 : " + price + "    남은시간 : " + remained_time);
 		}
 	}
 	
 	public void showAuction(Connection conn) throws Exception {
 		ResultSet rs = aSQL.showAuction(conn);
-		System.out.println("[경매중인 상품]");
 		printAuction(rs);
 	}
 

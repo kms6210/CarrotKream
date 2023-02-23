@@ -2,6 +2,7 @@ package com.kh.auction;
 
 import java.sql.Connection;
 
+import com.kh.account.Account;
 import com.kh.main.Main;
 
 public class AuctionService {
@@ -12,13 +13,11 @@ public class AuctionService {
 
 		while(!isFinish) {
 			System.out.println("\n==================");
-			System.out.println("경매 페이지");
-			System.out.println("------------------");
-			System.out.println("1. 경매 페이지 출력\n"
-						 	 + "2. 입찰\n"
-						 	 + "3. 입찰 취소\n");
-			
-			System.out.print("\n번호를 입력하세요 : ");
+	        System.out.println("★ 경매 페이지 ★\n");
+	        new Account().seeBalance(conn);
+	        System.out.println("\n1. 경매 품목 조회\n2. 물품 입찰\n3. 입찰 취소");
+	        System.out.println("==================");
+			System.out.print("번호를 입력하세요 : ");
 			String input = Main.SC.nextLine();
 			
 			try {
