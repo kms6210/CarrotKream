@@ -13,7 +13,7 @@ public class AuctionService {
 
 		while(!isFinish) {
 			System.out.println("\n==================");
-	        System.out.println("★ 경매 페이지 ★\n");
+	        System.out.println("★ 경매 페이지 ★");
 	        new Account().seeBalance(conn);
 	        System.out.println("\n1. 경매 품목 조회\n2. 물품 입찰\n3. 입찰 취소");
 	        System.out.println("==================");
@@ -29,7 +29,7 @@ public class AuctionService {
 					default: { throw new Exception("잘못된 입력입니다."); } 
 				}
 			} catch(Exception e) {
-				System.out.println("\n" + e.getMessage());
+				System.out.println("\n" + e.getMessage() + "\n");
 			}
 		}
 	}

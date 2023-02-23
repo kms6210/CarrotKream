@@ -3,13 +3,9 @@ package com.kh.admin;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
-import com.kh.auction.Auction;
 import com.kh.main.Main;
 import com.kh.main.MainProcess;
-import com.kh.user.UserData;
-import com.kh.user.UserInput;
 
 // 테이블 : 유저, 상품, 제재 내역, 품질 검증, 계좌, Q&A, 공지사항
 
