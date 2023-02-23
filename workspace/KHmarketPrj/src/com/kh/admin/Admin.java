@@ -11,6 +11,8 @@ import com.kh.main.MainProcess;
 
 public class Admin {
 	public void userAdmin(Connection conn) throws Exception {
+		boolean isFinish = false;
+		while(!isFinish) {
 		System.out.println("\n==================");
         System.out.println("★ 유저 관리 페이지 ★");
         System.out.println("");
@@ -21,9 +23,10 @@ public class Admin {
 		if(num.equals("1")) {
 			showUserList(conn);
 		} else if (num.equals("2")) {
-			
-		} else {
-			
+			banId(conn);
+		} else if(num.equals("99")){
+			isFinish = true;
+		}
 		}
 	}
 
@@ -64,6 +67,8 @@ public class Admin {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 
+		System.out.println("--------------------------------------------------------회원 목록------------------------------------------------------------------------");
+
 		while(rs.next()) {
 			 String userNo= rs.getString("USER_NO");
 			 String id = rs.getString("ID");
@@ -77,9 +82,8 @@ public class Admin {
 			 String answer = rs.getString("ANSWER");
 			 String userStatus = rs.getString("USER_STATUS");
 			 String signDate = rs.getString("SIGN_DATE");
-
-			System.out.println("--------------------------------------------------------회원 목록------------------------------------------------------------------------");
-			System.out.println(userNo+"|"+id+"|"+pwd+"|"+nick+"|"+phoneNo+"|"+trustLevel+"|"+address+"|"+balance+"|"+questionNo+"|"+answer+"|"+userStatus+"|"+signDate);
+			System.out.println("\n[ userNo | id | pwd | nick | phone_no | trust_level | address | balance | question_no | answer | user_status | sign_date ]");
+			System.out.println(userNo+" | "+id+" | "+pwd+" | "+nick+" | "+phoneNo+" | "+trustLevel+" | "+address+" | "+balance+" | "+questionNo+" | "+answer+" | "+userStatus+" | "+signDate);
 		}
 	}
 
@@ -88,21 +92,19 @@ public void deleteItem(Connection conn) throws Exception {
 	String sql = "UPDATE ITEM SET TRADE_STATUS =? WHERE ITEM_NO =? ";
 	PreparedStatement pstmt = conn.prepareStatement(sql);
 
-	System.out.print("상품 번호를 입력 하세요");
+	System.out.print("상품 번호를 입력 하세요 : ");
 	String itemNo = Main.SC.nextLine();
 
-	System.out.print("거래 상태 (D / N):");
-	String tradeStatus = Main.SC.nextLine();
 
-	pstmt.setString(1, tradeStatus);
+	pstmt.setString(1, "D");
 	pstmt.setString(2, itemNo);
 
 	int result = pstmt.executeUpdate();
 
 	if (result ==1) {
-		System.out.println(itemNo+"번 상품이 거래 완료 처리 되었습니다");
+		System.out.println("\n※" +  itemNo + "번 상품을 삭제하였습니다 ※\n");
 	}else {
-		System.out.println("실패..");
+		throw new Exception("※ 실패 ※");
 	}
 }
 
@@ -122,9 +124,9 @@ public void banId(Connection conn) throws Exception {
 
 	int result = pstmt.executeUpdate();
 	if(result ==1) {
-		System.out.println(userNo+"번 유저가"+stopReason+"의 사유로 정지 되었습니다.");
+		System.out.println("※" + userNo + "번 유저의 계정을 정지시켰습니다 ※");
 	}else {
-		System.out.println("실패");
+		throw new Exception("※ 실패 ※");
 	}
 
 }
@@ -145,14 +147,14 @@ public void judgeQuality(Connection conn) throws Exception {
 	int result =pstmt.executeUpdate();
 
 	if(result ==1) {
-		System.out.println(itemNo+"번 상품 등급 판정 완료");
+		System.out.println("※" + itemNo+ "번 상품 등급 판정 완료 ※");
 	}else {
-		System.out.println("실패...");
+		throw new Exception("실패...");
 	}
 }
 
 
-public void updateAdminBalance(Connection conn) throws Exception {
+public void getAdminBalance(Connection conn) throws Exception {
 	//3.updateAdminBalance (유저번호 가격 밸런스)
 //	//1,상품이랑 품질 테이블이랑 join 후 가격 상품번호 유저번호 select -품질판정하기 
 //	String sql = "SELECT Q.ITEM_NO ,I.PRICE , I.USER_NO FROM ITEM I JOIN QUALITY Q ON I.ITEM_NO = Q.ITEM_NO";
@@ -174,9 +176,9 @@ public void updateAdminBalance(Connection conn) throws Exception {
 	
 	if(rs.next()) {
 		String balance = rs.getString("BALANCE");
-		System.out.println("관리자의 잔액은"+ balance+"원 입니다.");
+		System.out.println("[잔고 : " + balance + "]");
 	}else {
-		System.out.println("실패...");
+		throw new Exception("※ 실패 ※");
 	}
 	
 }
@@ -202,9 +204,9 @@ public void answerQuestion(Connection conn) throws Exception {
 	int result = pstmt.executeUpdate();
 
 	if(result ==1) {
-		System.out.println("답변 작성 완료");
+		System.out.println("※ 답변 작성 완료 ※");
 	}else {
-		System.out.println("답변 작성 실패..");
+		throw new Exception("※ 답변 작성 실패 ※");
 	}
 
 }
@@ -226,9 +228,9 @@ public void writePublic(Connection conn) throws Exception {
 	int result = pstmt.executeUpdate();
 
 	if(result ==1) {
-		System.out.println("공지사항 작성 완료");
+		System.out.println("※ 공지사항 작성 완료 ※");
 }else {
-	System.out.println("공지사항 작성 실패");
+	throw new Exception("※ 공지사항 작성 실패 ※");
 }
 }
 
@@ -249,21 +251,21 @@ public void deletePublic(Connection conn) throws Exception {
 	int result = pstmt.executeUpdate();
 
 	if(result ==1) {
-		System.out.println(publicNo + "번 공지사항 삭제완료");
+		System.out.println("※ " + publicNo + "번 공지사항 삭제 완료 ※ ");
 	}else {
-		System.out.println("삭제실패..");
+		throw new Exception("※ 삭제실패 ※");
 	}
 }
 
-public void showFaqList (Connection conn) throws Exception {
-	//자주묻는 질문 추가
+public void updateFaqList (Connection conn) throws Exception {
+	//자주묻는 질문 수정
 	String sql = "UPDATE FAQ SET QUESTION = ? ,ANSWER =? WHERE QUESTION_NO = ?";
 	PreparedStatement pstmt = conn.prepareStatement(sql);
 
 	System.out.print("질문 등록 번호: ");
 	String questionNo = Main.SC.nextLine();
 
-	System.out.print("자주묻는 질문 : ");
+	System.out.print("질문 : ");
 	String question = Main.SC.nextLine();
 
 	System.out.print("답변 : ");
@@ -276,9 +278,9 @@ public void showFaqList (Connection conn) throws Exception {
 	int result = pstmt.executeUpdate();
 
 	if(result ==1) {
-		System.out.println("자주묻는 질문 등록 완료.");
+		System.out.println("※ 자주묻는 질문 수정 완료 ※");
 	} else {
-		System.out.println("실패...");
+		throw new Exception("※ 실패 ※");
 	}
 }
 }

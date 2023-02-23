@@ -19,7 +19,7 @@ public class AdminTemp {
 			String question = rs.getString("QUESTION");
 			String writeDate = rs.getString("WRITE_DATE");
 		
-			System.out.println(userNo + "|" + question + "|" +writeDate);
+			System.out.println(userNo + " | " + question + " | " +writeDate);
 		System.out.println("===========================================");
 		}
 		

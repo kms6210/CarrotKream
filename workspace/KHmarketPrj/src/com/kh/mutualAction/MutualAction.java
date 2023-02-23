@@ -81,7 +81,7 @@ public class MutualAction {
 				
 	} 
 	catch (SQLIntegrityConstraintViolationException e) {
-		throw new Exception("※ 이미 찜한 상품입니다 ※ ");
+		throw new Exception("※ 이미 '좋아요' 한 상품입니다 ※ ");
 	}
 	catch (Exception e) {
 		throw new Exception("※ 해당 상품을 찾을 수 없습니다 ※ ");
@@ -104,7 +104,7 @@ public class MutualAction {
 			System.out.println("\n※ 해당 상품의 '좋아요' 를 삭제했습니다 ※");
 		}
 		else {
-			throw new Exception("※ 좋아요 삭제 실패 ※");
+			throw new Exception("※ '좋아요' 삭제 실패 ※");
 		}
 	}
 	

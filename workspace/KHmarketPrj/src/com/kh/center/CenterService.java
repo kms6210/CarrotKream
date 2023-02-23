@@ -29,7 +29,7 @@ public class CenterService {
 					case "2" : { center.askIdRestore(conn); System.out.println(); break; }
 					case "3" : { center.ask(conn); System.out.println(); break; }
 					case "99" : { System.out.println(); isFinish = true; break; }
-					default: { throw new Exception("잘못된 입력입니다"); } 
+					default: { throw new Exception("※ 잘못된 입력입니다 ※"); } 
 				}
 			} catch(Exception e) {
 				System.out.println("\n" + e.getMessage());
@@ -58,7 +58,7 @@ public class CenterService {
 					case "2" : { new User().QuestionList(conn); break; }
 					case "3" : { center.ask(conn); System.out.println(); break; }
 					case "99" : { System.out.println(); isFinish = true; break; }
-					default: { throw new Exception("잘못된 입력입니다."); } 
+					default: { throw new Exception("※ 잘못된 입력입니다 ※"); } 
 				}
 			} catch(Exception e) {
 				System.out.println("\n" + e.getMessage());
