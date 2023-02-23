@@ -55,7 +55,7 @@ public class MainProcess {
 	}
 	
 	private String showAPage(Connection conn) throws Exception {
-		System.out.println("================== 관리자  페이지 ====================");
+		System.out.println("\n================== 관리자  페이지 ====================");
 		System.err.println("");
 		System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
         System.out.println("┃ 1.계좌내역확인 	| 2.상품관리	| 3.유저관리	  ┃");
@@ -158,7 +158,7 @@ public class MainProcess {
 			case "1": admin.showAccount(conn); break;
 			case "2": admin.itemAdmin(conn); break;
 			case "3": admin.userAdmin(conn); break;
-			case "4": break;
+			case "4": admin.publicWandD(conn); break;
 			case "5": break;
 			case "99" : throw new Exception("※ 메인 페이지입니다 ※");
 			default: throw new Exception("※ 잘못된 입력입니다 ※\n");
