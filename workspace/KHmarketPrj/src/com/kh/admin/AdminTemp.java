@@ -23,7 +23,25 @@ public class AdminTemp {
 		System.out.println("===========================================");
 		}
 		
+
+	}
+	public void showNoticeList(Connection conn) throws Exception {
+		//공지사항 보여주기
+		String sql = "SELECT * FROM NOTICE";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
+		System.out.println("========== 공지 사항  ===========");
+		ResultSet rs = pstmt.executeQuery();
+		while(rs.next()) {
+			String publicNo = rs.getString("PUBLIC_NO");
+			String title = rs.getString("TITLE");
+			String content = rs.getString("CONTENT");
+			String quitYn = rs.getString("QUIT_YN");
+			String writeDate = rs.getString("WRITE_DATE");
+			
+			System.out.println(publicNo+"|"+title+"|"+content+"|"+quitYn+"|"+writeDate);
+			System.out.println("===========================================");
+		}
 	}
 
 }
