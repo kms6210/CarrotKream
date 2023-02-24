@@ -39,7 +39,7 @@ public class Auction {
 			
 			int balance2 = aSQL.selectBalance2(1, conn);
 			int result3 = aSQL.updateBalance2(1, price, balance2, conn);
-			int result4 = aSQL.insertAccount2(Main.login_member_no, 1, -1 * price, conn);
+			int result4 = aSQL.insertAccount2(Main.login_member_no, 1, price, conn);
 			if(result1 == 0 || result2 == 0 || result3 == 0 || result4 == 0) {
 				throw new Exception("※ 입찰 취소 오류 ※");
 			}

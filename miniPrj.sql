@@ -508,8 +508,8 @@ insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (5, 
 insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (6, 6, '가격이 너무 비싼거같아요!', '중고거래인 만큼 KH마켓은 판매자가 자유롭게 가격을 책정하도록 하고 있어요. KH마켓에서 개입하여 판매 가격을 조정하지 않아요.', SYSDATE - 6);
 insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (7, 7, '종량제 봉투를 개인이 판매할수 있나요?!', '종량제봉투를 개인이 판매할 경우 [폐기물관리법] 제14조7항의 규정에 따라 300만 원 이하의 벌금에 처할 수 있어요.', SYSDATE - 7);
 insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (8, 8, '직접 재배하거나 채취한 농수산물도 중고거래할 수 있나요?!', '네 할수있습니다.', SYSDATE - 8);
-insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (9, 9, '주류도 개인이 판매 할수 있나요?', '주류 면허 등에 관한 법률 제 5조 (주류 판매업면허)에 따라 주류는 개인 간 거래할 수 없어요.', SYSDATE - 9);
-insert into QNA (QUESTION_NO, USER_NO, QUESTION, ANSWER, WRITE_DATE) values (10, 10, '"별로예요" 거래 후기를 남기면 상대방이 알 수 있나요?', '누가 나에게 "별로예요" 거래 후기를 남겼는지 알 수 없어요.', SYSDATE - 10);
+insert into QNA (QUESTION_NO, USER_NO, QUESTION, WRITE_DATE) values (9, 9, '주류도 개인이 판매 할수 있나요?', SYSDATE - 9);
+insert into QNA (QUESTION_NO, USER_NO, QUESTION, WRITE_DATE) values (10, 10, '"별로예요" 거래 후기를 남기면 상대방이 알 수 있나요?', SYSDATE - 10);
 
 insert into REVIEW (REVIEW_NO, USER_NO, ITEM_NO, TRADE_DATE) values (1, 1, 1, SYSDATE - 1);
 insert into REVIEW (REVIEW_NO, USER_NO, ITEM_NO, TRADE_DATE) values (2, 2, 2, SYSDATE - 2);

@@ -171,7 +171,7 @@ public class Item {
 			
 			int editNum = Main.SC.nextInt();
 			
-			System.out.println("수정할 부분(1.제목 / 2.내용 / 3. 가격) : ");
+			System.out.print("수정할 부분(1.제목 / 2.내용 / 3. 가격) : ");
 			
 			int input = Main.SC.nextInt();
 			
