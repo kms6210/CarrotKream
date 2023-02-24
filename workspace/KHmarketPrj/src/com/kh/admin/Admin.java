@@ -149,7 +149,6 @@ public class Admin {
 		ResultSet rs = pstmt.executeQuery();
 
 		System.out.println("--------------------------------------------------------회원 목록------------------------------------------------------------------------");
-		System.out.println("\n[ userNo | id | pwd | nick | phone_no | trust_level | address | balance | question_no | answer | user_status | sign_date ]");
 
 		while(rs.next()) {
 			 String userNo= rs.getString("USER_NO");
@@ -191,7 +190,7 @@ public void deleteItem(Connection conn) throws Exception {
 
 public void banId(Connection conn) throws Exception {
 	// 계정 정지하기 (ex. 7일 / 30일 / 1년 / 영구 ...)
-	String sql = "UPDATE BANNED SET STOP_REASON = ? WHERE USER_NO =?";
+	String sql = "UPDATE K_USER SET USER_STATUS = 'S'";
 	PreparedStatement pstmt = conn.prepareStatement(sql);
 
 	System.out.print("정지할 유저 번호 : ");
