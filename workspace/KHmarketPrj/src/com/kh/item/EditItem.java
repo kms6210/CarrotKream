@@ -50,7 +50,7 @@ public class EditItem {
 	
 	public void editPrice(Connection conn, int editNum, int login_member_no) throws Exception {
 		
-		System.out.println("수정할 가격: ");
+		System.out.print("수정할 가격: ");
 		String price = Main.SC.nextLine();
 		
 		String sql = "UPDATE ITEM SET PRICE = ? WHERE ITEM_NO = ? AND USER_NO = ?";

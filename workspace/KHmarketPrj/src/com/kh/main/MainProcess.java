@@ -133,7 +133,7 @@ public class MainProcess {
 		case "2": mas.chatPage(conn); break;
 		case "3": ise.itemPage(conn); break;
 		case "4": ats.auctionPage(conn); break;
-		case "5": cs.centerPage(conn); break;
+		case "5": cs.userCenterPage(conn); break;
 		case "99" : throw new Exception("※ 메인 페이지입니다 ※");
 		default: throw new Exception("※ 잘못된 입력입니다 ※");
 	}
