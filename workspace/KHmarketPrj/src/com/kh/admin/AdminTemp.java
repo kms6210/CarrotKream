@@ -9,7 +9,7 @@ public class AdminTemp {
 	
 	public void showQuestionList(Connection conn) throws Exception {
 		// 미답변 질문 목록 보여주기	
-		String sql= "SELECT USER_NO, QUESTION,WRITE_DATE  FROM QNA WHERE ANSWER = null";
+		String sql= "SELECT USER_NO, QUESTION,WRITE_DATE  FROM QNA WHERE ANSWER IS null";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
 		System.out.println("\n========== 질문 목록 ===========");
