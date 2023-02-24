@@ -150,7 +150,7 @@ public class MainProcess {
 		String num = inputNum();
 		switch (num) {
 			case "1": acs.accountPage(conn); break;
-			case "2" : System.out.println("※ 로그아웃 완료 ※"); Main.login_member_no = 0; break;
+			case "2" : Main.login_member_no = 0; throw new Exception("※ 로그아웃 완료 ※");
 			case "3" : if(user.dropUser(conn) == 0) {throw new Exception("※ 회원 탈퇴 실패 ※\n"); } break;
 			case "99" : isFinish = true; break;
 			default: System.out.println("\n※ 잘못된 입력입니다 ※\n");

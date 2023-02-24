@@ -30,6 +30,7 @@ public class AuctionInput {
 		ResultSet rs = aSQL.showDeadlineAuction(conn);
 		System.out.println("\n★★★★★★★★ 마감 임박 상품 ★★★★★★★★");
 		printAuction(rs, conn);
+		System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		System.out.println();
 		
 		rs = aSQL.showAuction(conn);
