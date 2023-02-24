@@ -190,17 +190,15 @@ public void deleteItem(Connection conn) throws Exception {
 
 public void banId(Connection conn) throws Exception {
 	// 계정 정지하기 (ex. 7일 / 30일 / 1년 / 영구 ...)
-	String sql = "UPDATE K_USER SET USER_STATUS = 'S'";
+	String sql = "UPDATE K_USER SET USER_STATUS = 'S' where user_no = ?";
 	PreparedStatement pstmt = conn.prepareStatement(sql);
-
+	
 	System.out.print("정지할 유저 번호 : ");
-	String userNo = Main.SC.nextLine();
+	int userNo = Integer.parseInt(Main.SC.nextLine());
+	pstmt.setInt(1, userNo);
 
 	System.out.print("정지 사유 : ");
 	String stopReason = Main.SC.nextLine();
-
-	pstmt.setString(1, stopReason);
-	pstmt.setString(2, userNo);
 
 	int result = pstmt.executeUpdate();
 	if(result ==1) {
